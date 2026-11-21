@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Say It to Open It</title>
+<style>
+:root{
+  --bg:#0d1420;--panel:#162033;--panel2:#1d2a41;--line:#2a3a56;
+  --text:#e9eef6;--muted:#8d9cb6;--gold:#f4b740;--teal:#33d1b4;--red:#ff6f6f;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:radial-gradient(1200px 600px at 15% -10%,#1b2a45 0,transparent 60%),
+             radial-gradient(900px 500px at 110% 110%,#13263a 0,transparent 60%),var(--bg);
+  color:var(--text);min-height:100vh;
+}
+button{font:inherit;color:inherit;cursor:pointer;border:none}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 60px}
+.hidden{display:none!important}
+
+/* ---------- start ---------- */
+.title{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.logo{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--gold),#e07b2f);
+  display:grid;place-items:center;font-size:28px;box-shadow:0 6px 20px #f4b74033}
+h1{font-size:30px;margin:0;letter-spacing:.5px}
+.sub{color:var(--muted);margin:0 0 22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 18px 20px;margin-bottom:16px}
+.card h2{font-size:14px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin:0 0 12px;display:flex;gap:10px;align-items:center}
+.step{width:24px;height:24px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:12px;color:var(--gold)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:240px;flex:1}
+.btn{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 16px;transition:.15s}
+.btn:hover{border-color:#40557c;background:#24334f}
+.btn.primary{background:linear-gradient(135deg,var(--gold),#e8932f);color:#1a1205;border:none;font-weight:700}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.big{padding:15px 28px;font-size:18px;border-radius:12px}
+.seg{display:flex;gap:6px;background:var(--panel2);padding:4px;border-radius:12px;border:1px solid var(--line)}
+.seg button{background:transparent;padding:8px 14px;border-radius:9px;color:var(--muted)}
+.seg button.on{background:#2b3c5c;color:var(--text)}
+.note{color:var(--muted);font-size:14px;margin-top:10px}
+.ok{color:var(--teal)} .bad{color:var(--red)}
+.themes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.theme{border:1px solid var(--line);border-radius:14px;padding:16px;text-align:left;min-height:120px;position:relative;overflow:hidden}
+.theme.museum{background:linear-gradient(135deg,#2a2236,#1b1828)}
+.theme.mountain{background:linear-gradient(135deg,#1b3140,#142430)}
+.theme .ti{font-size:34px}
+.theme b{display:block;font-size:19px;margin-top:6px}
+.theme small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
+.theme.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.locked-theme{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.lvl{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:left}
+.lvl b{display:block;font-size:13px;color:var(--gold);letter-spacing:1px;margin-bottom:2px}
+.lvl span{display:block;font-weight:600}
+.lvl small{display:block;color:var(--muted);margin-top:4px;line-height:1.3}
+.lvl.on,.topic.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px;margin-top:14px}
+.topic{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center}
+.topic .i{font-size:28px;display:block}
+.topic small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.banner{background:#3a1f26;border:1px solid #6b2f3a;color:#ffd2d2;border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.go{display:flex;justify-content:flex-end;margin-top:6px}
+@media(max-width:640px){.levels{grid-template-columns:repeat(2,1fr)} .themes{grid-template-columns:1fr} h1{font-size:24px}}
+
+/* ---------- map ---------- */
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.mission small{color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;font-size:12px}
+.mission div{font-size:22px;font-weight:700}
+.mission p{margin:4px 0 0;color:var(--muted)}
+.keys{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-weight:700;font-size:18px}
+.keys span{color:var(--gold)}
+.mapbox{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0b111b}
+.mapbox svg{display:block;width:100%;height:auto}
+.node{cursor:default}
+.node.current{cursor:pointer}
+.node.current .ring{animation:ring 1.4s infinite;transform-origin:center;transform-box:fill-box}
+@keyframes ring{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.6)}}
+.collect{display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:14px}
+.collect .lbl{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.slots{display:flex;gap:6px;flex-wrap:wrap}
+.slot{min-width:62px;height:44px;border-radius:9px;border:1px dashed var(--line);display:grid;place-items:center;
+  font-size:12px;font-weight:700;letter-spacing:1px;color:var(--muted);background:#121b2b;padding:0 6px}
+.slot.got{border:1px solid var(--gold);color:var(--gold);background:#2a2412}
+.tools{display:flex;gap:10px;margin-top:16px;justify-content:space-between;flex-wrap:wrap}
+
+/* ---------- modal ---------- */
+.overlay{position:fixed;inset:0;background:#05080fcc;backdrop-filter:blur(4px);display:grid;place-items:center;padding:16px;z-index:10}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:20px;width:100%;max-width:600px;padding:22px;position:relative;max-height:96vh;overflow:auto}
+.close{position:absolute;top:12px;right:14px;background:transparent;color:var(--muted);font-size:22px}
+.mtag{font-size:12px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+.task{text-align:center;font-size:15px;color:var(--gold);font-weight:700;letter-spacing:.5px;margin:14px 0 4px}
+.pic{font-size:54px;text-align:center;line-height:1.1;margin:4px 0}
+.target{text-align:center;margin:10px 0 14px;font-weight:700;line-height:1.35}
+.target.word{font-size:46px;letter-spacing:1px}
+.target.sent{font-size:28px}
+.target .w{display:inline-block;margin:0 4px;border-bottom:3px solid transparent;transition:.2s}
+.target .w.hit{color:var(--teal);border-color:var(--teal)}
+.target .w.miss{color:var(--red);border-color:var(--red)}
+.hidden-target{text-align:center;margin:12px 0}
+.hearbig{font-size:20px;padding:16px 26px;border-radius:14px}
+.subbtns{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.micbar{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0 10px}
+.mic{width:64px;height:64px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);font-size:26px;transition:.2s}
+.mic.live{background:linear-gradient(135deg,#ff7d7d,#e04848);border:none;animation:pulse 1.2s infinite}
+.mic.wait{opacity:.6}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #ff6f6f88}70%{box-shadow:0 0 0 20px #ff6f6f00}100%{box-shadow:0 0 0 0 #ff6f6f00}}
+.micstate{font-size:15px;color:var(--muted);min-width:180px}
+.micstate b{color:var(--text)}
+.heard{min-height:48px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;text-align:center;font-size:18px}
+.heard.empty{color:var(--muted);font-size:14px}
+.fb{text-align:center;font-weight:700;margin:12px 0 4px;min-height:24px}
+.tries{display:flex;gap:6px;justify-content:center;margin-top:6px}
+.tries i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.tries i.used{background:var(--red)}
+.mbtns{display:flex;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap}
+.linkbtn{background:transparent;color:var(--muted);text-decoration:underline;padding:8px 4px}
+.win{text-align:center;padding:10px 0}
+.win .big{font-size:60px}
+.win h3{font-size:24px;margin:6px 0}
+.reward{display:inline-flex;align-items:center;gap:12px;background:#2a2412;border:1px solid var(--gold);border-radius:14px;padding:12px 18px;margin:12px 0 18px}
+.reward b{color:var(--gold);font-size:22px;letter-spacing:2px}
+.keypad{display:grid;grid-template-columns:repeat(3,72px);gap:10px;justify-content:center;margin:14px 0}
+.keypad button{height:58px;border-radius:12px;background:var(--panel2);border:1px solid var(--line);font-size:22px;font-weight:700}
+.keypad button:hover{border-color:var(--gold)}
+.codeshow{display:flex;gap:6px;justify-content:center;margin:10px 0}
+.codeshow span{width:38px;height:48px;border-radius:9px;background:#0f1726;border:1px solid var(--line);display:grid;place-items:center;font-size:24px;font-weight:800;color:var(--gold)}
+.shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+/* ---------- end ---------- */
+.end{text-align:center;padding-top:30px}
+.end .trophy{font-size:80px}
+.end h2{font-size:30px;margin:10px 0 6px}
+.end .score{font-size:46px;font-weight:800;color:var(--gold);margin:8px 0}
+.end p{color:var(--muted)}
+.end .row{justify-content:center;margin-top:24px}
+</style>
+</head>
+<body>
+
+<!-- ================= START ================= -->
+<div id="start" class="wrap">
+  <div class="title"><div class="logo">🔐</div><h1>Say It to Open It</h1></div>
+  <p class="sub">Every door is locked. Your voice is the key.</p>
+
+  <div id="noMic" class="banner hidden">
+    🎙️ This browser can't listen to your voice. Open the game in <b>Chrome</b> or <b>Edge</b>.
+    You can still play here: say it out loud, then press <b>"I said it"</b>.
+  </div>
+
+  <div class="card">
+    <h2><span class="step">1</span>Choose your adventure</h2>
+    <div id="themePick" class="themes">
+      <button class="theme museum" data-th="museum"><span class="ti">🏛️</span><b>Museum Vault</b>
+        <small>Sneak through the museum at night. Every door gives you one number of the secret vault code.</small></button>
+      <button class="theme mountain" data-th="mountain"><span class="ti">🏔️</span><b>Mountain Expedition</b>
+        <small>Climb from base camp to the summit. Every camp gives you one piece of the summit flag.</small></button>
+    </div>
+    <div id="themeLocked" class="locked-theme hidden">
+      <div id="themeNow" style="font-size:18px;font-weight:700"></div>
+      <button class="linkbtn" id="newSession">Start a new adventure</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="step">2</span>Choose a voice</h2>
+    <div class="row">
+      <select id="voiceSel"></select>
+      <button class="btn" id="voiceTest">🔊 Listen</button>
+      <div class="seg" id="speedSeg">
+        <button data-r="0.95">Normal</button>
+        <button data-r="0.75">Slow</button>
+      </div>
+    </div>
+    <div class="note" id="voiceNote"></div>
+  </div>
+
+  <div class="card">
+    <h2><span class="step">3</span>Check your microphone</h2>
+    <div class="row">
+      <button class="btn" id="micTest">🎙️ Test mic</button>
+      <span id="micTestOut" class="note" style="margin:0">Press the button and say <b>"Hello, I am ready."</b> If the browser asks, choose <b>Allow</b>.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="step">4</span>Choose your level and topic</h2>
+    <div class="levels" id="levels"></div>
+    <div class="topics" id="topics"></div>
+  </div>
+
+  <div class="go"><button class="btn primary big" id="startBtn">Start →</button></div>
+</div>
+
+<!-- ================= MAP ================= -->
+<div id="map" class="wrap hidden">
+  <div class="top">
+    <div class="mission">
+      <small id="mLevel"></small>
+      <div id="mTitle"></div>
+      <p id="mBrief"></p>
+    </div>
+    <div class="keys">🔑 <span id="keyCount">0</span> / 24</div>
+  </div>
+  <div class="mapbox" id="mapbox"></div>
+  <div class="collect" id="collect"></div>
+  <div class="tools">
+    <button class="btn" id="backBtn">← Change level or topic</button>
+    <button class="btn" id="restartBtn">🔄 Start this route again</button>
+  </div>
+</div>
+
+<!-- ================= END ================= -->
+<div id="end" class="wrap hidden">
+  <div class="end">
+    <div class="trophy" id="endIcon">🏆</div>
+    <h2 id="endTitle"></h2>
+    <div class="score"><span id="endScore">0</span> / 24 🔑</div>
+    <p id="endMsg"></p>
+    <div class="row">
+      <button class="btn" id="endAgain">🔄 Play again</button>
+      <button class="btn primary" id="endNext">Next level →</button>
+      <button class="btn" id="endMenu">Change level or topic</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div id="overlay" class="overlay hidden">
+  <div class="modal" id="modal">
+    <button class="close" id="mClose" title="Close">✕</button>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+<script>
+/* =====================================================
+   CONTENT  T(picture, word, word-check, sentence)
+   word-check: "a|b" = a OR b. Short forms like "strawberr"
+   also accept "strawberry" and "strawberries".
+   ===================================================== */
+function T(e,w,k,s){return{e,w,k,s}}
+const TOPICS={
+food:{name:'Food',icon:'🍎',items:[
+ T('🍎','apple','apple','I eat an apple every day.'),
+ T('🍌','banana','banana','A monkey likes to eat a banana.'),
+ T('🍞','bread','bread','I make a sandwich with bread.'),
+ T('🥚','egg','egg','For breakfast I have an egg.'),
+ T('🧀','cheese','cheese','The mouse is eating the cheese.'),
+ T('🥕','carrot','carrot','A rabbit likes to eat a carrot.'),
+ T('🥛','milk','milk','I drink a glass of milk.'),
+ T('🍊','orange','orange','I want to drink orange juice.'),
+ T('🍓','strawberry','strawberr','My favourite fruit is the strawberry.'),
+ T('🍅','tomato','tomato','I put a tomato in my salad.'),
+ T('🎂','cake','cake','We eat cake at a birthday party.'),
+ T('🍕','pizza','pizza','I like pizza with cheese.')]},
+animals:{name:'Animals',icon:'🦁',items:[
+ T('🐶','dog','dog','My dog likes to play in the park.'),
+ T('🐱','cat','cat','The cat is sleeping on the sofa.'),
+ T('🐴','horse','horse','I can ride a horse.'),
+ T('🐄','cow','cow','We get milk from a cow.'),
+ T('🐟','fish','fish','A fish lives in the water.'),
+ T('🐦','bird','bird','The bird can fly in the sky.'),
+ T('🐘','elephant','elephant','The elephant has a long nose.'),
+ T('🦁','lion','lion','The lion is the king of the jungle.'),
+ T('🐰','rabbit','rabbit','The rabbit has long ears.'),
+ T('🐸','frog','frog','The frog can jump very high.'),
+ T('🐒','monkey','monkey','The monkey is climbing a tree.'),
+ T('🐍','snake','snake','A snake has no legs.')]},
+school:{name:'School',icon:'✏️',items:[
+ T('📕','book','book','I read a book before I go to sleep.'),
+ T('✏️','pencil','pencil','I write with a pencil.'),
+ T('🎒','backpack','backpack|back pack','I put my books in my backpack.'),
+ T('📏','ruler','ruler','I draw a straight line with a ruler.'),
+ T('✂️','scissors','scissor','I cut paper with scissors.'),
+ T('💻','computer','computer','I play games on my computer.'),
+ T('🕒','clock','clock','The clock is on the wall.'),
+ T('🧑‍🏫','teacher','teacher','My teacher helps me learn.'),
+ T('📓','notebook','notebook|note book','I write my homework in a notebook.'),
+ T('🖍️','crayon','crayon','I colour the picture with a crayon.'),
+ T('🗺️','map','map','We look at a map to find the way.'),
+ T('🚌','bus','bus','I go to school by bus.')]},
+home:{name:'Home',icon:'🏠',items:[
+ T('🏠','house','house','I live in a big house.'),
+ T('🛏️','bed','bed','I sleep in my bed at night.'),
+ T('🪑','chair','chair','I sit on a chair.'),
+ T('🚪','door','door','Please close the door.'),
+ T('🪟','window','window','I look out of the window.'),
+ T('🛋️','sofa','sofa','We watch TV on the sofa.'),
+ T('🛁','bath','bath','I take a bath in the evening.'),
+ T('🔑','key','key','I open the door with a key.'),
+ T('📺','television','television|tv','I watch cartoons on television.'),
+ T('🪞','mirror','mirror','I look in the mirror every morning.'),
+ T('🪥','toothbrush','toothbrush|tooth brush','I brush my teeth with a toothbrush.'),
+ T('💡','light','light','Turn on the light, it is dark.')]},
+clothes:{name:'Clothes',icon:'👕',items:[
+ T('👕','shirt','shirt','I wear a shirt to school.'),
+ T('👗','dress','dress','She is wearing a pretty dress.'),
+ T('👟','shoes','shoe','I put on my shoes before I go out.'),
+ T('🧢','cap','cap','I wear a cap in the sun.'),
+ T('🧦','socks','sock','I wear warm socks in winter.'),
+ T('👖','jeans','jeans','I wear my blue jeans every day.'),
+ T('🧥','coat','coat','It is cold, so I wear a coat.'),
+ T('🧣','scarf','scarf','I wear a scarf around my neck.'),
+ T('🧤','gloves','glove','My hands are warm in my gloves.'),
+ T('👓','glasses','glasses','My dad wears glasses to read.'),
+ T('🥾','boots','boot','I wear boots when it rains.'),
+ T('🕶️','sunglasses','sunglasses|sun glasses','I wear sunglasses on a sunny day.')]},
+weather:{name:'Weather',icon:'🌦️',items:[
+ T('☀️','sun','sun','The sun is shining today.'),
+ T('🌧️','rain','rain','Take an umbrella, it is going to rain.'),
+ T('❄️','snow','snow','In winter, snow falls from the sky.'),
+ T('☁️','cloud','cloud','There is a big grey cloud in the sky.'),
+ T('🌬️','wind','wind','The wind is blowing very hard.'),
+ T('🌈','rainbow','rainbow|rain bow','After the rain I see a rainbow.'),
+ T('☂️','umbrella','umbrella','I open my umbrella when it rains.'),
+ T('⛈️','storm','storm','There is a storm with thunder and lightning.'),
+ T('⛄','snowman','snowman|snow man','We build a snowman in the snow.'),
+ T('🥵','hot','hot','In summer it is very hot.'),
+ T('🥶','cold','cold','In winter I feel cold.'),
+ T('⚡','lightning','lightning|lighting|lightening','I see lightning in the storm.')]},
+actions:{name:'Actions',icon:'🏃',items:[
+ T('🏃','running','runn|run','He is running to school.'),
+ T('🏊','swimming','swim','She is swimming in the pool.'),
+ T('🚴','cycling','cycl','He is cycling to the park.'),
+ T('💃','dancing','danc','She is dancing to the music.'),
+ T('😴','sleeping','sleep','He is sleeping in his bed.'),
+ T('🧑‍🍳','cooking','cook','The chef is cooking dinner.'),
+ T('🎤','singing','sing','She is singing a song.'),
+ T('🧗','climbing','climb','He is climbing up the rock.'),
+ T('✍️','writing','writ','I am writing a letter to my friend.'),
+ T('⚽','football','football|foot ball','The children are playing football in the park.'),
+ T('🎨','painting','paint','She is painting a picture.'),
+ T('🏄','surfing','surf','He is surfing on a big wave.')]}
+};
+
+const LEVELS=[
+ {n:1,name:'Read the word',short:'See it, say it',task:'Read the word out loud',sentence:false,hear:false},
+ {n:2,name:'Read the sentence',short:'See it, say it',task:'Read the sentence out loud',sentence:true,hear:false},
+ {n:3,name:'Repeat the word',short:'Hear it, say it',task:'Listen and repeat the word',sentence:false,hear:true},
+ {n:4,name:'Repeat the sentence',short:'Hear it, say it',task:'Listen and repeat the sentence',sentence:true,hear:true}
+];
+const THEMES={
+ museum:{name:'Museum Vault',icon:'🏛️',marker:'🔦',
+   stops:['Entrance Hall','Dinosaur Wing','Ancient Egypt','Ocean Gallery','Space Hall','Art Gallery','Map Room','Clock Tower'],
+   goal:'The Vault',goalIcon:'💎',brief:'Open each door to move through the museum. Collect the vault code.'},
+ mountain:{name:'Mountain Expedition',icon:'🏔️',marker:'🧗',
+   stops:['Base Camp','Pine Forest','River Crossing','Rocky Ridge','Ice Bridge','Eagle Point','Cloud Camp','High Pass'],
+   goal:'The Summit',goalIcon:'🚩',brief:'Open each camp to climb higher. Collect the pieces of the summit flag.'}
+};
+const NUMWORDS=['ZERO','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE'];
+
+/* =====================================================
+   ANSWER CHECKING
+   ===================================================== */
+const NUM={'0':'zero','1':'one','2':'two','3':'three','4':'four','5':'five','6':'six','7':'seven','8':'eight','9':'nine','10':'ten'};
+const SOUNDS_LIKE={two:['to','too'],four:['for'],eight:['ate'],red:['read'],blue:['blew'],sea:['see'],see:['sea'],
+  an:['a','and','in'],a:['an','the','uh'],the:['a'],i:['eye'],in:['an'],its:['it'],hot:['hard'],cold:['called'],
+  write:['right'],writing:['riding'],rain:['reign'],eat:['it'],cap:['cup','cat'],sun:['son'],light:['like','lights']};
+function norm(t){
+  t=(t||'').toLowerCase().replace(/(\d+):00/g,'$1 oclock').replace(/[’']/g,'').replace(/color/g,'colour').replace(/[^a-z0-9\s]/g,' ');
+  const words=t.split(/\s+/).filter(Boolean).map(w=>NUM[w]||w);
+  return{words,text:' '+words.join(' ')+' '};
+}
+function lev(a,b){
+  const m=a.length,n=b.length;if(Math.abs(m-n)>2)return 9;
+  let p=Array.from({length:n+1},(_,j)=>j);
+  for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}
+  return p[n];
+}
+function wordHits(w,t){
+  if(w===t)return true;
+  if((SOUNDS_LIKE[t]||[]).includes(w))return true;
+  if(t.length>=3&&w.startsWith(t)&&w.length-t.length<=3)return true;
+  if(t.length>=5&&lev(w,t)<=1)return true;
+  if(t.length>=8&&lev(w,t)<=2)return true;
+  return false;
+}
+function hasKey(n,key){
+  return key.split('|').some(alt=>{
+    if(alt.includes(' '))return n.text.includes(' '+alt+' ');
+    return n.words.some(w=>wordHits(w,alt)||(alt.length>=4&&w.startsWith(alt)));
+  });
+}
+/* Sentence: which target words were said (in order, loosely). */
+function matchSentence(said,target){
+  const s=norm(said).words,tw=norm(target).words;
+  let pos=0;const hits=tw.map(()=>false);
+  tw.forEach((t,i)=>{
+    for(let j=pos;j<Math.min(s.length,pos+4);j++){if(wordHits(s[j],t)){hits[i]=true;pos=j+1;return}}
+    const j=s.findIndex((w,ix)=>ix>=pos&&wordHits(w,t));
+    if(j>=0){hits[i]=true;pos=j+1}
+  });
+  return hits;
+}
+function check(alts,item,lvl){
+  if(!LEVELS[lvl-1].sentence){
+    return{ok:alts.some(a=>hasKey(norm(a),item.k)),hits:null};
+  }
+  let best=null;
+  for(const a of alts){
+    const hits=matchSentence(a,item.s),n=hits.filter(Boolean).length;
+    if(!best||n>best.n)best={hits,n};
+  }
+  const total=best.hits.length,keyOk=alts.some(a=>hasKey(norm(a),item.k));
+  const need=Math.max(total-(total>=7?2:1),Math.ceil(total*0.75));
+  return{ok:keyOk&&best.n>=need,hits:best.hits,n:best.n,total};
+}
+
+/* =====================================================
+   SAVED SETTINGS
+   ===================================================== */
+let store={};
+try{store=JSON.parse(localStorage.getItem('sayItToOpenIt2')||'{}')}catch(e){}
+function save(){try{localStorage.setItem('sayItToOpenIt2',JSON.stringify(store))}catch(e){}}
+store.best=store.best||{};
+const $=s=>document.querySelector(s);
+
+/* =====================================================
+   VOICE
+   ===================================================== */
+const hasTTS='speechSynthesis' in window;
+const NATURAL=/natural|neural|online|google|enhanced|premium|siri|wavenet/i;
+const FLAGS={US:'🇺🇸',GB:'🇬🇧',AU:'🇦🇺',CA:'🇨🇦',IE:'🇮🇪',IN:'🇮🇳',NZ:'🇳🇿',ZA:'🇿🇦'};
+let voices=[],voice=null,rate=store.rate||0.95,speaking=false;
+function cleanName(v){
+  return v.name.replace(/^(Microsoft|Google|Apple)\s+/i,'').replace(/\s*Online\s*\(Natural\)/i,'').replace(/\s*-\s*English.*$/i,'').replace(/\s*\(.*?\)\s*/g,' ').trim()||v.name;
+}
+function loadVoices(){
+  if(!hasTTS){$('#voiceNote').textContent='This browser has no voices. Try Chrome or Edge.';return}
+  const all=speechSynthesis.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+  if(!all.length)return;
+  const nat=all.filter(v=>NATURAL.test(v.name)),other=all.filter(v=>!NATURAL.test(v.name));
+  voices=[...nat,...other];
+  const sel=$('#voiceSel');sel.innerHTML='';
+  const group=(label,list)=>{
+    if(!list.length)return;
+    const g=document.createElement('optgroup');g.label=label;
+    list.forEach(v=>{const o=document.createElement('option');o.value=v.name;
+      const reg=(v.lang.split(/[-_]/)[1]||'').toUpperCase();
+      o.textContent=(FLAGS[reg]||'🌐')+'  '+cleanName(v);g.appendChild(o)});
+    sel.appendChild(g);
+  };
+  group('Natural voices',nat);group('Other voices',other);
+  voice=voices.find(v=>v.name===store.voice)||nat[0]||voices[0];
+  sel.value=voice.name;
+  $('#voiceNote').textContent=nat.length?'Natural voices sound most like a real person. Chrome and Edge have the most.'
+    :'No natural voices on this device. Chrome or Edge usually have better ones.';
+}
+if(hasTTS){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}
+$('#voiceSel').onchange=e=>{voice=voices.find(v=>v.name===e.target.value);store.voice=voice.name;save();say("Hello! Let's open some doors.")};
+$('#voiceTest').onclick=()=>say("Hello! Let's open some doors.");
+document.querySelectorAll('#speedSeg button').forEach(b=>{
+  b.classList.toggle('on',+b.dataset.r===rate);
+  b.onclick=()=>{rate=+b.dataset.r;store.rate=rate;save();
+    document.querySelectorAll('#speedSeg button').forEach(x=>x.classList.toggle('on',x===b));say('This is my speed.')};
+});
+/* Speaking pauses the mic, so the game never hears its own voice. */
+function say(text,onEnd){
+  if(!hasTTS){onEnd&&onEnd();return}
+  speaking=true;micPause();updateMicUI();
+  speechSynthesis.cancel();
+  let done=false;
+  const finish=()=>{if(done)return;done=true;speaking=false;updateMicUI();
+    if(micWanted&&cur&&!cur.won)setTimeout(micStart,150);onEnd&&onEnd()};
+  setTimeout(()=>{
+    const u=new SpeechSynthesisUtterance(text);
+    if(voice){u.voice=voice;u.lang=voice.lang}else u.lang='en-US';
+    u.rate=rate;u.onend=finish;u.onerror=finish;
+    speechSynthesis.speak(u);
+    setTimeout(finish,1500+text.length*110/rate);
+  },60);
+}
+
+/* =====================================================
+   MICROPHONE  (stays on while a door is open)
+   ===================================================== */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null,recOn=false,micWanted=false,quietEnds=0;
+if(!SR)$('#noMic').classList.remove('hidden');
+
+function micStart(){
+  if(!SR||!cur||cur.won||speaking||recOn)return;
+  micWanted=true;
+  rec=new SR();rec.lang='en-US';rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=4;
+  let heardSomething=false;
+  rec.onresult=e=>{
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const r=e.results[i];
+      if(r.isFinal){heardSomething=true;const alts=[];for(let j=0;j<r.length;j++)alts.push(r[j].transcript.trim());onSpeech(alts.filter(Boolean))}
+      else showHeard(r[0].transcript);
+    }
+  };
+  rec.onerror=e=>{
+    if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error)){
+      micWanted=false;if(cur){cur.fb=micErrorText(e.error);cur.fbClass='bad';renderDoor()}
+    }
+  };
+  rec.onend=()=>{
+    recOn=false;
+    quietEnds=heardSomething?0:quietEnds+1;
+    if(micWanted&&cur&&!cur.won&&!speaking){
+      if(quietEnds>=3){micWanted=false;quietEnds=0;updateMicUI();return}
+      setTimeout(()=>{if(micWanted&&!recOn&&!speaking)micStart()},250);
+    }
+    updateMicUI();
+  };
+  try{rec.start();recOn=true}catch(e){}
+  updateMicUI();
+}
+function micPause(){if(rec&&recOn){try{rec.abort()}catch(e){}}}
+function micOff(){micWanted=false;micPause()}
+function micErrorText(err){
+  if(err==='not-allowed'||err==='service-not-allowed')return 'The microphone is blocked. Click the 🔒 or 🎙️ icon in the address bar and choose Allow.';
+  if(err==='network')return 'Voice recognition needs an internet connection.';
+  if(err==='audio-capture')return 'No microphone found. Check that one is plugged in.';
+  return 'Something went wrong with the microphone. Try again.';
+}
+
+/* start-screen mic test */
+let testRec=null;
+$('#micTest').onclick=()=>{
+  const out=$('#micTestOut');
+  if(!SR){out.className='note bad';out.textContent='This browser cannot listen. Use Chrome or Edge.';return}
+  if(testRec){testRec.stop();return}
+  out.className='note';out.style.margin=0;out.textContent='Listening… say "Hello, I am ready."';
+  $('#micTest').textContent='⏹ Stop';
+  testRec=new SR();testRec.lang='en-US';testRec.interimResults=true;
+  let got='',err=null;
+  testRec.onresult=e=>{got=[...e.results].map(r=>r[0].transcript).join(' ');out.textContent='I hear: "'+got+'"'};
+  testRec.onerror=e=>{err=e.error};
+  testRec.onend=()=>{testRec=null;$('#micTest').textContent='🎙️ Test mic';
+    if(err&&err!=='no-speech'){out.className='note bad';out.textContent=micErrorText(err);return}
+    if(got){out.className='note ok';out.textContent='✓ Your mic works. I heard: "'+got+'"'}
+    else{out.className='note bad';out.textContent="I didn't hear anything. Speak a little louder and try again."}};
+  testRec.start();
+};
+
+/* =====================================================
+   SOUND EFFECTS
+   ===================================================== */
+let actx=null;
+function tone(freqs,dur=.12,type='sine',gap=.09){
+  try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();
+    freqs.forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.value=f;
+      const t=actx.currentTime+i*gap;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.16,t+.02);
+      g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+dur+.05)})}catch(e){}
+}
+const sfxUnlock=()=>tone([523,659,784,1047],.25,'triangle',.08);
+const sfxWrong=()=>tone([220,180],.18,'square',.12);
+const sfxFinish=()=>tone([523,659,784,1047,1319],.35,'triangle',.11);
+
+/* =====================================================
+   SETUP SCREEN
+   ===================================================== */
+let theme=null,level=store.level||1,topic=store.topic||'food';
+function renderSetup(){
+  const locked=!!theme;
+  $('#themePick').classList.toggle('hidden',locked);
+  $('#themeLocked').classList.toggle('hidden',!locked);
+  if(locked)$('#themeNow').textContent=THEMES[theme].icon+'  '+THEMES[theme].name;
+  document.querySelectorAll('.theme').forEach(b=>b.classList.toggle('on',b.dataset.th===pickTheme));
+  $('#levels').innerHTML=LEVELS.map(l=>`<button class="lvl ${l.n===level?'on':''}" data-l="${l.n}"><b>LEVEL ${l.n}</b><span>${l.name}</span><small>${l.short}</small></button>`).join('');
+  const th=theme||pickTheme;
+  $('#topics').innerHTML=Object.entries(TOPICS).map(([id,t])=>{
+    const b=th?store.best[th+'-'+level+'-'+id]:null;
+    return `<button class="topic ${id===topic?'on':''}" data-t="${id}"><span class="i">${t.icon}</span>${t.name}<small>${b!=null?'Best: '+b+'/24 🔑':'&nbsp;'}</small></button>`}).join('');
+  document.querySelectorAll('.lvl').forEach(b=>b.onclick=()=>{level=+b.dataset.l;renderSetup()});
+  document.querySelectorAll('.topic').forEach(b=>b.onclick=()=>{topic=b.dataset.t;renderSetup()});
+}
+let pickTheme=null;
+document.querySelectorAll('.theme').forEach(b=>b.onclick=()=>{pickTheme=b.dataset.th;renderSetup()});
+$('#newSession').onclick=()=>{theme=null;pickTheme=null;renderSetup()};
+renderSetup();
+function show(id){['start','map','end'].forEach(s=>$('#'+s).classList.toggle('hidden',s!==id));window.scrollTo(0,0)}
+
+$('#startBtn').onclick=()=>{
+  if(!theme){
+    if(!pickTheme){const tp=$('#themePick');tp.classList.remove('shake');void tp.offsetWidth;tp.classList.add('shake');say('First, choose your adventure.');return}
+    theme=pickTheme;
+  }
+  startRoute();
+};
+
+/* =====================================================
+   ROUTE (the map)
+   ===================================================== */
+let route=null;
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function startRoute(){
+  store.level=level;store.topic=topic;save();
+  route={
+    stops:shuffle(TOPICS[topic].items).slice(0,8).map(it=>({it,state:'locked',keys:0})),
+    code:Array.from({length:8},()=>Math.floor(Math.random()*10)),
+    pos:0
+  };
+  const TH=THEMES[theme],L=LEVELS[level-1];
+  $('#mLevel').textContent='Level '+level+' · '+L.name+' · '+TOPICS[topic].name;
+  $('#mTitle').textContent=TH.icon+'  '+TH.name;
+  $('#mBrief').textContent=TH.brief;
+  renderRoute();show('map');
+  say(theme==='museum'?'Welcome to the museum. Open the first door.':'Welcome to base camp. Open the first camp.');
+}
+function totalKeys(){return route.stops.reduce((s,d)=>s+d.keys,0)}
+
+const POS={
+  mountain:[[120,500],[330,478],[560,452],[770,392],[575,328],[345,292],[165,222],[370,150],[615,72]],
+  museum:[[150,105],[450,105],[750,105],[750,290],[450,290],[150,290],[150,470],[450,470],[750,470]]
+};
+function bgMountain(){
+  return `<defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1730"/><stop offset="1" stop-color="#1b3550"/></linearGradient>
+    <linearGradient id="mt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b5772"/><stop offset="1" stop-color="#1c2f42"/></linearGradient>
+    <linearGradient id="mt2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#25384f"/><stop offset="1" stop-color="#16263a"/></linearGradient>
+  </defs>
+  <rect width="900" height="560" fill="url(#sky)"/>
+  ${Array.from({length:40},(_,i)=>`<circle cx="${(i*197)%900}" cy="${(i*71)%230}" r="${i%3?1:1.6}" fill="#fff" opacity="${.3+(i%5)/10}"/>`).join('')}
+  <polygon points="0,560 0,330 150,240 260,300 420,170 520,250 680,160 900,300 900,560" fill="url(#mt2)"/>
+  <polygon points="40,560 330,330 470,250 615,40 760,240 860,330 900,380 900,560" fill="url(#mt)"/>
+  <polygon points="615,40 665,112 640,104 618,124 594,106 572,116" fill="#e8f1fa"/>
+  <polygon points="0,560 0,520 120,505 260,520 420,500 600,525 760,505 900,515 900,560" fill="#132332"/>
+  ${[[60,520],[230,535],[470,515],[700,530],[840,512]].map(([x,y])=>`<text x="${x}" y="${y}" font-size="26">🌲</text>`).join('')}`;
+}
+function bgMuseum(){
+  const rooms=POS.museum.map(([x,y],i)=>{
+    const vault=i===8;
+    return `<rect x="${x-135}" y="${y-80}" width="270" height="160" rx="10" fill="${vault?'#2a2212':'#1c1a2b'}" stroke="${vault?'#f4b740':'#3a3554'}" stroke-width="${vault?3:2}"/>
+      ${vault?'':`<rect x="${x-120}" y="${y-66}" width="40" height="28" rx="3" fill="#2a2640" stroke="#4a4468"/><rect x="${x+80}" y="${y-66}" width="40" height="28" rx="3" fill="#2a2640" stroke="#4a4468"/>`}`;
+  }).join('');
+  return `<rect width="900" height="560" fill="#100f1a"/>
+  <pattern id="tiles" width="30" height="30" patternUnits="userSpaceOnUse"><rect width="30" height="30" fill="#14121f"/><path d="M30 0H0V30" fill="none" stroke="#1d1a2c"/></pattern>
+  <rect x="8" y="8" width="884" height="544" rx="14" fill="url(#tiles)" stroke="#3a3554" stroke-width="3"/>${rooms}`;
+}
+function renderRoute(popIndex){
+  const TH=THEMES[theme],P=POS[theme],st=route.stops,pos=route.pos;
+  const pathAll='M'+P.map(p=>p.join(',')).join(' L');
+  const pathDone=pos>0?'M'+P.slice(0,pos+1).map(p=>p.join(',')).join(' L'):'';
+  const nodes=P.map(([x,y],i)=>{
+    const goal=i===8,label=goal?TH.goal:TH.stops[i];
+    let state,inner;
+    if(goal){state=pos===8?'current':'locked';inner=pos===8?TH.goalIcon:'🔐'}
+    else if(i<pos){state=st[i].state==='skip'?'skip':'done';inner=st[i].state==='skip'?'⛔':st[i].it.e}
+    else if(i===pos){state='current';inner='🚪'}
+    else{state='locked';inner='🔒'}
+    const fill=state==='done'?'#16403a':state==='current'?'#3a2c0e':state==='skip'?'#2a2a33':'#1a2333';
+    const stroke=state==='done'?'#33d1b4':state==='current'?'#f4b740':'#3a4a66';
+    const keys=state==='done'?`<text x="${x}" y="${y+56}" text-anchor="middle" font-size="12">${'🔑'.repeat(st[i].keys)}</text>`:'';
+    const marker=(i===pos)?`<text x="${x+40}" y="${y+12}" font-size="26">${TH.marker}</text>`:'';
+    return `<g class="node ${state} ${popIndex===i?'pop':''}" data-i="${i}">
+      ${state==='current'?`<circle class="ring" cx="${x}" cy="${y}" r="34" fill="none" stroke="#f4b740" stroke-width="3"/>`:''}
+      <circle cx="${x}" cy="${y}" r="34" fill="${fill}" stroke="${stroke}" stroke-width="3"/>
+      <text x="${x}" y="${y+11}" text-anchor="middle" font-size="30" opacity="${state==='locked'?.55:1}">${inner}</text>
+      <text x="${x}" y="${y-(theme==='museum'?52:44)}" text-anchor="middle" font-size="13" font-weight="700" fill="${state==='locked'?'#7d8aa3':'#e9eef6'}" letter-spacing="1">${label.toUpperCase()}</text>
+      ${keys}${marker}</g>`;
+  }).join('');
+  $('#mapbox').innerHTML=`<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" font-family="system-ui,Segoe UI,sans-serif">
+    ${theme==='mountain'?bgMountain():bgMuseum()}
+    <path d="${pathAll}" fill="none" stroke="#5b6a86" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" stroke-linejoin="round"/>
+    ${pathDone?`<path d="${pathDone}" fill="none" stroke="#f4b740" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`:''}
+    ${nodes}</svg>`;
+  document.querySelectorAll('.node.current').forEach(g=>g.onclick=()=>{
+    const i=+g.dataset.i;if(i===8)openFinale();else openDoor(i);
+  });
+  $('#keyCount').textContent=totalKeys();
+  renderCollect();
+}
+function renderCollect(){
+  const got=i=>i<route.pos;
+  if(theme==='museum'){
+    $('#collect').innerHTML=`<div><div class="lbl">Vault code</div><div class="slots">${route.code.map((d,i)=>`<div class="slot ${got(i)?'got':''}">${got(i)?NUMWORDS[d]:'?'}</div>`).join('')}</div></div>
+      <div class="note" style="margin:0;max-width:220px">Each door gives you one number. You need all 8 to open the vault.</div>`;
+  }else{
+    $('#collect').innerHTML=`<div><div class="lbl">Summit flag</div>${flagSVG(route.pos,150)}</div>
+      <div class="note" style="margin:0;max-width:260px">Each camp gives you one piece of the flag. Plant it on the summit to finish.</div>`;
+  }
+}
+function flagSVG(pieces,w){
+  const covers=Array.from({length:8},(_,i)=>i).filter(i=>i>=pieces)
+    .map(i=>`<rect x="${(i%4)*80}" y="${Math.floor(i/4)*80}" width="80" height="80" fill="#0f1726" stroke="#2a3a56" stroke-dasharray="4 4"/>`).join('');
+  return `<svg viewBox="-12 -6 344 172" width="${w*2}" height="${w}" xmlns="http://www.w3.org/2000/svg">
+    <rect x="-10" y="-4" width="6" height="170" rx="2" fill="#8d9cb6"/>
+    <rect x="0" y="0" width="320" height="160" fill="#1f6f7a"/>
+    <polygon points="0,160 320,0 320,40 80,160" fill="#f4b740"/>
+    <polygon points="40,140 120,40 170,100 200,70 260,140" fill="#e9eef6"/>
+    <polygon points="120,40 140,65 128,62 112,72 104,60" fill="#1f6f7a" opacity=".25"/>
+    <circle cx="265" cy="38" r="16" fill="#fff4d6"/>
+    ${covers}
+    ${Array.from({length:8},(_,i)=>`<rect x="${(i%4)*80}" y="${Math.floor(i/4)*80}" width="80" height="80" fill="none" stroke="#0d1420" stroke-opacity=".35"/>`).join('')}
+  </svg>`;
+}
+$('#backBtn').onclick=()=>{renderSetup();show('start')};
+$('#restartBtn').onclick=startRoute;
+
+/* =====================================================
+   DOOR
+   ===================================================== */
+let cur=null;
+function openDoor(i){
+  const d=route.stops[i];
+  cur={i,d,tries:0,revealed:false,showText:false,won:false,heard:'',fb:'',fbClass:'',hits:null,last:''};
+  $('#overlay').classList.remove('hidden');
+  renderDoor();
+  const L=LEVELS[level-1];
+  if(L.hear)setTimeout(()=>say(target()),250);
+  else if(SR)setTimeout(micStart,250);
+}
+function target(){const L=LEVELS[level-1];return L.sentence?cur.d.it.s:cur.d.it.w}
+function closeModal(){micOff();if(hasTTS)speechSynthesis.cancel();speaking=false;$('#overlay').classList.add('hidden');cur=null}
+$('#mClose').onclick=closeModal;
+
+function targetHTML(){
+  const L=LEVELS[level-1],t=target();
+  if(!L.sentence)return `<div class="target word">${t}</div>`;
+  const words=t.split(' ');
+  return `<div class="target sent">${words.map((w,i)=>`<span class="w ${cur.hits?(cur.hits[i]?'hit':'miss'):''}">${w}</span>`).join(' ')}</div>`;
+}
+function renderDoor(){
+  if(!cur||cur.finale)return;
+  const it=cur.d.it,L=LEVELS[level-1],TH=THEMES[theme];
+  const tag=`<div class="mtag">${TH.stops[cur.i]} · Level ${level}</div>`;
+  if(cur.won){
+    const reward=theme==='museum'
+      ?`<div class="reward"><span style="font-size:28px">🔢</span><div style="text-align:left"><div class="mtag">Code number</div><b>${NUMWORDS[route.code[cur.i]]}</b></div></div>`
+      :`<div class="reward"><span style="font-size:28px">🚩</span><div style="text-align:left"><div class="mtag">Flag piece</div><b>${cur.i+1} of 8</b></div></div>`;
+    $('#mBody').innerHTML=`${tag}<div class="win"><div class="big">🔓</div><h3>Door unlocked!</h3>
+      <div style="font-size:22px;color:var(--gold)">+${cur.d.keys} ${'🔑'.repeat(cur.d.keys)}</div>
+      ${reward}<div><button class="btn primary big" id="contBtn">Continue →</button></div></div>`;
+    $('#contBtn').onclick=advance;
+    return;
+  }
+  const showText=!L.hear||cur.showText||cur.revealed;
+  const hearPart=L.hear?`<div class="hidden-target">
+      <button class="btn primary hearbig" id="hearBtn">🔊 Hear it again</button>
+      ${showText?'':`<div class="subbtns"><button class="linkbtn" id="showBtn">👀 Show me the words (max 2 🔑)</button></div>`}</div>`:'';
+  const micState=!SR?'Say it out loud, then press the button.'
+    :speaking?'🔊 <b>Listen…</b>'
+    :recOn?'<b>I\'m listening.</b> Say it now.'
+    :micWanted?'Starting the mic…':'Mic is off. <b>Tap 🎙️ to start.</b>';
+  $('#mBody').innerHTML=`${tag}
+    <div class="task">${L.task.toUpperCase()}</div>
+    <div class="pic">${it.e}</div>
+    ${showText?targetHTML():''}
+    ${hearPart}
+    <div class="micbar">
+      ${SR?`<button class="mic ${recOn?'live':speaking?'wait':''}" id="micBtn" title="Microphone">🎙️</button>`
+          :`<button class="btn primary big" id="saidBtn">✓ I said it</button>`}
+      ${SR?`<div class="micstate" id="micState">${micState}</div>`:''}
+    </div>
+    <div class="heard ${cur.heard?'':'empty'}" id="heard">${cur.heard?'"'+cur.heard+'"':'Your words will appear here'}</div>
+    <div class="fb ${cur.fbClass}" id="fb">${cur.fb}</div>
+    <div class="tries">${[0,1,2].map(k=>`<i class="${k<cur.tries?'used':''}"></i>`).join('')}</div>
+    <div class="mbtns"><button class="linkbtn" id="skipBtn">Skip this door</button></div>`;
+  if($('#micBtn'))$('#micBtn').onclick=()=>{if(recOn||micWanted){micOff();setTimeout(updateMicUI,50)}else{quietEnds=0;micStart()}};
+  if($('#saidBtn'))$('#saidBtn').onclick=()=>win();
+  if($('#hearBtn'))$('#hearBtn').onclick=()=>say(target());
+  if($('#showBtn'))$('#showBtn').onclick=()=>{cur.showText=true;renderDoor()};
+  $('#skipBtn').onclick=()=>{cur.d.state='skip';cur.d.keys=0;cur.won=true;micOff();advance()};
+}
+function updateMicUI(){
+  if(!cur||cur.won||cur.finale){if(cur&&cur.finale)renderFinaleMic();return}
+  const b=$('#micBtn'),s=$('#micState');if(!b||!s)return;
+  b.className='mic '+(recOn?'live':speaking?'wait':'');
+  s.innerHTML=speaking?'🔊 <b>Listen…</b>':recOn?'<b>I\'m listening.</b> Say it now.':micWanted?'Starting the mic…':'Mic is off. <b>Tap 🎙️ to start.</b>';
+}
+function showHeard(t){
+  if(!cur)return;const h=$('#heard');if(!h)return;
+  h.classList.remove('empty');h.textContent='"'+t+'"';
+}
+function onSpeech(alts){
+  if(!cur||cur.won||!alts.length)return;
+  if(cur.finale){finaleSpeech(alts);return}
+  const L=LEVELS[level-1];
+  // Let a sentence said in two parts still count.
+  const tryAlts=cur.last?[...alts,...alts.map(a=>cur.last+' '+a)]:alts;
+  cur.heard=alts[0];
+  const r=check(tryAlts,cur.d.it,level);
+  if(r.ok){win();return}
+  if(L.sentence&&norm(alts[0]).words.length<2){cur.last=alts[0];cur.fb='Keep going: say the whole sentence.';cur.fbClass='';renderDoor();return}
+  cur.last=alts[0];
+  cur.tries++;sfxWrong();
+  if(r.hits&&(cur.showText||!L.hear||cur.revealed))cur.hits=r.hits;
+  cur.fb=r.hits?`You said ${r.n} of ${r.total} words. ${cur.tries>=3?'Listen and try again.':'Try again!'}`
+    :(cur.tries>=3?'Listen and try again.':'Not quite. Try again!');
+  cur.fbClass='bad';
+  if(cur.tries>=3&&!cur.revealed){cur.revealed=true;renderDoor();say(target());return}
+  renderDoor();
+}
+function win(){
+  let k=cur.revealed?1:Math.max(1,3-cur.tries);
+  if(LEVELS[level-1].hear&&cur.showText)k=Math.min(k,2);
+  if(!SR)k=2;
+  cur.d.state='open';cur.d.keys=k;cur.won=true;cur.hits=null;
+  micOff();sfxUnlock();renderDoor();
+  const doorCur=cur,digit=NUMWORDS[route.code[cur.i]].toLowerCase();
+  setTimeout(()=>{if(cur!==doorCur)return;
+    say(theme==='museum'?'Great! Your code number is '+digit+'.':'Great! You found a flag piece.')},400);
+}
+function advance(){
+  const i=cur.i;closeModal();
+  route.pos=i+1;renderRoute(i);
+  if(route.pos===8)setTimeout(()=>say(theme==='museum'?'You have the whole code. Go to the vault!':'You have the whole flag. Climb to the summit!'),300);
+}
+
+/* =====================================================
+   FINALE
+   ===================================================== */
+let typed='';
+function openFinale(){
+  cur={finale:true,won:false,heard:'',fb:'',fbClass:''};typed='';
+  $('#overlay').classList.remove('hidden');
+  if(theme==='museum'){renderVault();say('Enter the vault code.')}
+  else{renderSummit();micWanted=!!SR;say('Plant the flag! Say: I reached the top!')}
+}
+function renderVault(){
+  $('#mBody').innerHTML=`<div class="mtag">The Vault</div>
+    <div class="task">ENTER THE VAULT CODE</div>
+    <div class="slots" style="justify-content:center;margin:10px 0">${route.code.map(d=>`<div class="slot got">${NUMWORDS[d]}</div>`).join('')}</div>
+    <p class="prompt" style="text-align:center;color:var(--muted);margin:6px 0">Type the numbers in order.</p>
+    <div class="codeshow" id="codeShow">${route.code.map((_,i)=>`<span>${typed[i]??''}</span>`).join('')}</div>
+    <div class="keypad">${[1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].map(k=>`<button data-k="${k}">${k}</button>`).join('')}</div>
+    <div class="fb" id="fb"></div>`;
+  document.querySelectorAll('.keypad button').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.k;
+    if(k==='⌫')typed=typed.slice(0,-1);
+    else if(k==='✓')return tryCode();
+    else if(typed.length<8)typed+=k;
+    renderVault();
+    if(typed.length===8)setTimeout(tryCode,200);
+  });
+}
+function tryCode(){
+  if(typed===route.code.join('')){sfxFinish();
+    $('#mBody').innerHTML=`<div class="win"><div class="big">💎</div><h3>The vault is open!</h3><p style="color:var(--muted)">You found the museum's secret diamond.</p>
+      <button class="btn primary big" id="finBtn">See your score →</button></div>`;
+    say('The vault is open! You found the diamond.');
+    $('#finBtn').onclick=()=>{closeModal();finish()};
+  }else{
+    sfxWrong();const c=$('#codeShow');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');
+    $('#fb').className='fb bad';$('#fb').textContent='Wrong code. Read the words again and try again.';
+    typed='';setTimeout(()=>{if(cur&&cur.finale)renderVault()},900);
+  }
+}
+const SUMMIT={w:'top',k:'top',s:'I reached the top!'};
+function renderSummit(){
+  $('#mBody').innerHTML=`<div class="mtag">The Summit</div>
+    <div class="task">PLANT THE FLAG</div>
+    <div style="text-align:center;margin:10px 0">${flagSVG(8,110)}</div>
+    <p style="text-align:center;color:var(--muted);margin:4px 0">Say it out loud:</p>
+    <div class="target sent">"I reached the top!"</div>
+    <div class="micbar">
+      ${SR?`<button class="mic" id="micBtn">🎙️</button><div class="micstate" id="micState"></div>`
+          :`<button class="btn primary big" id="saidBtn">✓ I said it</button>`}
+    </div>
+    <div class="heard empty" id="heard">Your words will appear here</div>
+    <div class="fb" id="fb"></div>`;
+  if($('#micBtn'))$('#micBtn').onclick=()=>{if(recOn||micWanted){micOff()}else{quietEnds=0;micWanted=true;finaleMicStart()}};
+  if($('#saidBtn'))$('#saidBtn').onclick=summitWin;
+  renderFinaleMic();
+}
+function finaleMicStart(){if(cur&&cur.finale&&!speaking){cur.won=false;micStart()}}
+function renderFinaleMic(){
+  const b=$('#micBtn'),s=$('#micState');if(!b||!s)return;
+  b.className='mic '+(recOn?'live':speaking?'wait':'');
+  s.innerHTML=speaking?'🔊 <b>Listen…</b>':recOn?'<b>I\'m listening.</b> Say it now.':'<b>Tap 🎙️ and say it.</b>';
+}
+function finaleSpeech(alts){
+  showHeard(alts[0]);
+  const hits=matchSentence(alts[0],SUMMIT.s);
+  const ok=alts.some(a=>{const h=matchSentence(a,SUMMIT.s);return h.filter(Boolean).length>=3&&hasKey(norm(a),'top')});
+  if(ok)summitWin();else{$('#fb').className='fb bad';$('#fb').textContent='Almost! Say: I reached the top!'}
+}
+function summitWin(){
+  micOff();cur.won=true;sfxFinish();
+  $('#mBody').innerHTML=`<div class="win"><div class="big">🏔️🚩</div><h3>You reached the summit!</h3><p style="color:var(--muted)">Your flag is flying on top of the mountain.</p>
+    <button class="btn primary big" id="finBtn">See your score →</button></div>`;
+  say('You reached the summit! Well done.');
+  $('#finBtn').onclick=()=>{closeModal();finish()};
+}
+
+/* =====================================================
+   END
+   ===================================================== */
+function finish(){
+  const k=totalKeys(),key=theme+'-'+level+'-'+topic;
+  if(store.best[key]==null||k>store.best[key])store.best[key]=k;save();
+  $('#endScore').textContent=k;
+  const tm=theme==='museum';
+  const [icon,title,msg]=k>=21?[tm?'💎':'🏔️',tm?'Master thief!':'Mountain master!','Amazing. Try the next level.']
+    :k>=15?['🥇','Great expedition!','Play again to collect even more keys.']
+    :['🔓','You made it!','Every door makes your English stronger. Play again for more keys.'];
+  $('#endIcon').textContent=icon;$('#endTitle').textContent=title;$('#endMsg').textContent=msg;
+  $('#endNext').classList.toggle('hidden',level===4);
+  show('end');
+}
+$('#endAgain').onclick=startRoute;
+$('#endNext').onclick=()=>{level=Math.min(4,level+1);startRoute()};
+$('#endMenu').onclick=()=>{renderSetup();show('start')};
+document.addEventListener('keydown',e=>{if(e.code==='Escape'&&cur)closeModal()});
+</script>
+</body>
+</html>
