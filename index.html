@@ -168,6 +168,13 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
 .shake{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 
+.starter{background:#1a2a24;border:1px solid #2f5a4b;border-radius:12px;padding:10px 14px;text-align:center;margin:8px 0}
+.starter .st{font-size:20px;font-weight:600;margin:4px 0}
+.starter .blank{color:var(--gold);letter-spacing:2px}
+.tile.small{font-size:16px;padding:7px 11px}
+.typed .w.nearw{color:var(--gold)}
+.answer-line.letters .tile,.pool .tile[data-lt]{min-width:46px;text-align:center;font-size:24px;text-transform:none}
+.chunk{font-size:14px;padding:8px 12px}
 /* ---------- finales ---------- */
 .treasure{position:relative;height:230px;border-radius:16px;overflow:hidden;
   background:radial-gradient(circle at 50% 110%,#5a3d0e 0,#2a1d08 45%,#120d05 80%);border:1px solid #6b5220}
@@ -254,7 +261,7 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
   </div>
 
   <div class="card">
-    <h2><span class="step">4</span>Your journey</h2>
+    <h2><span class="step">4</span>Your journey <span id="modeNote" style="text-transform:none;letter-spacing:0;font-weight:400;margin-left:auto"></span></h2>
     <div id="ladder"></div>
     <div class="note" style="margin:2px 0 12px">Get at least 12 🔑 on a level to unlock the next one.</div>
     <div class="topics" id="topics"></div>
@@ -574,6 +581,262 @@ actions:`🥇|competition|She practiced every day for months, and finally she wo
 💇|recognize|I didn't recognize my teacher at first because she had cut her hair.|How do you recognize your friend from far away?
 🏥|volunteer|On Fridays my mom volunteers at the hospital, helping children with their homework.|Where would you like to volunteer?`}
 };
+/* Level 8 help: a sentence starter for every question.
+   The part in [brackets] is what the child fills in; the whole line is the example answer. */
+const ANS_RAW={
+easy:`apple|Yes, I like [apples].
+banana|A banana is [yellow].
+bread|Yes, I eat bread for [breakfast].
+egg|I like my eggs [boiled].
+cheese|[My brother] likes cheese.
+carrot|A carrot is [orange].
+milk|Yes, I drink milk [every morning].
+orange|An orange is [sweet].
+strawberry|Strawberries are [red].
+tomato|I put a tomato in [my salad].
+cake|We eat cake on [birthdays].
+pizza|I like [cheese and olives] on my pizza.
+dog|[Yes, I] have a dog.
+cat|A cat likes to [sleep].
+horse|[Yes, I] can ride a horse.
+cow|A cow gives us [milk].
+fish|A fish lives in [the sea].
+bird|A bird can [fly].
+elephant|An elephant is [very big].
+lion|A lion lives in [Africa].
+rabbit|A rabbit eats [carrots].
+frog|A frog is [green].
+monkey|A monkey likes to eat [bananas].
+snake|[Yes, I am] afraid of snakes.
+book|I like books [about animals].
+pencil|I [write] with a pencil.
+backpack|In my backpack there are [books and pencils].
+ruler|I [draw lines] with a ruler.
+scissors|I cut [paper] with scissors.
+computer|I [play games] on the computer.
+clock|The clock is [on the wall].
+teacher|My teacher is [Dana].
+notebook|My notebook is [blue].
+crayon|I draw [a house] with a crayon.
+map|We look at a map to [find the way].
+bus|[Yes, I] go to school by bus.
+house|[Yes, I] live in a house.
+bed|My bed is [white].
+chair|My chair is [in my room].
+door|My door is [brown].
+window|From my window I can see [trees].
+sofa|On the sofa I [watch TV].
+bath|I take a bath [in the evening].
+key|[My mom] has a key to our home.
+television|I watch [cartoons] on television.
+mirror|In the mirror I see [my face].
+toothbrush|My toothbrush is [green].
+light|I turn on the light [at night].
+shirt|My shirt is [blue].
+dress|[My sister] wears a dress.
+shoes|My shoes are [black].
+cap|I wear a cap [in the sun].
+socks|My socks are [white].
+jeans|[Yes, I] like jeans.
+coat|I wear a coat [in winter].
+scarf|I wear a scarf [when it is cold].
+gloves|I need gloves [in winter].
+glasses|[My dad] wears glasses.
+boots|I wear boots [when it rains].
+sunglasses|I wear sunglasses [in summer].
+sun|The sun is [hot].
+rain|[Yes, I] like the rain.
+snow|[Yes, I] have seen snow.
+cloud|A rain cloud is [gray].
+wind|The wind is [strong] today.
+rainbow|A rainbow has [red, yellow and blue].
+umbrella|I need an umbrella [when it rains].
+storm|[No, I am not] afraid of a storm.
+snowman|I make a snowman [with snow].
+hot|It is hot [in summer].
+cold|It is cold [in winter].
+lightning|I see lightning [in a storm].
+run|[Yes, I] can run fast.
+swim|I swim [in the pool].
+ride|[Yes, I] ride a bike.
+dance|[Yes, I] like to dance.
+sleep|I sleep [at night].
+cook|[My dad] can cook.
+sing|I like to sing [Happy Birthday].
+climb|[Yes, I] can climb a tree.
+write|I write [my name] at school.
+play|I play [soccer] with my friends.
+paint|I like to paint [flowers].
+jump|I can jump [very high].`,
+medium:`breakfast|For breakfast I had [cereal and milk].
+sandwich|In my sandwich I like [cheese and tomato].
+vegetables|I like vegetables like [carrots and cucumbers].
+soup|I like to eat soup [when it is cold].
+juice|I like [apple] juice.
+lunch|Yesterday I ate lunch [at school].
+salad|In a salad I put [tomatoes and cucumbers].
+pancakes|I last ate pancakes [on Saturday].
+hungry|When I am hungry, I eat [a sandwich].
+dessert|My favorite dessert is [ice cream].
+kitchen|In the kitchen I [help my mom cook].
+recipe|[Yes, I] can follow a recipe on my own.
+puppy|Yes, I would like a puppy because [it is cute].
+zoo|At the zoo I saw [lions and monkeys].
+farm|On a farm there are [cows and chickens].
+feathers|[Birds and parrots] have feathers.
+hunt|[Lions and wolves] hunt for their food.
+nest|Birds build a nest [in a tree].
+tail|A dog wags its tail [when it is happy].
+wild|Yes, I saw a wild [fox].
+pet|I would like a pet [rabbit].
+shark|[Yes, I am] afraid of sharks.
+bark|A dog barks [when someone comes to the door].
+cage|[Hamsters and birds] live in a cage.
+homework|I do my homework [after lunch].
+classroom|In my classroom there are [desks and chairs].
+test|Before a test I [study at home].
+break|During the break I [play with my friends].
+library|In the library I [read books].
+lesson|My favorite lesson is [English].
+friend|My best friend is [Noa].
+forgot|Once I forgot my [lunch] at home.
+principal|The principal [runs the school].
+project|At school I did a project about [space].
+answer|When I know the answer, I [raise my hand].
+schedule|On Sunday my schedule has [math and English].
+bedroom|In my bedroom there is [a bed and a desk].
+garden|In our garden there are [flowers and trees].
+stairs|[Yes, we] have stairs in our home.
+neighbor|My neighbor is [Dan].
+dishes|[My dad] washes the dishes in our home.
+balcony|On the balcony I [sit and read].
+blanket|I need a blanket [when it is cold].
+laundry|[My mom] does the laundry in our home.
+roof|From a roof you can see [the whole town].
+floor|On my floor there are [toys and books].
+cupboard|In the cupboard we keep [cups and plates].
+shower|I have a shower [in the evening].
+pocket|In my pocket I keep [my keys].
+costume|For Purim I wore a [superhero] costume.
+pajamas|My pajamas are [blue].
+raincoat|I wear a raincoat [when it rains].
+tight|When my shoes are too tight, I [take them off].
+buttons|[Shirts and coats] have buttons.
+sweater|My favorite sweater is [red].
+swimsuit|I wear a swimsuit [at the beach].
+zipper|[My jacket] has a zipper.
+hood|I put up my hood [when it rains].
+shopping|When I go shopping, I like to buy [books].
+dirty|I put dirty clothes [in the laundry basket].
+forecast|The forecast says it will be [sunny] tomorrow.
+sunny|On a sunny day I [go to the beach].
+wet|I get wet [when it rains].
+thunder|When I hear thunder, I feel [scared].
+warm|When it is warm, I wear [a T-shirt].
+fog|It is hard to drive in the fog because [you can't see the road].
+heat|In the summer heat I [go to the pool].
+puddle|[Yes, I] like to jump in a puddle.
+cloudy|[Yes, it] is cloudy today.
+freezing|When it is freezing, I wear [a warm coat].
+breeze|I can feel a cool breeze [at the beach].
+season|My favorite season is [summer] because [I can swim].
+practice|Last week I practiced [the piano].
+win|Last time I won a game of [soccer].
+throw|I can throw a ball [very far].
+build|With blocks I built [a tall tower].
+catch|[Yes, I] can catch a ball with one hand.
+hide|In hide and seek I hid [behind the door].
+laugh|Yesterday I laughed at [a funny video].
+carry|I carry [my backpack] to school.
+wait|While I wait for the bus, I [read a book].
+draw|Last time I drew [a cat].
+lose|Last week I lost [my pencil].
+shout|People shout [when they are angry].`,
+hard:`ingredients|To make a cake you need ingredients like [flour, eggs and sugar].
+delicious|The most delicious food I have ever eaten is [my grandma's soup].
+vegetarian|I would [not] like to be vegetarian because [I love chicken].
+restaurant|My favorite restaurant is [the pizza place], and I order [pizza].
+menu|From a menu I usually choose [pasta].
+healthy|To stay healthy, I eat [fruit and vegetables].
+spicy|I [don't] like spicy food because [it burns my mouth].
+fridge|In my fridge right now there is [milk and cheese].
+bakery|At a bakery I would buy [fresh bread and a cookie].
+picnic|I would like to go for a picnic [in the park].
+dinner|In my house, [my dad] makes dinner.
+leftovers|With leftovers we [make sandwiches the next day].
+endangered|Some animals are endangered because [people cut down forests].
+habitat|The habitat of a camel is [the desert].
+camouflage|[Chameleons and zebras] use camouflage to hide.
+nocturnal|[An owl] is a nocturnal animal.
+migrate|Birds migrate in the fall because [it gets cold].
+veterinarian|I would like to be a veterinarian because [I love animals].
+predator|[A lion] is a predator, and it hunts [zebras].
+herd|[Cows and elephants] live in a herd.
+dolphin|I know that dolphins [are very smart].
+species|My favorite species of animal is [the red panda].
+claws|[Cats and lions] have sharp claws.
+enormous|The most enormous animal I know is [the blue whale].
+experiment|In science class I would like to try an experiment with [a volcano].
+presentation|Before a presentation I feel [nervous].
+dictionary|I use a dictionary when [I don't know a word].
+concentrate|It is easiest for me to concentrate [in my room].
+explain|I would like my teacher to explain [fractions] again.
+semester|This semester we are learning about [the human body].
+mistake|When I make a mistake, I [try again].
+field trip|I would like to go on a field trip to [the zoo].
+grade|To get a better grade in English, I can [read every day].
+uniform|I would [not] like to wear a school uniform because [I like my own clothes].
+improve|This year I would like to improve my [English].
+curious|I am curious about [space].
+furniture|In my room the furniture is [a bed, a desk and a closet].
+comfortable|The most comfortable place in my home is [the sofa].
+apartment|From a tall apartment building you can see [the whole city].
+electricity|When the electricity goes off, we [light candles].
+renovate|I would like to renovate [the bathroom].
+chores|At home my chores are [to make my bed and feed the dog].
+alarm|My alarm rings at [seven o'clock] in the morning.
+vacuum|In my home, [my mom] vacuums.
+basement|In a basement I would keep [old toys].
+doorbell|When the doorbell rings, I [open the door].
+borrow|I borrow [books] from my friends.
+tidy|My room is [usually] tidy.
+fashionable|I think [white sneakers] are fashionable right now.
+size|I wear size [thirty five] shoes.
+cotton|Cotton clothes are good for summer because [they are cool].
+closet|In my closet there are [shirts, pants and shoes].
+waterproof|You need waterproof clothes in winter because [it rains a lot].
+ironing|In my home, [my dad] does the ironing.
+shoelaces|[Yes, I] can tie my shoelaces quickly.
+outfit|My favorite outfit is [jeans and a blue hoodie].
+stain|You can get a stain out of a shirt by [washing it with soap].
+receipt|You should keep the receipt because [you may need to return something].
+disguise|To surprise my friends, I would wear a disguise of [a pirate].
+shrink|In hot water, a wool sweater will [shrink].
+temperature|In summer the temperature where I live is [very hot].
+humid|When the air is humid, I feel [sticky and tired].
+drought|A drought is a problem for farmers because [their plants need water].
+flood|When there is a flood, people can [go to a higher place].
+hail|Hail can [break car windows and hurt plants].
+climate|The climate is changing because [the world is getting hotter].
+heatwave|During a heatwave, I keep cool by [staying inside].
+predict|Scientists predict the weather with [satellites and computers].
+sandstorm|During a sandstorm, you should [stay inside].
+thunderstorm|During a thunderstorm, I [stay home and read].
+shelter|In a storm you can find shelter [in a building].
+unpredictable|The weather is sometimes unpredictable because [it changes quickly].
+competition|I would like to win a [chess] competition.
+explore|I would like to explore [an old castle].
+rescue|[Firefighters] rescue people in an emergency.
+invent|If I could, I would invent [a flying car].
+balance|I can balance on [one foot].
+celebrate|My family celebrates birthdays with [a big cake].
+argue|My brother and I argue about [the TV].
+apologize|You should apologize when [you hurt someone].
+whisper|I whisper when [my baby sister is sleeping].
+organize|I would like to organize [a class party].
+recognize|I recognize my friend from far away by [her red hat].
+volunteer|I would like to volunteer at [an animal shelter].`
+};
 const BANDS=[
  {id:'easy',name:'Easy',desc:'Short sentences, everyday words'},
  {id:'medium',name:'Medium',desc:'Longer sentences, past tense'},
@@ -601,6 +864,14 @@ for(const [band,topics] of Object.entries(RAW)){
     });
   }
 }
+for(const [band,txt] of Object.entries(ANS_RAW)){
+  const m={};txt.trim().split('\n').forEach(l=>{const [w,a]=l.split('|');m[w.trim()]=a.trim()});
+  Object.values(BANK[band]).flat().forEach(it=>{
+    const a=m[it.w]||'';
+    it.starter=a.replace(/\[[^\]]*\]/g,'___');
+    it.example=a.replace(/[\[\]]/g,'');
+  });
+}
 
 /* =====================================================
    LEVELS
@@ -608,10 +879,10 @@ for(const [band,topics] of Object.entries(RAW)){
 const LEVELS=[
  {n:1,kind:'speak',sent:false,hear:false,icon:'👁️',name:'Read the word',task:'Read the word out loud'},
  {n:2,kind:'speak',sent:false,hear:true, icon:'👂',name:'Repeat the word',task:'Listen and say the word'},
- {n:3,kind:'type', sent:false,hear:true, icon:'⌨️',name:'Spell the word',task:'Listen and type the word'},
+ {n:3,kind:'spell',sent:false,hear:true, icon:'🔤',name:'Spell the word',task:'Listen and spell the word'},
  {n:4,kind:'speak',sent:true, hear:false,icon:'📖',name:'Read the sentence',task:'Read the sentence out loud'},
  {n:5,kind:'speak',sent:true, hear:true, icon:'🔁',name:'Repeat the sentence',task:'Listen and say the sentence'},
- {n:6,kind:'build',sent:true, hear:false,icon:'🧩',name:'Build the sentence',task:'Put the words in order'},
+ {n:6,kind:'build',sent:true, hear:true, icon:'🧩',name:'Build the sentence',task:'Listen, then put the words in order'},
  {n:7,kind:'type', sent:true, hear:true, icon:'✍️',name:'Write the sentence',task:'Listen and type the sentence'},
  {n:8,kind:'answer',sent:false,hear:true,icon:'💬',name:'Answer the question',task:'Listen and answer in a full sentence'}
 ];
@@ -690,17 +961,23 @@ function checkSpeech(alts,item,L){
   let best=null;
   for(const a of alts){const hits=matchSentence(a,item.s),n=hits.filter(Boolean).length;if(!best||n>best.n)best={hits,n}}
   const total=best.hits.length,keyOk=alts.some(a=>usesWord(a,item.w));
-  const need=Math.max(total-(total>=9?2:1),Math.ceil(total*0.75));
+  const need=Math.max(total-(total>=9?3:2),Math.ceil(total*0.7));
   return{ok:keyOk&&best.n>=need,hits:best.hits,n:best.n,total};
 }
 /* typing: spelling must be right; capitals and punctuation don't matter */
+/* small slips are forgiven: "rabit" for "rabbit" counts, but earns fewer keys */
 function checkTyped(typed,item,L){
   const target=L.sent?item.s:item.w;
   const tw=words(target),yw=words(typed);
-  const okWords=yw.map((w,i)=>w===tw[i]);
-  const ok=yw.length===tw.length&&okWords.every(Boolean);
+  if(!L.sent){
+    const t=tw.join(''),y=yw.join('');
+    const exact=t===y,tol=t.length<=3?0:t.length<=6?1:2,near=!exact&&tol>0&&lev(y,t)<=tol;
+    return{ok:exact||near,near};
+  }
+  const marks=yw.map((w,i)=>w===tw[i]?'ok':(tw[i]&&tw[i].length>=4&&lev(w,tw[i])<=1)?'near':'no');
+  const ok=yw.length===tw.length&&marks.every(m=>m!=='no');
   const raw=typed.trim().split(/\s+/);
-  return{ok,yw:raw.length===yw.length?raw:yw,okWords,tLen:tw.length};
+  return{ok,near:ok&&marks.includes('near'),yw:raw.length===yw.length?raw:yw,marks,tLen:tw.length};
 }
 
 /* =====================================================
@@ -720,6 +997,12 @@ function save(){try{localStorage.setItem('sayItToOpenIt3',JSON.stringify(store))
 const $=s=>document.querySelector(s);
 /* teacher mode: add ?admin to the address. Everything open, nothing saved. */
 const ADMIN=new URLSearchParams(location.search).has('admin');
+/* Beginner (default): levels 1-5 in each band.  Intermediate (?mode=intermediate): levels 1-8. */
+const MODE=ADMIN?'all':(new URLSearchParams(location.search).get('mode')==='intermediate'?'intermediate':'beginner');
+const VISIBLE=MODE==='beginner'?[1,2,3,4,5]:[1,2,3,4,5,6,7,8];
+const ROUTE_IDX=[0,1,2].flatMap(b=>VISIBLE.map(l=>b*8+l-1));
+const nextIdx=i=>ROUTE_IDX.find(x=>x>i);
+const visibleSel=i=>ROUTE_IDX.includes(i)?i:([...ROUTE_IDX].reverse().find(x=>x<=i)??0);
 
 /* =====================================================
    VOICE
@@ -793,7 +1076,7 @@ function micStart(){
     for(let i=e.resultIndex;i<e.results.length;i++){
       const r=e.results[i];
       if(r.isFinal){heardSomething=true;const alts=[];for(let j=0;j<r.length;j++)alts.push(r[j].transcript.trim());onSpeech(alts.filter(Boolean))}
-      else showHeard(r[0].transcript);
+      else{if(cur&&cur.failT){clearTimeout(cur.failT);cur.failT=null}showHeard(((cur&&cur.parts?cur.parts.join(' ')+' ':'')+r[0].transcript).trim())}
     }
   };
   rec.onerror=e=>{
@@ -805,7 +1088,7 @@ function micStart(){
     recOn=false;
     quietEnds=heardSomething?0:quietEnds+1;
     if(micWanted&&micOK()&&!speaking){
-      if(quietEnds>=3){micWanted=false;quietEnds=0;updateMicUI();return}
+      if(quietEnds>=5){micWanted=false;quietEnds=0;updateMicUI();return}
       setTimeout(()=>{if(micWanted&&!recOn&&!speaking)micStart()},250);
     }
     updateMicUI();
@@ -880,7 +1163,7 @@ function viewSVG(i,w){
 /* =====================================================
    SETUP SCREEN
    ===================================================== */
-let theme=null,pickTheme=null,selIdx=Math.min(store.unlocked,store.sel??store.unlocked),topic=store.topic||'mixed';
+let theme=null,pickTheme=null,selIdx=visibleSel(Math.min(store.unlocked,store.sel??store.unlocked)),topic=store.topic||'mixed';
 function renderSetup(){
   const locked=!!theme;
   $('#themePick').classList.toggle('hidden',locked);
@@ -888,7 +1171,7 @@ function renderSetup(){
   if(locked)$('#themeNow').textContent=THEMES[theme].icon+'  '+THEMES[theme].name;
   document.querySelectorAll('.theme').forEach(b=>b.classList.toggle('on',b.dataset.th===pickTheme));
   $('#ladder').innerHTML=BANDS.map((b,bi)=>`<div class="band"><div class="bandhead"><b>${b.name}</b><small>${b.desc}</small></div>
-    <div class="ladder">${LEVELS.map(L=>{
+    <div class="ladder" style="grid-template-columns:repeat(${VISIBLE.length},1fr)">${LEVELS.filter(L=>VISIBLE.includes(L.n)).map(L=>{
       const i=bi*8+L.n-1,lockd=!ADMIN&&i>store.unlocked,best=store.best[i];
       return `<button class="lv ${lockd?'locked':''} ${best>=12?'done':''} ${i===selIdx?'on':''}" data-i="${i}" ${lockd?'disabled':''}>
         <span class="n">${lockd?'🔒':'LEVEL '+L.n}</span><span class="i">${L.icon}</span><span class="t">${L.name}</span>
@@ -899,13 +1182,15 @@ function renderSetup(){
   document.querySelectorAll('.topic').forEach(b=>b.onclick=()=>{topic=b.dataset.t;renderSetup()});
   const {band,level}=fromIdx(selIdx);
   $('#selText').textContent=BANDS.find(b=>b.id===band).name+' · Level '+level+': '+LEVELS[level-1].name;
+  $('#modeNote').textContent=MODE==='beginner'?'Beginner path · levels 1–5 in each band':MODE==='intermediate'?'Intermediate path · levels 1–8 in each band':'Teacher mode · all levels';
   renderShelf();
 }
 function renderShelf(){
   const th=theme||pickTheme||'museum';
   const got=store.shelf[th]||{};
   $('#collTitle').textContent=th==='museum'?'🏛️ Your trophy shelf':'🏔️ Your summit postcards';
-  $('#shelf').innerHTML=Array.from({length:24},(_,i)=>{
+  $('#shelf').style.gridTemplateColumns=`repeat(${VISIBLE.length},1fr)`;
+  $('#shelf').innerHTML=ROUTE_IDX.map(i=>{
     const have=got[i];
     if(th==='museum')return `<div class="item ${have?'':'empty'}"><span class="e">${have?ARTIFACTS[i][0]:'❔'}</span><small>${have?ARTIFACTS[i][1]:'Level '+(i%8+1)+' · '+BANDS[Math.floor(i/8)].name}</small></div>`;
     return `<div class="item pc ${have?'':'empty'}">${have?viewSVG(i):'<div style="height:52px;display:grid;place-items:center;font-size:24px">❔</div>'}<small>${have?VIEWS[i][0]:'Level '+(i%8+1)+' · '+BANDS[Math.floor(i/8)].name}</small></div>`;
@@ -1052,10 +1337,8 @@ const L=()=>LEVELS[level-1];
 function item(){return cur.items[cur.k]}
 function needsMic(){
   if(!cur||cur.finale)return false;
-  const lv=L();
-  if(lv.kind==='speak'||lv.kind==='answer')return !cur.itemDone;
-  if(lv.kind==='build')return cur.phase==='speak'&&!cur.itemDone;
-  return false;
+  const k=L().kind;
+  return (k==='speak'||k==='answer')&&!cur.itemDone;
 }
 function openDoor(i){
   cur={i,d:route.stops[i],items:route.stops[i].items,k:0,scores:[],doorWon:false};
@@ -1064,12 +1347,19 @@ function openDoor(i){
   startItem();
 }
 function newItemState(){
-  Object.assign(cur,{tries:0,revealed:false,showText:false,itemDone:false,heard:'',fb:'',fbClass:'',hits:null,last:'',
-    typedRes:null,phase:'tiles',tiles:null,placed:[],tileMarks:null});
-  if(L().kind==='build'){
-    const ws=item().s.split(' ').map((w,ix)=>({id:ix,t:(ix===0&&!/^(I|Mom|Dad|Grandma|Grandpa|English)\b/.test(w)?w[0].toLowerCase()+w.slice(1):w).replace(/[.!?]$/,'')}));
+  if(cur.failT)clearTimeout(cur.failT);
+  Object.assign(cur,{tries:0,revealed:false,showText:false,itemDone:false,heard:'',fb:'',fbClass:'',hits:null,parts:[],failT:null,
+    typedRes:null,tiles:null,placed:[],tileMarks:null,letters:null,lplaced:[],lmarks:null,showStarter:false});
+  const lv=L(),it=item();
+  if(lv.kind==='build'){
+    const ws=it.s.split(' ').map((w,ix)=>({id:ix,t:(ix===0&&!/^(I|Mom|Dad|Grandma|Grandpa|English)\b/.test(w)?w[0].toLowerCase()+w.slice(1):w).replace(/[.!?]$/,'')}));
     let sh=shuffle(ws);if(sh.every((w,ix)=>w.id===ix))sh=sh.reverse();
     cur.tiles=sh;
+  }
+  if(lv.kind==='spell'){
+    const letters=it.w.replace(/\s/g,'').split('').map((c,ix)=>({id:ix,t:c}));
+    let sh=shuffle(letters);if(sh.map(x=>x.t).join('')===it.w.replace(/\s/g,''))sh=sh.reverse();
+    cur.letters=sh;
   }
 }
 function target(){return L().kind==='answer'?item().q:(L().sent?item().s:item().w)}
@@ -1077,13 +1367,28 @@ function startItem(){
   renderDoor();
   const lv=L();
   if(lv.hear)setTimeout(()=>say(target()),250);
-  else if(needsMic()&&SR)setTimeout(micStart,250);
-  if(lv.kind==='type')setTimeout(()=>{const i=$('#typeIn');if(i)i.focus()},300);
+  else if(needsMic()&&SR)setTimeout(()=>{micWanted=true;micStart()},250);
+  if(lv.kind==='type'||(lv.kind==='spell'&&store.spellType))setTimeout(()=>{const i=$('#typeIn');if(i)i.focus()},300);
 }
-function closeModal(){micOff();if(hasTTS)speechSynthesis.cancel();speaking=false;$('#overlay').classList.add('hidden');cur=null}
+function closeModal(){if(cur&&cur.failT)clearTimeout(cur.failT);micOff();if(hasTTS)speechSynthesis.cancel();speaking=false;$('#overlay').classList.add('hidden');cur=null}
 $('#mClose').onclick=closeModal;
-function setFb(t,c){if(!cur)return;cur.fb=t;cur.fbClass=c||'';const f=$('#fb');if(f){f.textContent=t;f.className='fb '+(c||'')}}
+function setFb(t,c){if(!cur)return;cur.fb=t;cur.fbClass=c||'';const f=$('#fb');if(f){f.innerHTML=t;f.className='fb '+(c||'')}}
 
+/* split a sentence into short parts to hear one at a time */
+function chunks(sentence){
+  const ws=sentence.split(' '),out=[];let curc=[];
+  const breakBefore=/^(because|but|so|when|and|after|before|if|while|which|that|until|although|to|with|in|on|at|for)$/i;
+  ws.forEach((w,i)=>{
+    if(curc.length>=3&&breakBefore.test(w)){out.push(curc);curc=[]}
+    curc.push(w);
+    if(/,$/.test(w)&&curc.length>=2){out.push(curc);curc=[]}
+  });
+  if(curc.length)out.push(curc);
+  const fixed=[];
+  out.forEach(c=>{while(c.length>5){fixed.push(c.splice(0,Math.ceil(c.length/2)))}fixed.push(c)});
+  const merged=[];fixed.forEach(c=>{if(merged.length&&c.length<2)merged[merged.length-1].push(...c);else merged.push(c)});
+  return merged.map(c=>c.join(' '));
+}
 function sentenceHTML(text,hits){
   return `<div class="target sent">${text.split(' ').map((w,i)=>`<span class="w ${hits?(hits[i]?'hit':'miss'):''}">${w}</span>`).join(' ')}</div>`;
 }
@@ -1110,7 +1415,8 @@ function renderDoor(){
 
   if(lv.kind==='speak'){
     body+=pic;
-    if(showText)body+=lv.sent?sentenceHTML(it.s,cur.hits):`<div class="target word">${it.w}</div>`;
+    if(showText)body+=lv.sent?sentenceHTML(it.s,cur.hits)
+      :`<div class="target word" id="hoverWord" title="Point here to hear it" style="cursor:pointer">${it.w} <span style="font-size:22px;opacity:.6">🔊</span></div>`;
     if(lv.hear)body+=hearBtns+(showText?'':`<div style="text-align:center"><button class="linkbtn" id="showBtn">👀 Show me the words (max 2 🔑)</button></div>`);
     body+=micHTML()+heardHTML();
   }
@@ -1118,31 +1424,51 @@ function renderDoor(){
     body+=pic+`<div class="mustuse">Use the word: <span>${it.w}</span></div>`;
     body+=showText?`<div class="question">${it.q}</div>`:'';
     body+=hearBtns+(showText?'':`<div style="text-align:center"><button class="linkbtn" id="showBtn">👀 Show me the question (max 2 🔑)</button></div>`);
+    body+=`<div class="starter"><div class="mtag">You can start like this</div><div class="st">${it.starter.replace(/___/g,'<span class="blank">_____</span>')}</div>
+      <button class="linkbtn" id="exampleBtn">💡 Hear an example</button></div>`;
     body+=micHTML()+heardHTML();
+  }
+  if(lv.kind==='spell'){
+    body+=pic+hearBtns;
+    if(cur.revealed)body+=`<div class="note" style="text-align:center">It's spelled like this:</div><div class="target word">${it.w}</div>`;
+    if(store.spellType){
+      body+=`<div class="typebox"><input id="typeIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the word…">
+        <button class="btn primary" id="checkBtn">Check</button></div>
+        <div style="text-align:center"><button class="linkbtn" id="modeBtn">🔤 Use letter tiles</button></div>`;
+    }else{
+      const placed=cur.lplaced.map(id=>cur.letters.find(t=>t.id===id));
+      const pool=cur.letters.filter(t=>!cur.lplaced.includes(t.id));
+      body+=`<div class="answer-line letters">${placed.length?placed.map((t,ix)=>`<button class="tile ${cur.lmarks?(cur.lmarks[ix]?'ok':'no'):''}" data-lp="${t.id}">${t.t}</button>`).join('')
+          :'<span class="note" style="margin:0">Tap the letters in the right order</span>'}</div>
+        <div class="pool">${pool.map(t=>`<button class="tile" data-lt="${t.id}">${t.t}</button>`).join('')}</div>
+        <div style="text-align:center"><button class="linkbtn" id="modeBtn">⌨️ Type it instead</button></div>`;
+    }
   }
   if(lv.kind==='type'){
     body+=pic+hearBtns;
-    if(cur.revealed)body+=`<div class="note" style="text-align:center">Type it exactly like this:</div>`+(lv.sent?`<div class="target sent">${it.s}</div>`:`<div class="target word">${it.w}</div>`);
-    if(cur.typedRes&&!cur.typedRes.ok&&lv.sent){
+    const parts=chunks(it.s);
+    if(parts.length>1)body+=`<div class="hearrow">${parts.map((c,ix)=>`<button class="btn chunk" data-c="${ix}">🔊 Part ${ix+1}</button>`).join('')}</div>`;
+    const bank=shuffle(it.s.split(' ').map((w,ix)=>(ix===0&&!/^(I|Mom|Dad|Grandma|Grandpa|English)\b/.test(w)?w[0].toLowerCase()+w.slice(1):w).replace(/[.,!?]+$/,'')));
+    body+=`<div class="mtag" style="text-align:center;margin-top:6px">Words you need · tap to add</div>
+      <div class="pool wordbank">${bank.map(w=>`<button class="tile small" data-w="${w.replace(/"/g,'&quot;')}">${w}</button>`).join('')}</div>`;
+    if(cur.revealed)body+=`<div class="note" style="text-align:center">Type it exactly like this:</div><div class="target sent">${it.s}</div>`;
+    if(cur.typedRes&&!cur.typedRes.ok){
       const r=cur.typedRes;
-      body+=`<div class="typed">${r.yw.map((w,i)=>`<span class="w ${r.okWords[i]?'ok':'no'}">${w}</span>`).join(' ')}</div>`;
+      body+=`<div class="typed">${r.yw.map((w,i)=>`<span class="w ${r.marks[i]==='ok'?'ok':r.marks[i]==='near'?'nearw':'no'}">${w}</span>`).join(' ')}</div>`;
     }
-    body+=`<div class="typebox"><input id="typeIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${lv.sent?'Type the sentence…':'Type the word…'}">
+    body+=`<div class="typebox"><input id="typeIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the sentence…">
       <button class="btn primary" id="checkBtn">Check</button></div>`;
   }
   if(lv.kind==='build'){
-    body+=pic;
-    if(cur.phase==='tiles'){
-      const placed=cur.placed.map(id=>cur.tiles.find(t=>t.id===id));
-      const pool=cur.tiles.filter(t=>!cur.placed.includes(t.id));
-      body+=`<div class="answer-line" id="answerLine">${placed.length?placed.map((t,ix)=>`<button class="tile ${cur.tileMarks?(cur.tileMarks[ix]?'ok':'no'):''}" data-p="${t.id}">${t.t}</button>`).join('')
-        :'<span class="note" style="margin:0">Tap the words in the right order</span>'}</div>
-        <div class="pool">${pool.map(t=>`<button class="tile" data-t="${t.id}">${t.t}</button>`).join('')}</div>`;
-    }else{
-      body+=`<div class="task" style="margin-top:4px">NOW READ IT OUT LOUD</div>`+sentenceHTML(it.s,cur.hits)+micHTML()+heardHTML();
-    }
+    body+=pic+hearBtns;
+    if(cur.revealed)body+=`<div class="note" style="text-align:center">Here is the right order:</div>`+sentenceHTML(it.s,null);
+    const placed=cur.placed.map(id=>cur.tiles.find(t=>t.id===id));
+    const pool=cur.tiles.filter(t=>!cur.placed.includes(t.id));
+    body+=`<div class="answer-line">${placed.length?placed.map((t,ix)=>`<button class="tile ${cur.tileMarks?(cur.tileMarks[ix]?'ok':'no'):''}" data-p="${t.id}">${t.t}</button>`).join('')
+      :'<span class="note" style="margin:0">Tap the words in the right order</span>'}</div>
+      <div class="pool">${pool.map(t=>`<button class="tile" data-t="${t.id}">${t.t}</button>`).join('')}</div>`;
   }
-  $('#mBody').innerHTML=`${head}<div class="task">${(lv.kind==='build'&&cur.phase==='speak')?'GREAT ORDER!':lv.task.toUpperCase()}</div>${body}
+  $('#mBody').innerHTML=`${head}<div class="task">${lv.task.toUpperCase()}</div>${body}
     <div class="fb ${cur.fbClass}" id="fb">${cur.fb}</div>
     <div class="tries">${[0,1,2].map(j=>`<i class="${j<cur.tries?'used':''}"></i>`).join('')}</div>
     <div class="mbtns"><button class="linkbtn" id="skipBtn">Skip this door</button></div>`;
@@ -1154,19 +1480,28 @@ function micHTML(){
     <div class="micstate" id="micState">${micStateText()}</div></div>`;
 }
 function heardHTML(){return `<div class="heard ${cur.heard?'':'empty'}" id="heard">${cur.heard?'"'+cur.heard+'"':'Your words will appear here'}</div>`}
-function micStateText(){return speaking?'🔊 <b>Listen…</b>':recOn?'<b>I\'m listening.</b> Say it now.':micWanted?'Starting the mic…':'Mic is off. <b>Tap 🎙️ to start.</b>'}
+function micStateText(){return speaking?'🔊 <b>Listen…</b>':recOn?'<b>I\'m listening.</b> Take your time.':micWanted?'Starting the mic…':'Mic is off. <b>Tap 🎙️ to start.</b>'}
+let lastHover=0;
 function wireDoor(){
   const on=(id,fn)=>{const el=$(id);if(el)el.onclick=fn};
   on('#micBtn',()=>{if(recOn||micWanted){micOff();setTimeout(updateMicUI,50)}else{quietEnds=0;micWanted=true;micStart()}});
-  on('#saidBtn',()=>itemWin(true));
+  on('#saidBtn',()=>itemWin({self:true}));
   on('#hearBtn',()=>say(target()));
   on('#slowBtn',()=>say(target(),null,true));
   on('#showBtn',()=>{cur.showText=true;renderDoor()});
+  on('#exampleBtn',()=>{cur.showStarter=true;say(item().example)});
   on('#checkBtn',checkTypeAnswer);
+  on('#modeBtn',()=>{store.spellType=!store.spellType;save();renderDoor();const i=$('#typeIn');if(i)i.focus()});
   on('#skipBtn',()=>{cur.d.state='skip';cur.d.keys=0;micOff();cur.doorWon=true;advance()});
+  const hw=$('#hoverWord');
+  if(hw){const sayIt=()=>{const now=Date.now();if(now-lastHover>1500){lastHover=now;say(item().w)}};hw.onmouseenter=sayIt;hw.onclick=()=>{lastHover=0;sayIt()}}
   const inp=$('#typeIn');if(inp)inp.onkeydown=e=>{if(e.key==='Enter')checkTypeAnswer()};
-  document.querySelectorAll('.pool .tile').forEach(b=>b.onclick=()=>{cur.placed.push(+b.dataset.t);cur.tileMarks=null;setFb('','');renderDoor();if(cur.placed.length===cur.tiles.length)checkTiles()});
-  document.querySelectorAll('.answer-line .tile').forEach(b=>b.onclick=()=>{cur.placed=cur.placed.filter(id=>id!==+b.dataset.p);cur.tileMarks=null;renderDoor()});
+  document.querySelectorAll('.chunk').forEach(b=>b.onclick=()=>say(chunks(item().s)[+b.dataset.c],null,true));
+  document.querySelectorAll('.wordbank .tile').forEach(b=>b.onclick=()=>{const i=$('#typeIn');if(!i)return;i.value=(i.value.trim()+' '+b.dataset.w).trim()+' ';i.focus()});
+  document.querySelectorAll('.pool .tile[data-t]').forEach(b=>b.onclick=()=>{cur.placed.push(+b.dataset.t);cur.tileMarks=null;setFb('','');renderDoor();if(cur.placed.length===cur.tiles.length)checkTiles()});
+  document.querySelectorAll('.answer-line .tile[data-p]').forEach(b=>b.onclick=()=>{cur.placed=cur.placed.filter(id=>id!==+b.dataset.p);cur.tileMarks=null;renderDoor()});
+  document.querySelectorAll('.pool .tile[data-lt]').forEach(b=>b.onclick=()=>{cur.lplaced.push(+b.dataset.lt);cur.lmarks=null;setFb('','');renderDoor();if(cur.lplaced.length===cur.letters.length)checkLetters()});
+  document.querySelectorAll('.answer-line .tile[data-lp]').forEach(b=>b.onclick=()=>{cur.lplaced=cur.lplaced.filter(id=>id!==+b.dataset.lp);cur.lmarks=null;renderDoor()});
 }
 function updateMicUI(){
   if(cur&&cur.finale){renderFinaleMic();return}
@@ -1175,20 +1510,31 @@ function updateMicUI(){
 }
 function showHeard(t){const h=$('#heard');if(!h)return;h.classList.remove('empty');h.textContent='"'+t+'"'}
 
-/* ---- speaking ---- */
+/* ---- speaking: waits for the child to finish, even with pauses ---- */
 function onSpeech(alts){
   if(!cur||!alts.length)return;
   if(cur.finale){finaleSpeech(alts);return}
   if(cur.itemDone||!needsMic())return;
+  if(cur.failT){clearTimeout(cur.failT);cur.failT=null}
   const lv=L(),it=item();
-  const tryAlts=cur.last?[...alts,...alts.map(a=>cur.last+' '+a)]:alts;
-  cur.heard=alts[0];
-  const r=checkSpeech(tryAlts,it,lv);
+  const prev=cur.parts.join(' ');
+  const cands=prev?[...alts.map(a=>prev+' '+a),...alts]:alts;
+  cur.heard=cands[0];showHeard(cur.heard);
+  const r=checkSpeech(cands,it,lv);
   if(r.ok){itemWin();return}
-  if((lv.sent||lv.kind==='answer')&&words(alts[0]).length<2){cur.last=alts[0];cur.fb='Keep going: say the whole sentence.';cur.fbClass='';renderDoor();return}
-  cur.last=alts[0];
+  cur.parts.push(alts[0]);
+  const wait=(lv.sent||lv.kind==='answer')?3000:1600;
+  cur.failT=setTimeout(attemptFailed,wait);
+}
+function attemptFailed(){
+  if(!cur||cur.itemDone||cur.finale)return;
+  cur.failT=null;
+  const lv=L(),it=item();
+  const said=cur.parts.join(' ');cur.parts=[];
+  const r=checkSpeech([said],it,lv);
+  if(r.ok){itemWin();return}
   cur.tries++;sfxWrong();
-  const visible=!lv.hear||cur.showText||cur.revealed||lv.kind==='build';
+  const visible=!lv.hear||cur.showText||cur.revealed;
   if(r.hits&&visible)cur.hits=r.hits;
   if(lv.kind==='answer'){
     cur.fb=r.short?`Good! Now say it in a longer sentence (at least ${r.min} words).`:`Use the word "${it.w}" in your answer.`;
@@ -1196,62 +1542,71 @@ function onSpeech(alts){
   cur.fbClass='bad';
   if(cur.tries>=3&&!cur.revealed){
     cur.revealed=true;renderDoor();
-    if(lv.kind==='answer'){setFb('Here is one way to answer. Now say your own!','');say(it.s)}
+    if(lv.kind==='answer'){setFb('Listen to the example, then say your own answer.','');say(it.example)}
     else say(lv.sent?it.s:it.w);
     return;
   }
   renderDoor();
 }
-/* ---- typing ---- */
+/* ---- typing (spell the word, write the sentence) ---- */
 function checkTypeAnswer(){
   const inp=$('#typeIn');if(!inp||!inp.value.trim())return;
-  const r=checkTyped(inp.value,item(),L());
-  if(r.ok){itemWin();return}
+  const lv=L(),it=item();
+  const r=checkTyped(inp.value,it,lv);
+  if(r.ok){
+    itemWin({near:r.near,correct:lv.sent?it.s:it.w});return;
+  }
   cur.tries++;cur.typedRes=r;sfxWrong();
-  const lv=L();
   if(lv.sent)cur.fb=r.yw.length!==r.tLen?`Check again: the sentence has ${r.tLen} words.`:'Check the red words.';
-  else cur.fb='Not quite. Check your spelling.';
+  else cur.fb='Not quite. Listen again and check your spelling.';
   cur.fbClass='bad';
   if(cur.tries>=3&&!cur.revealed){cur.revealed=true;cur.fb='Copy it to continue.';cur.fbClass=''}
   const v=inp.value;renderDoor();const ni=$('#typeIn');if(ni){ni.value=lv.sent?v:'';ni.focus()}
 }
-/* ---- building ---- */
+/* ---- letter tiles ---- */
+function checkLetters(){
+  const got=cur.lplaced.map(id=>cur.letters.find(t=>t.id===id).t);
+  const want=item().w.replace(/\s/g,'').split('');
+  const marks=got.map((c,i)=>c===want[i]);
+  if(marks.every(Boolean)){itemWin();return}
+  cur.tries++;sfxWrong();cur.lmarks=marks;
+  if(cur.tries>=3&&!cur.revealed){cur.revealed=true;cur.fb='Look at the spelling and try again.';cur.fbClass='';say(item().w)}
+  else{cur.fb='Not quite. The red letters are in the wrong place.';cur.fbClass='bad'}
+  renderDoor();
+}
+/* ---- word tiles ---- */
 function checkTiles(){
   const placed=cur.placed.map(id=>cur.tiles.find(t=>t.id===id).t.toLowerCase());
   const want=item().s.split(' ').map(w=>w.toLowerCase().replace(/[.!?]$/,''));
   const marks=placed.map((w,i)=>w===want[i]);
-  if(marks.every(Boolean)){toSpeakPhase();return}
+  if(marks.every(Boolean)){itemWin();return}
   cur.tries++;sfxWrong();cur.tileMarks=marks;
-  if(cur.tries>=3){
-    cur.revealed=true;
-    cur.fb='Here is the right order. Now read it out loud.';cur.fbClass='';
-    cur.phase='speak';renderDoor();say(item().s);return;
-  }
-  cur.fb='Not quite. The red words are in the wrong place.';cur.fbClass='bad';renderDoor();
+  if(cur.tries>=3&&!cur.revealed){cur.revealed=true;cur.fb='Look at the right order, then fix your words.';cur.fbClass='';say(item().s)}
+  else{cur.fb='Not quite. The red words are in the wrong place.';cur.fbClass='bad'}
+  renderDoor();
 }
-function toSpeakPhase(){
-  sfxRight();cur.phase='speak';cur.fb='';cur.fbClass='';
-  renderDoor();quietEnds=0;
-  if(SR){micWanted=true;setTimeout(micStart,200)}
-}
-/* ---- an item is done ---- */
-function itemWin(selfCheck){
+/* ---- a challenge is done ---- */
+function itemWin(o){
+  o=o||{};
   if(cur.itemDone)return;
+  if(cur.failT){clearTimeout(cur.failT);cur.failT=null}
   let s=cur.revealed?1:Math.max(1,3-cur.tries);
   if(cur.showText)s=Math.min(s,2);
-  if(selfCheck)s=Math.min(s,2);
+  if(o.self||o.near)s=Math.min(s,2);
   cur.scores.push(s);cur.itemDone=true;micPause();
   sfxRight();
-  setFb(['','Done.','Good!','Excellent!'][s]+(cur.k<2?' Next one…':''),'ok');
-  const done=$('#heard');if(done&&L().sent)cur.hits=null;
+  let msg=['','Done.','Good!','Excellent!'][s];
+  if(o.near)msg=`Almost! It's spelled: <b>${o.correct}</b>`;
+  if(L().kind==='build')cur.hits=null;
+  setFb(msg+(cur.k<2&&!o.near?' Next one…':''),'ok');
   setTimeout(()=>{
-    if(!cur)return;
+    if(!cur||cur.finale)return;
     if(cur.k<2){cur.k++;newItemState();startItem();return}
     const keys=Math.round(cur.scores.reduce((a,b)=>a+b,0)/3);
     cur.d.state='open';cur.d.keys=keys;cur.doorWon=true;micOff();sfxUnlock();renderDoor();
     const digit=NUMWORDS[route.code[cur.i]].toLowerCase(),me=cur;
     setTimeout(()=>{if(cur===me)say(theme==='museum'?'Door unlocked! Your code number is '+digit+'.':'Camp reached! You found a flag piece.')},400);
-  },1100);
+  },o.near?2600:1100);
 }
 function advance(){
   const i=cur.i;closeModal();
@@ -1368,25 +1723,25 @@ function finish(){
   if(!ADMIN){
     if(store.best[idx]==null||k>store.best[idx])store.best[idx]=k;
     store.shelf[theme][idx]=true;
-    if(k>=12&&idx<23&&store.unlocked<idx+1){store.unlocked=idx+1;unlockedNow=true}
+    const nx=nextIdx(idx);if(k>=12&&nx!=null&&store.unlocked<nx){store.unlocked=nx;unlockedNow=true}
     save();
   }
   $('#endScore').textContent=k;
-  const passed=k>=12,last=idx===23;
+  const passed=k>=12,last=nextIdx(idx)==null;
   const [icon,title]=k>=21?[theme==='museum'?'💎':'🏔️','Amazing!']:passed?['🥇','Level complete!']:['🔓','You made it to the end!'];
   $('#endIcon').textContent=icon;$('#endTitle').textContent=title;
-  const nxt=last?null:fromIdx(idx+1);
+  const nxt=last?null:fromIdx(nextIdx(idx));
   const nxtName=nxt?(BANDS.find(b=>b.id===nxt.band).name+' Level '+nxt.level+': '+LEVELS[nxt.level-1].name):'';
   $('#endUnlock').innerHTML=last&&passed?'<div class="unlock">🏆 You finished the whole journey!</div>'
     :passed?`<div class="unlock">${unlockedNow?'🔓 Unlocked: ':'Next: '}${nxtName}</div>`
     :`<div class="unlock no">Get 12 🔑 to unlock the next level. Try again!</div>`;
   $('#endMsg').textContent=k>=21?'Your English is getting stronger and stronger.':passed?'Play again to collect even more keys.':'Every door makes your English stronger.';
-  $('#endNext').classList.toggle('hidden',last||(!ADMIN&&store.unlocked<idx+1));
+  $('#endNext').classList.toggle('hidden',last||(!ADMIN&&store.unlocked<nextIdx(idx)));
   sfxFinish();show('end');say(title);
 }
 $('#endAgain').onclick=startRoute;
-$('#endNext').onclick=()=>{selIdx=Math.min(23,selIdx+1);startRoute()};
-$('#endMenu').onclick=()=>{selIdx=Math.min(store.unlocked,selIdx);renderSetup();show('start')};
+$('#endNext').onclick=()=>{selIdx=nextIdx(selIdx)??selIdx;startRoute()};
+$('#endMenu').onclick=()=>{selIdx=visibleSel(ADMIN?selIdx:Math.min(store.unlocked,selIdx));renderSetup();show('start')};
 
 if(ADMIN)$('#adminBanner').classList.remove('hidden');
 renderSetup();
