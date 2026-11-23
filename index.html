@@ -18,7 +18,8 @@ body{
   color:var(--text);min-height:100vh;
 }
 button{font:inherit;color:inherit;cursor:pointer;border:none}
-.wrap{max-width:960px;margin:0 auto;padding:26px 18px 60px}
+input{font:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:26px 18px 60px}
 .hidden{display:none!important}
 
 /* ---------- start ---------- */
@@ -38,13 +39,14 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
 .btn.primary{background:linear-gradient(135deg,var(--gold),#e8932f);color:#1a1205;border:none;font-weight:700}
 .btn.primary:hover{filter:brightness(1.08)}
 .btn.big{padding:15px 28px;font-size:18px;border-radius:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
 .seg{display:flex;gap:6px;background:var(--panel2);padding:4px;border-radius:12px;border:1px solid var(--line)}
 .seg button{background:transparent;padding:8px 14px;border-radius:9px;color:var(--muted)}
 .seg button.on{background:#2b3c5c;color:var(--text)}
 .note{color:var(--muted);font-size:14px;margin-top:10px}
 .ok{color:var(--teal)} .bad{color:var(--red)}
 .themes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.theme{border:1px solid var(--line);border-radius:14px;padding:16px;text-align:left;min-height:120px;position:relative;overflow:hidden}
+.theme{border:1px solid var(--line);border-radius:14px;padding:16px;text-align:left;min-height:120px}
 .theme.museum{background:linear-gradient(135deg,#2a2236,#1b1828)}
 .theme.mountain{background:linear-gradient(135deg,#1b3140,#142430)}
 .theme .ti{font-size:34px}
@@ -52,19 +54,36 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
 .theme small{display:block;color:var(--muted);margin-top:4px;line-height:1.35}
 .theme.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
 .locked-theme{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.lvl{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:left}
-.lvl b{display:block;font-size:13px;color:var(--gold);letter-spacing:1px;margin-bottom:2px}
-.lvl span{display:block;font-weight:600}
-.lvl small{display:block;color:var(--muted);margin-top:4px;line-height:1.3}
-.lvl.on,.topic.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
-.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px;margin-top:14px}
-.topic{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center}
-.topic .i{font-size:28px;display:block}
-.topic small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.linkbtn{background:transparent;color:var(--muted);text-decoration:underline;padding:8px 4px}
+
+.band{margin-bottom:14px}
+.bandhead{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.bandhead b{font-size:16px}
+.bandhead small{color:var(--muted)}
+.ladder{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.lv{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:9px 6px;text-align:center;min-height:92px;position:relative}
+.lv .n{font-size:11px;color:var(--gold);letter-spacing:1px;font-weight:700}
+.lv .i{font-size:22px;display:block;margin:2px 0}
+.lv .t{font-size:11.5px;line-height:1.2;display:block}
+.lv .best{font-size:11px;color:var(--gold);display:block;margin-top:3px}
+.lv.locked{opacity:.38;cursor:not-allowed}
+.lv.locked .i{filter:grayscale(1)}
+.lv.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
+.lv.done{background:#163330;border-color:#2a6d63}
+.topics{display:flex;gap:8px;flex-wrap:wrap}
+.topic{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+.topic.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold) inset}
 .banner{background:#3a1f26;border:1px solid #6b2f3a;color:#ffd2d2;border-radius:12px;padding:12px 14px;margin-bottom:16px}
-.go{display:flex;justify-content:flex-end;margin-top:6px}
-@media(max-width:640px){.levels{grid-template-columns:repeat(2,1fr)} .themes{grid-template-columns:1fr} h1{font-size:24px}}
+.go{display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-top:6px}
+.go .sel{color:var(--muted)}
+.shelf{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.item{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;min-height:88px}
+.item .e{font-size:30px;display:block}
+.item small{display:block;font-size:11px;color:var(--muted);line-height:1.2;margin-top:3px}
+.item.empty{opacity:.35}
+.item.pc{padding:0;overflow:hidden}
+.item.pc small{padding:4px}
+@media(max-width:760px){.ladder,.shelf{grid-template-columns:repeat(4,1fr)} .themes{grid-template-columns:1fr} h1{font-size:24px}}
 
 /* ---------- map ---------- */
 .top{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin-bottom:14px;flex-wrap:wrap}
@@ -75,7 +94,6 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
 .keys span{color:var(--gold)}
 .mapbox{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#0b111b}
 .mapbox svg{display:block;width:100%;height:auto}
-.node{cursor:default}
 .node.current{cursor:pointer}
 .node.current .ring{animation:ring 1.4s infinite;transform-origin:center;transform-box:fill-box}
 @keyframes ring{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.6)}}
@@ -90,20 +108,26 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
 
 /* ---------- modal ---------- */
 .overlay{position:fixed;inset:0;background:#05080fcc;backdrop-filter:blur(4px);display:grid;place-items:center;padding:16px;z-index:10}
-.modal{background:var(--panel);border:1px solid var(--line);border-radius:20px;width:100%;max-width:600px;padding:22px;position:relative;max-height:96vh;overflow:auto}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:20px;width:100%;max-width:640px;padding:22px;position:relative;max-height:96vh;overflow:auto}
 .close{position:absolute;top:12px;right:14px;background:transparent;color:var(--muted);font-size:22px}
 .mtag{font-size:12px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
-.task{text-align:center;font-size:15px;color:var(--gold);font-weight:700;letter-spacing:.5px;margin:14px 0 4px}
-.pic{font-size:54px;text-align:center;line-height:1.1;margin:4px 0}
-.target{text-align:center;margin:10px 0 14px;font-weight:700;line-height:1.35}
-.target.word{font-size:46px;letter-spacing:1px}
-.target.sent{font-size:28px}
-.target .w{display:inline-block;margin:0 4px;border-bottom:3px solid transparent;transition:.2s}
+.itemdots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.itemdots i{width:34px;height:6px;border-radius:3px;background:var(--line)}
+.itemdots i.done{background:var(--teal)}
+.itemdots i.now{background:var(--gold)}
+.task{text-align:center;font-size:15px;color:var(--gold);font-weight:700;letter-spacing:.5px;margin:12px 0 4px}
+.pic{font-size:46px;text-align:center;line-height:1.1;margin:4px 0}
+.target{text-align:center;margin:10px 0 14px;font-weight:700;line-height:1.4}
+.target.word{font-size:44px;letter-spacing:1px}
+.target.sent{font-size:26px}
+.target .w{display:inline-block;margin:0 3px;border-bottom:3px solid transparent;transition:.2s}
 .target .w.hit{color:var(--teal);border-color:var(--teal)}
 .target .w.miss{color:var(--red);border-color:var(--red)}
-.hidden-target{text-align:center;margin:12px 0}
-.hearbig{font-size:20px;padding:16px 26px;border-radius:14px}
-.subbtns{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.question{text-align:center;font-size:22px;font-weight:700;margin:8px 0}
+.mustuse{text-align:center;margin:8px 0 4px}
+.mustuse span{display:inline-block;background:#2a2412;border:1px solid var(--gold);color:var(--gold);border-radius:999px;padding:6px 14px;font-weight:700;font-size:18px}
+.hearrow{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.hearbig{font-size:18px;padding:14px 22px;border-radius:14px}
 .micbar{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0 10px}
 .mic{width:64px;height:64px;border-radius:50%;background:var(--panel2);border:1px solid var(--line);font-size:26px;transition:.2s}
 .mic.live{background:linear-gradient(135deg,#ff7d7d,#e04848);border:none;animation:pulse 1.2s infinite}
@@ -118,9 +142,21 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
 .tries i{width:9px;height:9px;border-radius:50%;background:var(--line)}
 .tries i.used{background:var(--red)}
 .mbtns{display:flex;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap}
-.linkbtn{background:transparent;color:var(--muted);text-decoration:underline;padding:8px 4px}
+.typebox{display:flex;gap:8px;margin:12px 0}
+.typebox input{flex:1;background:#0f1726;border:1px solid var(--line);border-radius:12px;padding:14px 16px;color:var(--text);font-size:22px;outline:none}
+.typebox input:focus{border-color:var(--gold)}
+.typed{text-align:center;font-size:20px;margin:6px 0}
+.typed .w{display:inline-block;margin:0 3px;padding:0 2px;border-radius:4px}
+.typed .w.ok{color:var(--teal)}
+.typed .w.no{color:var(--red);text-decoration:underline wavy}
+.answer-line{min-height:64px;border:2px dashed var(--line);border-radius:14px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;margin:12px 0}
+.pool{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+.tile{background:var(--panel2);border:1px solid #3b4f74;border-radius:10px;padding:10px 14px;font-size:20px;font-weight:600;transition:.12s}
+.tile:hover{border-color:var(--gold);transform:translateY(-1px)}
+.tile.ok{border-color:var(--teal);color:var(--teal)}
+.tile.no{border-color:var(--red);color:var(--red)}
 .win{text-align:center;padding:10px 0}
-.win .big{font-size:60px}
+.win .bigicon{font-size:60px}
 .win h3{font-size:24px;margin:6px 0}
 .reward{display:inline-flex;align-items:center;gap:12px;background:#2a2412;border:1px solid var(--gold);border-radius:14px;padding:12px 18px;margin:12px 0 18px}
 .reward b{color:var(--gold);font-size:22px;letter-spacing:2px}
@@ -132,12 +168,40 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
 .shake{animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 
+/* ---------- finales ---------- */
+.treasure{position:relative;height:230px;border-radius:16px;overflow:hidden;
+  background:radial-gradient(circle at 50% 110%,#5a3d0e 0,#2a1d08 45%,#120d05 80%);border:1px solid #6b5220}
+.treasure .gem{position:absolute;top:-40px;font-size:26px;animation:fall 1.1s cubic-bezier(.5,0,.8,1) forwards}
+@keyframes fall{to{transform:translateY(var(--drop)) rotate(var(--rot))}}
+.treasure .chest{position:absolute;left:50%;bottom:10px;transform:translateX(-50%)}
+.newitem{display:inline-flex;align-items:center;gap:14px;background:#2a2412;border:1px solid var(--gold);border-radius:16px;padding:12px 20px;margin:16px 0;animation:popin .6s 1.6s both}
+.newitem .e{font-size:44px}
+.newitem small{display:block;color:var(--muted);font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.newitem b{font-size:20px}
+@keyframes popin{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:scale(1)}}
+.summit{border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.summit svg{display:block;width:100%;height:auto}
+.dawn{animation:fadein 2.4s .6s both}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.sunrise{animation:rise 2.6s .8s both}
+@keyframes rise{from{transform:translateY(90px)}to{transform:translateY(0)}}
+.cloudL{animation:cl 2.6s .5s both}
+.cloudR{animation:cr 2.6s .5s both}
+@keyframes cl{from{transform:translateX(120px)}to{transform:translateX(-160px)}}
+@keyframes cr{from{transform:translateX(-120px)}to{transform:translateX(170px)}}
+.flagdrop{animation:drop .7s .2s cubic-bezier(.3,1.4,.6,1) both}
+@keyframes drop{from{transform:translateY(-220px)}to{transform:translateY(0)}}
+.cloth{transform-origin:0 0;transform-box:fill-box;animation:wave 1.2s 1s ease-in-out infinite alternate}
+@keyframes wave{from{transform:skewY(0deg) scaleX(1)}to{transform:skewY(5deg) scaleX(.92)}}
+
 /* ---------- end ---------- */
 .end{text-align:center;padding-top:30px}
 .end .trophy{font-size:80px}
 .end h2{font-size:30px;margin:10px 0 6px}
 .end .score{font-size:46px;font-weight:800;color:var(--gold);margin:8px 0}
 .end p{color:var(--muted)}
+.end .unlock{display:inline-block;background:#163330;border:1px solid var(--teal);color:var(--teal);border-radius:12px;padding:10px 16px;font-weight:700;margin-top:8px}
+.end .unlock.no{background:#2a1f24;border-color:#6b2f3a;color:#ffc3c3}
 .end .row{justify-content:center;margin-top:24px}
 </style>
 </head>
@@ -148,6 +212,7 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
   <div class="title"><div class="logo">🔐</div><h1>Say It to Open It</h1></div>
   <p class="sub">Every door is locked. Your voice is the key.</p>
 
+  <div id="adminBanner" class="banner hidden" style="background:#1d2e45;border-color:#3d5a85;color:#cfe0ff">🧑‍🏫 <b>Teacher mode.</b> Every level and room is open, and nothing is saved. Remove <b>?admin</b> from the address to play as a student.</div>
   <div id="noMic" class="banner hidden">
     🎙️ This browser can't listen to your voice. Open the game in <b>Chrome</b> or <b>Edge</b>.
     You can still play here: say it out loud, then press <b>"I said it"</b>.
@@ -157,9 +222,9 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
     <h2><span class="step">1</span>Choose your adventure</h2>
     <div id="themePick" class="themes">
       <button class="theme museum" data-th="museum"><span class="ti">🏛️</span><b>Museum Vault</b>
-        <small>Sneak through the museum at night. Every door gives you one number of the secret vault code.</small></button>
+        <small>Sneak through the museum at night. Every door gives you one number of the vault code. Fill your trophy shelf.</small></button>
       <button class="theme mountain" data-th="mountain"><span class="ti">🏔️</span><b>Mountain Expedition</b>
-        <small>Climb from base camp to the summit. Every camp gives you one piece of the summit flag.</small></button>
+        <small>Climb from base camp to the summit. Every camp gives you one piece of the summit flag. Collect the views.</small></button>
     </div>
     <div id="themeLocked" class="locked-theme hidden">
       <div id="themeNow" style="font-size:18px;font-weight:700"></div>
@@ -189,12 +254,18 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
   </div>
 
   <div class="card">
-    <h2><span class="step">4</span>Choose your level and topic</h2>
-    <div class="levels" id="levels"></div>
+    <h2><span class="step">4</span>Your journey</h2>
+    <div id="ladder"></div>
+    <div class="note" style="margin:2px 0 12px">Get at least 12 🔑 on a level to unlock the next one.</div>
     <div class="topics" id="topics"></div>
   </div>
 
-  <div class="go"><button class="btn primary big" id="startBtn">Start →</button></div>
+  <div class="go"><span class="sel" id="selText"></span><button class="btn primary big" id="startBtn">Start →</button></div>
+
+  <div class="card" style="margin-top:18px" id="collectionCard">
+    <h2 id="collTitle">Your collection</h2>
+    <div class="shelf" id="shelf"></div>
+  </div>
 </div>
 
 <!-- ================= MAP ================= -->
@@ -210,7 +281,7 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
   <div class="mapbox" id="mapbox"></div>
   <div class="collect" id="collect"></div>
   <div class="tools">
-    <button class="btn" id="backBtn">← Change level or topic</button>
+    <button class="btn" id="backBtn">← Back to journey</button>
     <button class="btn" id="restartBtn">🔄 Start this route again</button>
   </div>
 </div>
@@ -221,11 +292,12 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
     <div class="trophy" id="endIcon">🏆</div>
     <h2 id="endTitle"></h2>
     <div class="score"><span id="endScore">0</span> / 24 🔑</div>
+    <div id="endUnlock"></div>
     <p id="endMsg"></p>
     <div class="row">
       <button class="btn" id="endAgain">🔄 Play again</button>
       <button class="btn primary" id="endNext">Next level →</button>
-      <button class="btn" id="endMenu">Change level or topic</button>
+      <button class="btn" id="endMenu">My journey</button>
     </div>
   </div>
 </div>
@@ -240,132 +312,328 @@ select{font:inherit;color:var(--text);background:var(--panel2);border:1px solid 
 
 <script>
 /* =====================================================
-   CONTENT  T(picture, word, word-check, sentence)
-   word-check: "a|b" = a OR b. Short forms like "strawberr"
-   also accept "strawberry" and "strawberries".
+   WORD AND SENTENCE BANK
+   One line per entry:  picture | word | sentence | question
    ===================================================== */
-function T(e,w,k,s){return{e,w,k,s}}
-const TOPICS={
-food:{name:'Food',icon:'🍎',items:[
- T('🍎','apple','apple','I eat an apple every day.'),
- T('🍌','banana','banana','A monkey likes to eat a banana.'),
- T('🍞','bread','bread','I make a sandwich with bread.'),
- T('🥚','egg','egg','For breakfast I have an egg.'),
- T('🧀','cheese','cheese','The mouse is eating the cheese.'),
- T('🥕','carrot','carrot','A rabbit likes to eat a carrot.'),
- T('🥛','milk','milk','I drink a glass of milk.'),
- T('🍊','orange','orange','I want to drink orange juice.'),
- T('🍓','strawberry','strawberr','My favourite fruit is the strawberry.'),
- T('🍅','tomato','tomato','I put a tomato in my salad.'),
- T('🎂','cake','cake','We eat cake at a birthday party.'),
- T('🍕','pizza','pizza','I like pizza with cheese.')]},
-animals:{name:'Animals',icon:'🦁',items:[
- T('🐶','dog','dog','My dog likes to play in the park.'),
- T('🐱','cat','cat','The cat is sleeping on the sofa.'),
- T('🐴','horse','horse','I can ride a horse.'),
- T('🐄','cow','cow','We get milk from a cow.'),
- T('🐟','fish','fish','A fish lives in the water.'),
- T('🐦','bird','bird','The bird can fly in the sky.'),
- T('🐘','elephant','elephant','The elephant has a long nose.'),
- T('🦁','lion','lion','The lion is the king of the jungle.'),
- T('🐰','rabbit','rabbit','The rabbit has long ears.'),
- T('🐸','frog','frog','The frog can jump very high.'),
- T('🐒','monkey','monkey','The monkey is climbing a tree.'),
- T('🐍','snake','snake','A snake has no legs.')]},
-school:{name:'School',icon:'✏️',items:[
- T('📕','book','book','I read a book before I go to sleep.'),
- T('✏️','pencil','pencil','I write with a pencil.'),
- T('🎒','backpack','backpack|back pack','I put my books in my backpack.'),
- T('📏','ruler','ruler','I draw a straight line with a ruler.'),
- T('✂️','scissors','scissor','I cut paper with scissors.'),
- T('💻','computer','computer','I play games on my computer.'),
- T('🕒','clock','clock','The clock is on the wall.'),
- T('🧑‍🏫','teacher','teacher','My teacher helps me learn.'),
- T('📓','notebook','notebook|note book','I write my homework in a notebook.'),
- T('🖍️','crayon','crayon','I colour the picture with a crayon.'),
- T('🗺️','map','map','We look at a map to find the way.'),
- T('🚌','bus','bus','I go to school by bus.')]},
-home:{name:'Home',icon:'🏠',items:[
- T('🏠','house','house','I live in a big house.'),
- T('🛏️','bed','bed','I sleep in my bed at night.'),
- T('🪑','chair','chair','I sit on a chair.'),
- T('🚪','door','door','Please close the door.'),
- T('🪟','window','window','I look out of the window.'),
- T('🛋️','sofa','sofa','We watch TV on the sofa.'),
- T('🛁','bath','bath','I take a bath in the evening.'),
- T('🔑','key','key','I open the door with a key.'),
- T('📺','television','television|tv','I watch cartoons on television.'),
- T('🪞','mirror','mirror','I look in the mirror every morning.'),
- T('🪥','toothbrush','toothbrush|tooth brush','I brush my teeth with a toothbrush.'),
- T('💡','light','light','Turn on the light, it is dark.')]},
-clothes:{name:'Clothes',icon:'👕',items:[
- T('👕','shirt','shirt','I wear a shirt to school.'),
- T('👗','dress','dress','She is wearing a pretty dress.'),
- T('👟','shoes','shoe','I put on my shoes before I go out.'),
- T('🧢','cap','cap','I wear a cap in the sun.'),
- T('🧦','socks','sock','I wear warm socks in winter.'),
- T('👖','jeans','jeans','I wear my blue jeans every day.'),
- T('🧥','coat','coat','It is cold, so I wear a coat.'),
- T('🧣','scarf','scarf','I wear a scarf around my neck.'),
- T('🧤','gloves','glove','My hands are warm in my gloves.'),
- T('👓','glasses','glasses','My dad wears glasses to read.'),
- T('🥾','boots','boot','I wear boots when it rains.'),
- T('🕶️','sunglasses','sunglasses|sun glasses','I wear sunglasses on a sunny day.')]},
-weather:{name:'Weather',icon:'🌦️',items:[
- T('☀️','sun','sun','The sun is shining today.'),
- T('🌧️','rain','rain','Take an umbrella, it is going to rain.'),
- T('❄️','snow','snow','In winter, snow falls from the sky.'),
- T('☁️','cloud','cloud','There is a big grey cloud in the sky.'),
- T('🌬️','wind','wind','The wind is blowing very hard.'),
- T('🌈','rainbow','rainbow|rain bow','After the rain I see a rainbow.'),
- T('☂️','umbrella','umbrella','I open my umbrella when it rains.'),
- T('⛈️','storm','storm','There is a storm with thunder and lightning.'),
- T('⛄','snowman','snowman|snow man','We build a snowman in the snow.'),
- T('🥵','hot','hot','In summer it is very hot.'),
- T('🥶','cold','cold','In winter I feel cold.'),
- T('⚡','lightning','lightning|lighting|lightening','I see lightning in the storm.')]},
-actions:{name:'Actions',icon:'🏃',items:[
- T('🏃','running','runn|run','He is running to school.'),
- T('🏊','swimming','swim','She is swimming in the pool.'),
- T('🚴','cycling','cycl','He is cycling to the park.'),
- T('💃','dancing','danc','She is dancing to the music.'),
- T('😴','sleeping','sleep','He is sleeping in his bed.'),
- T('🧑‍🍳','cooking','cook','The chef is cooking dinner.'),
- T('🎤','singing','sing','She is singing a song.'),
- T('🧗','climbing','climb','He is climbing up the rock.'),
- T('✍️','writing','writ','I am writing a letter to my friend.'),
- T('⚽','football','football|foot ball','The children are playing football in the park.'),
- T('🎨','painting','paint','She is painting a picture.'),
- T('🏄','surfing','surf','He is surfing on a big wave.')]}
+const TOPIC_INFO={food:['Food','🍎'],animals:['Animals','🦁'],school:['School','✏️'],home:['Home','🏠'],
+  clothes:['Clothes','👕'],weather:['Weather','🌦️'],actions:['Actions','🏃']};
+const RAW={
+easy:{
+food:`🍎|apple|I eat a red apple.|Do you like apples?
+🍌|banana|The monkey eats a banana.|What color is a banana?
+🍞|bread|I like fresh bread.|Do you eat bread for breakfast?
+🥚|egg|I have an egg for breakfast.|How do you like your eggs?
+🧀|cheese|The mouse likes cheese.|Who likes cheese?
+🥕|carrot|The rabbit eats a carrot.|What color is a carrot?
+🥛|milk|I drink cold milk.|Do you drink milk?
+🍊|orange|This orange is very sweet.|Is an orange sweet or sour?
+🍓|strawberry|Strawberries are red and sweet.|What color are strawberries?
+🍅|tomato|I cut a tomato.|Where do you put a tomato?
+🎂|cake|We eat birthday cake.|When do we eat cake?
+🍕|pizza|I love hot pizza.|What do you like on your pizza?`,
+animals:`🐶|dog|My dog can run fast.|Do you have a dog?
+🐱|cat|The cat is sleeping.|What does a cat like to do?
+🐴|horse|I can ride a horse.|Can you ride a horse?
+🐄|cow|A cow gives us milk.|What does a cow give us?
+🐟|fish|The fish swims in water.|Where does a fish live?
+🐦|bird|The bird can fly.|What can a bird do?
+🐘|elephant|The elephant is very big.|Is an elephant big or small?
+🦁|lion|The lion is strong.|Where does a lion live?
+🐰|rabbit|The rabbit has long ears.|What does a rabbit eat?
+🐸|frog|The frog can jump.|What color is a frog?
+🐒|monkey|The monkey climbs a tree.|What does a monkey like to eat?
+🐍|snake|A snake has no legs.|Are you afraid of snakes?`,
+school:`📕|book|I read a good book.|What book do you like?
+✏️|pencil|I write with a pencil.|What do you do with a pencil?
+🎒|backpack|My backpack is heavy.|What is in your backpack?
+📏|ruler|I have a long ruler.|What do you do with a ruler?
+✂️|scissors|I cut paper with scissors.|What do you cut with scissors?
+💻|computer|I play on the computer.|What do you do on the computer?
+🕒|clock|The clock is on the wall.|Where is the clock in your classroom?
+🧑‍🏫|teacher|My teacher is kind.|Who is your teacher?
+📓|notebook|I open my notebook.|What color is your notebook?
+🖍️|crayon|I draw with a crayon.|What do you draw with a crayon?
+🗺️|map|Look at the map.|Why do we look at a map?
+🚌|bus|I go to school by bus.|Do you go to school by bus?`,
+home:`🏠|house|I live in a house.|Do you live in a house?
+🛏️|bed|My bed is soft.|What color is your bed?
+🪑|chair|Sit on the chair.|Where is your chair?
+🚪|door|Please close the door.|What color is your door?
+🪟|window|Open the window, please.|What can you see from your window?
+🛋️|sofa|We sit on the sofa.|What do you do on the sofa?
+🛁|bath|I take a bath.|When do you take a bath?
+🔑|key|Where is my key?|Who has a key to your home?
+📺|television|I watch television at night.|What do you watch on television?
+🪞|mirror|I look in the mirror.|What do you see in the mirror?
+🪥|toothbrush|My toothbrush is blue.|What color is your toothbrush?
+💡|light|Turn on the light.|When do you turn on the light?`,
+clothes:`👕|shirt|I wear a blue shirt.|What color is your shirt?
+👗|dress|She has a pink dress.|Who wears a dress?
+👟|shoes|My shoes are new.|What color are your shoes?
+🧢|cap|I wear a cap.|When do you wear a cap?
+🧦|socks|My socks are warm.|What color are your socks?
+👖|jeans|I like my jeans.|Do you like jeans?
+🧥|coat|Put on your coat.|When do you wear a coat?
+🧣|scarf|My scarf is long.|When do you wear a scarf?
+🧤|gloves|I need my gloves.|When do you need gloves?
+👓|glasses|My dad wears glasses.|Who wears glasses in your family?
+🥾|boots|I have black boots.|When do you wear boots?
+🕶️|sunglasses|I wear sunglasses in summer.|When do you wear sunglasses?`,
+weather:`☀️|sun|The sun is hot.|Is the sun hot or cold?
+🌧️|rain|I like the rain.|Do you like the rain?
+❄️|snow|The snow is white.|Have you ever seen snow?
+☁️|cloud|I see a big cloud.|What color is a rain cloud?
+🌬️|wind|The wind is strong.|Is the wind strong today?
+🌈|rainbow|Look at the rainbow!|What colors are in a rainbow?
+☂️|umbrella|Take your umbrella today.|When do you need an umbrella?
+⛈️|storm|There is a storm.|Are you afraid of a storm?
+⛄|snowman|We make a snowman.|How do you make a snowman?
+🥵|hot|It is hot today.|When is it hot?
+🥶|cold|It is cold outside.|When is it cold?
+⚡|lightning|I can see the lightning.|When do you see lightning?`,
+actions:`🏃|run|I run very fast.|Can you run fast?
+🏊|swim|I can swim well.|Where do you swim?
+🚴|ride|I ride my bike.|Do you ride a bike?
+💃|dance|She likes to dance.|Do you like to dance?
+😴|sleep|The baby is sleeping.|When do you sleep?
+🧑‍🍳|cook|Dad can cook pasta.|Who can cook in your family?
+🎤|sing|We sing a song.|What song do you like to sing?
+🧗|climb|I climb the tree.|Can you climb a tree?
+✍️|write|I write my name.|What do you write at school?
+⚽|play|We play soccer together.|What do you play with your friends?
+🎨|paint|She paints a picture.|What do you like to paint?
+🤸|jump|The kids jump high.|How high can you jump?`},
+medium:{
+food:`🥣|breakfast|Yesterday I had milk and cereal for breakfast.|What did you have for breakfast today?
+🥪|sandwich|I made a sandwich because I was hungry.|What do you like in your sandwich?
+🥦|vegetables|We bought vegetables at the market on Friday.|Which vegetables do you like?
+🍲|soup|My grandma cooked hot soup when it was cold.|When do you like to eat soup?
+🧃|juice|I wanted orange juice, but there was none left.|What kind of juice do you like?
+🍽️|lunch|We ate lunch together after school yesterday.|Where did you eat lunch yesterday?
+🥗|salad|Dad made a big salad with tomatoes and cucumbers.|What do you put in a salad?
+🥞|pancakes|On Saturday we made pancakes and ate them all.|When did you last eat pancakes?
+😋|hungry|I was hungry, so I ate two bananas.|What do you eat when you are hungry?
+🍨|dessert|After dinner we had ice cream for dessert.|What is your favorite dessert?
+🍳|kitchen|Mom was cooking in the kitchen when I came home.|What do you do in the kitchen?
+📋|recipe|We followed the recipe, but the cake was burnt.|Can you follow a recipe on your own?`,
+animals:`🐕|puppy|Our new puppy chewed my shoe last night.|Would you like a puppy? Why?
+🦒|zoo|We went to the zoo and saw two giraffes.|What animals did you see at the zoo?
+🐔|farm|My uncle has a farm with cows and chickens.|What animals live on a farm?
+🦜|feathers|The parrot had green and yellow feathers.|Which animals have feathers?
+🐆|hunt|The lion was hiding because it wanted to hunt.|Which animals hunt for their food?
+🪺|nest|The bird built a nest in our tree.|Where do birds build a nest?
+🐕‍🦺|tail|The dog wagged its tail when I came home.|Why does a dog wag its tail?
+🦊|wild|A wild fox ran across the road yesterday.|Have you ever seen a wild animal?
+🐹|pet|I wanted a pet, but my mom said no.|What pet would you like to have?
+🦈|shark|We saw a shark at the aquarium last summer.|Are you afraid of sharks?
+🔔|bark|The dog barked loudly when the doorbell rang.|When does a dog bark?
+🐹|cage|The hamster escaped from its cage this morning.|Which pets live in a cage?`,
+school:`📝|homework|I finished my homework before I went outside.|When do you do your homework?
+🏫|classroom|Our classroom was very noisy after the break.|What is in your classroom?
+💯|test|I studied hard because we had a math test.|How do you get ready for a test?
+⚽|break|During the break we played soccer in the yard.|What do you do during the break?
+📚|library|I borrowed two books from the school library.|What do you do in the library?
+🔤|lesson|The English lesson was fun, but it was short.|What is your favorite lesson?
+🤝|friend|My best friend sat next to me today.|Who is your best friend?
+🤦|forgot|I forgot my pencil case at home again.|What did you forget at home once?
+👩‍💼|principal|The principal visited our class this morning.|What does the principal do?
+🔬|project|We worked on a science project in groups.|What project did you do at school?
+🙋|answer|I raised my hand and gave the right answer.|What do you do when you know the answer?
+🗓️|schedule|Our schedule changed, so we have art on Monday.|What is on your schedule on Sunday?`,
+home:`🛏️|bedroom|I cleaned my bedroom because it was very messy.|What is in your bedroom?
+🌷|garden|We planted flowers in the garden last spring.|What grows in your garden?
+🪜|stairs|I fell down the stairs, but I was okay.|Do you have stairs in your home?
+🏘️|neighbor|Our neighbor gave us a cake for the holiday.|Who is your neighbor?
+🍽️|dishes|I washed the dishes after dinner last night.|Who washes the dishes in your home?
+🌇|balcony|We sat on the balcony and watched the sunset.|What do you do on the balcony?
+🛌|blanket|I was cold, so I took another blanket.|When do you need a blanket?
+🧺|laundry|Mom asked me to hang the laundry outside.|Who does the laundry in your home?
+🏠|roof|The cat climbed onto the roof and couldn't get down.|What can you see from a roof?
+🧃|floor|My little brother spilled juice all over the floor.|What is on your floor right now?
+🍪|cupboard|I looked in the cupboard, but there were no cookies.|What do you keep in the cupboard?
+🚿|shower|I had a quick shower before school today.|When do you have a shower?`,
+clothes:`👖|pocket|I found some money in my jacket pocket.|What do you keep in your pocket?
+🏴‍☠️|costume|I wore a pirate costume for the party.|What costume did you wear for Purim?
+😴|pajamas|I stayed in my pajamas all Saturday morning.|What color are your pajamas?
+🧥|raincoat|It was raining, so I wore my raincoat.|When do you wear a raincoat?
+👞|tight|These shoes are too tight, so they hurt.|What do you do when your shoes are too tight?
+🔘|buttons|My coat lost two buttons on the way home.|Which clothes have buttons?
+🧶|sweater|Grandma knitted me a warm sweater for winter.|What color is your favorite sweater?
+🩱|swimsuit|I packed my swimsuit because we went to the beach.|Where do you wear a swimsuit?
+🎒|zipper|The zipper on my backpack broke yesterday.|What has a zipper?
+🧥|hood|I put up my hood when it started to rain.|When do you put up your hood?
+🛍️|shopping|We went shopping and I chose new sneakers.|What do you like to buy when you go shopping?
+👕|dirty|My shirt was dirty after the soccer game.|What do you do with dirty clothes?`,
+weather:`📺|forecast|The forecast said it would rain all weekend.|What does the forecast say for tomorrow?
+🏖️|sunny|It was sunny, so we went to the beach.|What do you do on a sunny day?
+💦|wet|I got very wet because I forgot my umbrella.|When do you get wet?
+🌩️|thunder|The thunder was so loud that the dog hid.|How do you feel when you hear thunder?
+🌤️|warm|Yesterday was warm, but today is cold again.|What do you wear when it is warm?
+🌫️|fog|We couldn't see the road because of the fog.|Why is it hard to drive in the fog?
+🔥|heat|The heat was terrible in August last year.|What do you do in the summer heat?
+💧|puddle|My little sister jumped into every puddle.|Do you like to jump in a puddle?
+☁️|cloudy|It was cloudy all day, but it didn't rain.|Is it cloudy today?
+🧊|freezing|It was freezing, so I wore two sweaters.|What do you wear when it is freezing?
+🍃|breeze|A cool breeze came from the sea in the evening.|Where can you feel a cool breeze?
+🌸|season|My favorite season is spring because of the flowers.|What is your favorite season? Why?`,
+actions:`🎹|practice|I practiced the piano for an hour yesterday.|What did you practice last week?
+🏆|win|Our team won the game in the last minute.|What game did you win last time?
+🥎|throw|He threw the ball over the fence by mistake.|How far can you throw a ball?
+🧱|build|We built a tower with blocks, but it fell.|What did you build with blocks?
+🚌|catch|I tried to catch the bus, but I missed it.|Can you catch a ball with one hand?
+🙈|hide|My brother hid behind the door to scare me.|Where did you hide in hide and seek?
+😂|laugh|We laughed so much at the funny movie.|What made you laugh yesterday?
+🛍️|carry|I helped Grandpa carry the heavy bags home.|What do you carry to school?
+⏳|wait|We waited for the bus in the rain.|What do you do while you wait for the bus?
+🐉|draw|She drew a dragon and colored it green.|What did you draw last time?
+🔑|lose|I lost my key, so I couldn't open the door.|What did you lose last week?
+📣|shout|The coach shouted because we weren't listening.|When do people shout?`},
+hard:{
+food:`🧂|ingredients|We needed three ingredients for the cake, but the shop had already closed.|What ingredients do you need to make a cake?
+😋|delicious|The soup smelled delicious, so everyone hurried to the table.|What is the most delicious food you have ever eaten?
+🥬|vegetarian|My cousin is vegetarian, so we cooked pasta with vegetables instead of meat.|Would you like to be vegetarian? Why or why not?
+🍝|restaurant|If we finish our homework early, we can go to the restaurant tonight.|What is your favorite restaurant, and what do you order there?
+📜|menu|The menu was so long that I couldn't decide what to order.|What do you usually choose from a menu?
+🍏|healthy|Fruit is healthy, although sweets are much more fun to eat.|What do you eat to stay healthy?
+🌶️|spicy|The sauce was too spicy for me, but my brother loved it.|Do you like spicy food? Why or why not?
+🧊|fridge|Someone left the fridge open all night, and now the milk is warm.|What is in your fridge right now?
+🥐|bakery|Every Friday morning, the bakery smells of fresh bread and cinnamon.|What would you buy at a bakery?
+🧺|picnic|We were planning a picnic in the park, but it started to rain.|Where would you like to go for a picnic?
+🍽️|dinner|While Dad was making dinner, I set the table for six people.|Who makes dinner in your house?
+🍕|leftovers|There were so many leftovers that we ate pizza again the next day.|What do you do with leftovers?`,
+animals:`🐼|endangered|Many animals are endangered because people are destroying the forests where they live.|Why are some animals endangered?
+🐻‍❄️|habitat|Polar bears are losing their habitat because the ice is melting.|What is the habitat of a camel?
+🦎|camouflage|The chameleon uses camouflage, so its enemies cannot see it on the branch.|Which animals use camouflage to hide?
+🦉|nocturnal|Owls are nocturnal, which means they hunt at night and sleep during the day.|Can you name an animal that is nocturnal?
+🦢|migrate|Every fall, millions of birds migrate south to find warmer weather.|Why do birds migrate in the fall?
+🩺|veterinarian|When our cat got sick, we took her to the veterinarian right away.|Would you like to be a veterinarian? Why or why not?
+🦅|predator|The rabbit froze in the grass when it noticed a predator nearby.|Which animal is a predator, and what does it hunt?
+🐘|herd|A herd of elephants walked slowly toward the river to drink.|Which animals live in a herd?
+🐬|dolphin|Dolphins are smarter than many other animals, and they can work together.|What do you know about dolphins?
+🐸|species|Scientists discovered a new species of frog in the rainforest last year.|Which species of animal is your favorite?
+🐾|claws|The cat scratched the sofa with its sharp claws while we were out.|Which animals have sharp claws?
+🐋|enormous|The whale was so enormous that it looked like a small island.|What is the most enormous animal you know?`,
+school:`🧪|experiment|During the science experiment, the liquid suddenly changed color and started to bubble.|What experiment would you like to try in science class?
+🎤|presentation|I was nervous before my presentation, but everyone clapped when I finished.|How do you feel before a presentation?
+📖|dictionary|If you don't know a word, you can look it up in the dictionary.|When do you use a dictionary?
+🧠|concentrate|It is hard to concentrate when the class next door is so loud.|Where is it easiest for you to concentrate?
+👩‍🏫|explain|The teacher explained the question again because nobody understood it the first time.|What would you like your teacher to explain again?
+🪐|semester|This semester we are learning about the planets and the solar system.|What are you learning this semester?
+✏️|mistake|Making mistakes is part of learning, so don't be afraid to try.|What do you do when you make a mistake?
+🚍|field trip|Our class is going on a field trip to the museum next Thursday.|Where would you like to go on a field trip?
+🅰️|grade|She got a better grade than last time because she practiced every day.|How can you get a better grade in English?
+👔|uniform|At my cousin's school, everyone has to wear a uniform with a blue tie.|Would you like to wear a school uniform? Why or why not?
+📈|improve|My reading has improved a lot since I started reading every night.|What would you like to improve this year?
+📦|curious|The students were curious about the strange box on the teacher's desk.|What are you curious about?`,
+home:`🛋️|furniture|We moved all the furniture into the living room because the painters were coming.|What furniture is in your room?
+🪑|comfortable|This armchair is more comfortable than the sofa, so everyone wants it.|What is the most comfortable place in your home?
+🏢|apartment|We live on the fourth floor of an apartment building with no elevator.|What can you see from a tall apartment building?
+🕯️|electricity|When the electricity went off, we lit candles and told stories in the dark.|What do you do when the electricity goes off?
+🔨|renovate|My parents decided to renovate the kitchen, so we ate outside for a month.|Which room would you like to renovate?
+🧹|chores|If I do my chores without complaining, I get extra time on the computer.|What chores do you do at home?
+🚨|alarm|The fire alarm went off while Dad was burning the toast again.|When does your alarm ring in the morning?
+🧽|vacuum|I had to vacuum the whole house before our guests arrived.|Who vacuums in your home?
+📦|basement|We found old photos in a box in the basement of Grandma's house.|What would you keep in a basement?
+🔔|doorbell|The doorbell rang just as I got into the bath.|What do you do when the doorbell rings?
+🪜|borrow|Our neighbors asked to borrow a ladder because theirs was broken.|What do you borrow from your friends?
+🧸|tidy|My room is much tidier than my sister's, although she says it isn't.|Is your room tidy or messy?`,
+clothes:`👠|fashionable|My sister thinks these shoes are fashionable, but I think they look strange.|What do you think is fashionable right now?
+📏|size|The jacket was the right color, but it was two sizes too big.|What size shoes do you wear?
+👕|cotton|I prefer cotton T-shirts because they are softer and cooler in summer.|Why are cotton clothes good for summer?
+🚪|closet|My closet is so full that I can't close the door anymore.|What is in your closet?
+☔|waterproof|Make sure your jacket is waterproof, because it is going to pour tonight.|Why do you need waterproof clothes in winter?
+👔|ironing|Dad was ironing his shirt when he realized he was already late.|Who does the ironing in your home?
+👟|shoelaces|I tripped over my shoelaces because I forgot to tie them.|Can you tie your shoelaces quickly?
+👗|outfit|She spent an hour choosing an outfit for her cousin's wedding.|What is your favorite outfit?
+🍫|stain|I spilled chocolate on my white shirt, and the stain won't come out.|How can you get a stain out of a shirt?
+🧾|receipt|You can return the shoes if you still have the receipt.|Why should you keep the receipt?
+🕵️|disguise|The detective wore a long coat and a hat as a disguise.|What disguise would you wear to surprise your friends?
+🧺|shrink|If you wash this sweater in hot water, it will shrink.|What happens if you wash a wool sweater in hot water?`,
+weather:`🌡️|temperature|The temperature dropped quickly after sunset, so we lit a fire.|What is the temperature like in summer where you live?
+💦|humid|In summer the air is so humid that my clothes stick to me.|How do you feel when the air is humid?
+🏜️|drought|After a long drought, the farmers were happy to see the first rain.|Why is a drought a problem for farmers?
+🌊|flood|The heavy rain caused a flood, and some streets were closed for days.|What can people do when there is a flood?
+🧊|hail|Hail as big as marbles fell on our car during the storm.|What can hail do to cars and plants?
+🌍|climate|The climate is changing, and summers are getting hotter every year.|How is the climate changing?
+🥵|heatwave|During the heatwave, we stayed inside with the air conditioner on.|How do you keep cool during a heatwave?
+🛰️|predict|Scientists use satellites to predict when a big storm is coming.|How do scientists predict the weather?
+🌪️|sandstorm|A sandstorm turned the sky yellow, and we couldn't see the hills.|What should you do during a sandstorm?
+⛈️|thunderstorm|The thunderstorm kept us awake, so we were all tired the next morning.|What do you do during a thunderstorm?
+🌉|shelter|When the storm began, we ran to find shelter under a bridge.|Where can you find shelter in a storm?
+🏔️|unpredictable|The weather in the mountains is unpredictable, so always bring a jacket.|Why is the weather sometimes unpredictable?`,
+actions:`🥇|competition|She practiced every day for months, and finally she won the competition.|What competition would you like to win?
+🏰|explore|We explored the old castle until it got too dark to see.|What place would you like to explore?
+🚒|rescue|The firefighters climbed a tall ladder to rescue a cat from the tree.|Who rescues people in an emergency?
+🤖|invent|If I could invent anything, I would invent a robot that does homework.|What would you invent if you could?
+🛹|balance|It took me a week to learn how to balance on my skateboard.|What can you balance on?
+🎉|celebrate|We celebrated Grandpa's birthday with a surprise party in the garden.|How does your family celebrate birthdays?
+🚗|argue|My brother and I always argue about who gets the front seat.|What do you and your brothers or sisters argue about?
+🙏|apologize|I apologized to my friend because I had broken her favorite pen.|When should you apologize?
+🤫|whisper|We whispered in the library so we wouldn't disturb anyone.|When do you whisper?
+📋|organize|Our class organized a sale to raise money for the animal shelter.|What would you like to organize for your class?
+💇|recognize|I didn't recognize my teacher at first because she had cut her hair.|How do you recognize your friend from far away?
+🏥|volunteer|On Fridays my mom volunteers at the hospital, helping children with their homework.|Where would you like to volunteer?`}
 };
-
-const LEVELS=[
- {n:1,name:'Read the word',short:'See it, say it',task:'Read the word out loud',sentence:false,hear:false},
- {n:2,name:'Read the sentence',short:'See it, say it',task:'Read the sentence out loud',sentence:true,hear:false},
- {n:3,name:'Repeat the word',short:'Hear it, say it',task:'Listen and repeat the word',sentence:false,hear:true},
- {n:4,name:'Repeat the sentence',short:'Hear it, say it',task:'Listen and repeat the sentence',sentence:true,hear:true}
+const BANDS=[
+ {id:'easy',name:'Easy',desc:'Short sentences, everyday words'},
+ {id:'medium',name:'Medium',desc:'Longer sentences, past tense'},
+ {id:'hard',name:'Hard',desc:'Long sentences, harder words'}
 ];
-const THEMES={
- museum:{name:'Museum Vault',icon:'🏛️',marker:'🔦',
-   stops:['Entrance Hall','Dinosaur Wing','Ancient Egypt','Ocean Gallery','Space Hall','Art Gallery','Map Room','Clock Tower'],
-   goal:'The Vault',goalIcon:'💎',brief:'Open each door to move through the museum. Collect the vault code.'},
- mountain:{name:'Mountain Expedition',icon:'🏔️',marker:'🧗',
-   stops:['Base Camp','Pine Forest','River Crossing','Rocky Ridge','Ice Bridge','Eagle Point','Cloud Camp','High Pass'],
-   goal:'The Summit',goalIcon:'🚩',brief:'Open each camp to climb higher. Collect the pieces of the summit flag.'}
-};
-const NUMWORDS=['ZERO','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE'];
+/* extra forms the game accepts for a word (spoken, typed, or used in an answer) */
+const FORMS={win:'won',throw:'threw|thrown',build:'built',hide:'hid|hidden',draw:'drew|drawn',lose:'lost',forgot:'forget',
+  catch:'caught',run:'ran',swim:'swam',ride:'rode',sing:'sang|sung',write:'wrote|written',shrink:'shrank|shrunk',sleep:'slept|asleep',
+  television:'tv|telly',teacher:'teach',backpack:'back pack|bag',notebook:'note book',sunglasses:'sun glasses',toothbrush:'tooth brush',
+  snowman:'snow man',rainbow:'rain bow',lightning:'lighting|lightening',heatwave:'heat wave',sandstorm:'sand storm',
+  thunderstorm:'thunder storm',raincoat:'rain coat',swimsuit:'swim suit|bathing suit',shoelaces:'shoe laces|shoelace',doorbell:'door bell',
+  classroom:'class room',bedroom:'bed room',cupboard:'cup board|cabinet',pajamas:'pyjamas',practice:'practise',neighbor:'neighbour',
+  apologize:'apologise',organize:'organise',recognize:'recognise','field trip':'trip',scissors:'scissor',shoes:'shoe',
+  socks:'sock',gloves:'glove',boots:'boot',jeans:'jean',feathers:'feather',buttons:'button',claws:'claw',vegetables:'vegetable',
+  pancakes:'pancake',leftovers:'leftover|left over',ingredients:'ingredient',stairs:'stair',dishes:'dish',chores:'chore',
+  tidy:'tidier|tidiest',healthy:'healthier|health',enormous:'huge',dolphin:'dolphins'};
+
+const BANK={};
+for(const [band,topics] of Object.entries(RAW)){
+  BANK[band]={};
+  for(const [topic,txt] of Object.entries(topics)){
+    BANK[band][topic]=txt.trim().split('\n').map(line=>{
+      const [e,w,s,q]=line.split('|').map(x=>x.trim());
+      return {e,w,s,q,topic,band};
+    });
+  }
+}
+
+/* =====================================================
+   LEVELS
+   ===================================================== */
+const LEVELS=[
+ {n:1,kind:'speak',sent:false,hear:false,icon:'👁️',name:'Read the word',task:'Read the word out loud'},
+ {n:2,kind:'speak',sent:false,hear:true, icon:'👂',name:'Repeat the word',task:'Listen and say the word'},
+ {n:3,kind:'type', sent:false,hear:true, icon:'⌨️',name:'Spell the word',task:'Listen and type the word'},
+ {n:4,kind:'speak',sent:true, hear:false,icon:'📖',name:'Read the sentence',task:'Read the sentence out loud'},
+ {n:5,kind:'speak',sent:true, hear:true, icon:'🔁',name:'Repeat the sentence',task:'Listen and say the sentence'},
+ {n:6,kind:'build',sent:true, hear:false,icon:'🧩',name:'Build the sentence',task:'Put the words in order'},
+ {n:7,kind:'type', sent:true, hear:true, icon:'✍️',name:'Write the sentence',task:'Listen and type the sentence'},
+ {n:8,kind:'answer',sent:false,hear:true,icon:'💬',name:'Answer the question',task:'Listen and answer in a full sentence'}
+];
+const MIN_ANSWER={easy:3,medium:4,hard:5};
+const idxOf=(band,lvl)=>BANDS.findIndex(b=>b.id===band)*8+(lvl-1);
+const fromIdx=i=>({band:BANDS[Math.floor(i/8)].id,level:i%8+1});
 
 /* =====================================================
    ANSWER CHECKING
    ===================================================== */
 const NUM={'0':'zero','1':'one','2':'two','3':'three','4':'four','5':'five','6':'six','7':'seven','8':'eight','9':'nine','10':'ten'};
+const BRIT={colour:'color',colours:'colors',coloured:'colored',favourite:'favorite',neighbour:'neighbor',neighbours:'neighbors',
+  practise:'practice',practised:'practiced',organise:'organize',organised:'organized',apologise:'apologize',apologised:'apologized',
+  recognise:'recognize',realised:'realized',realise:'realize',grey:'gray',mum:'mom',pyjamas:'pajamas',theatre:'theater',centre:'center',
+  okay:'ok'};
 const SOUNDS_LIKE={two:['to','too'],four:['for'],eight:['ate'],red:['read'],blue:['blew'],sea:['see'],see:['sea'],
-  an:['a','and','in'],a:['an','the','uh'],the:['a'],i:['eye'],in:['an'],its:['it'],hot:['hard'],cold:['called'],
-  write:['right'],writing:['riding'],rain:['reign'],eat:['it'],cap:['cup','cat'],sun:['son'],light:['like','lights']};
-function norm(t){
-  t=(t||'').toLowerCase().replace(/(\d+):00/g,'$1 oclock').replace(/[’']/g,'').replace(/color/g,'colour').replace(/[^a-z0-9\s]/g,' ');
-  const words=t.split(/\s+/).filter(Boolean).map(w=>NUM[w]||w);
-  return{words,text:' '+words.join(' ')+' '};
+  an:['a','and','in'],a:['an','the','uh'],the:['a'],i:['eye'],in:['an'],hot:['hard'],write:['right'],rain:['reign'],
+  eat:['it'],sun:['son'],won:['one'],threw:['through'],hole:['whole'],our:['are','hour'],their:['there'],theirs:['there\'s'],
+  its:['it\'s'],weather:['whether'],would:['wood'],knew:['new'],no:['know'],hear:['here'],by:['buy','bye'],flour:['flower']};
+function words(t){
+  t=(t||'').toLowerCase().replace(/(\d+):00/g,'$1 oclock').replace(/[’'`]/g,'').replace(/-/g,' ').replace(/[^a-z0-9\s]/g,' ');
+  return t.split(/\s+/).filter(Boolean).map(w=>BRIT[w]||NUM[w]||w);
 }
 function lev(a,b){
   const m=a.length,n=b.length;if(Math.abs(m-n)>2)return 9;
@@ -381,15 +649,28 @@ function wordHits(w,t){
   if(t.length>=8&&lev(w,t)<=2)return true;
   return false;
 }
-function hasKey(n,key){
-  return key.split('|').some(alt=>{
-    if(alt.includes(' '))return n.text.includes(' '+alt+' ');
-    return n.words.some(w=>wordHits(w,alt)||(alt.length>=4&&w.startsWith(alt)));
+/* every way of saying the target word */
+function keyAlts(word){
+  const alts=new Set([word]);
+  (FORMS[word]||'').split('|').filter(Boolean).forEach(a=>alts.add(a));
+  if(!word.includes(' ')){
+    if(/e$/.test(word)&&word.length>3)alts.add(word.slice(0,-1));
+    if(/[^aeiou]y$/.test(word))alts.add(word.slice(0,-1)+'i');
+    if(/^[^aeiou]*[aeiou][^aeiouwxy]$/.test(word))alts.add(word+word.slice(-1));
+  }
+  return [...alts];
+}
+function usesWord(text,word){
+  const ws=words(text),joined=' '+ws.join(' ')+' ';
+  return keyAlts(word).some(alt=>{
+    const a=words(alt);
+    if(a.length>1)return joined.includes(' '+a.join(' ')+' ');
+    const t=a[0];
+    return ws.some(w=>wordHits(w,t)||(t.length>=4&&w.startsWith(t)&&w.length-t.length<=4));
   });
 }
-/* Sentence: which target words were said (in order, loosely). */
 function matchSentence(said,target){
-  const s=norm(said).words,tw=norm(target).words;
+  const s=words(said),tw=words(target);
   let pos=0;const hits=tw.map(()=>false);
   tw.forEach((t,i)=>{
     for(let j=pos;j<Math.min(s.length,pos+4);j++){if(wordHits(s[j],t)){hits[i]=true;pos=j+1;return}}
@@ -398,28 +679,47 @@ function matchSentence(said,target){
   });
   return hits;
 }
-function check(alts,item,lvl){
-  if(!LEVELS[lvl-1].sentence){
-    return{ok:alts.some(a=>hasKey(norm(a),item.k)),hits:null};
+function checkSpeech(alts,item,L){
+  if(L.kind==='answer'){
+    const min=MIN_ANSWER[item.band];
+    const used=alts.some(a=>usesWord(a,item.w));
+    const ok=alts.some(a=>usesWord(a,item.w)&&words(a).length>=min);
+    return{ok,used,short:used&&!ok,min};
   }
+  if(!L.sent)return{ok:alts.some(a=>usesWord(a,item.w))};
   let best=null;
-  for(const a of alts){
-    const hits=matchSentence(a,item.s),n=hits.filter(Boolean).length;
-    if(!best||n>best.n)best={hits,n};
-  }
-  const total=best.hits.length,keyOk=alts.some(a=>hasKey(norm(a),item.k));
-  const need=Math.max(total-(total>=7?2:1),Math.ceil(total*0.75));
+  for(const a of alts){const hits=matchSentence(a,item.s),n=hits.filter(Boolean).length;if(!best||n>best.n)best={hits,n}}
+  const total=best.hits.length,keyOk=alts.some(a=>usesWord(a,item.w));
+  const need=Math.max(total-(total>=9?2:1),Math.ceil(total*0.75));
   return{ok:keyOk&&best.n>=need,hits:best.hits,n:best.n,total};
+}
+/* typing: spelling must be right; capitals and punctuation don't matter */
+function checkTyped(typed,item,L){
+  const target=L.sent?item.s:item.w;
+  const tw=words(target),yw=words(typed);
+  const okWords=yw.map((w,i)=>w===tw[i]);
+  const ok=yw.length===tw.length&&okWords.every(Boolean);
+  const raw=typed.trim().split(/\s+/);
+  return{ok,yw:raw.length===yw.length?raw:yw,okWords,tLen:tw.length};
 }
 
 /* =====================================================
-   SAVED SETTINGS
+   SAVED PROGRESS (in this browser)
    ===================================================== */
 let store={};
-try{store=JSON.parse(localStorage.getItem('sayItToOpenIt2')||'{}')}catch(e){}
-function save(){try{localStorage.setItem('sayItToOpenIt2',JSON.stringify(store))}catch(e){}}
-store.best=store.best||{};
+try{store=JSON.parse(localStorage.getItem('sayItToOpenIt3')||'{}')}catch(e){}
+store.unlocked=store.unlocked||0;store.best=store.best||{};store.shelf=store.shelf||{museum:{},mountain:{}};
+function save(){try{localStorage.setItem('sayItToOpenIt3',JSON.stringify(store))}catch(e){}}
+/* start point from the English Corner link: ?start=medium  or  ?start=medium-3 */
+(function(){
+  const p=new URLSearchParams(location.search).get('start');if(!p)return;
+  const [b,l]=p.toLowerCase().split('-');const bi=BANDS.findIndex(x=>x.id===b);if(bi<0)return;
+  const lvl=Math.min(8,Math.max(1,parseInt(l)||1));const idx=bi*8+lvl-1;
+  if(idx>store.unlocked){store.unlocked=idx;store.sel=idx;save()}
+})();
 const $=s=>document.querySelector(s);
+/* teacher mode: add ?admin to the address. Everything open, nothing saved. */
+const ADMIN=new URLSearchParams(location.search).has('admin');
 
 /* =====================================================
    VOICE
@@ -461,31 +761,31 @@ document.querySelectorAll('#speedSeg button').forEach(b=>{
     document.querySelectorAll('#speedSeg button').forEach(x=>x.classList.toggle('on',x===b));say('This is my speed.')};
 });
 /* Speaking pauses the mic, so the game never hears its own voice. */
-function say(text,onEnd){
+function say(text,onEnd,slow){
   if(!hasTTS){onEnd&&onEnd();return}
   speaking=true;micPause();updateMicUI();
   speechSynthesis.cancel();
-  let done=false;
+  let done=false;const r=slow?Math.min(rate,0.7):rate;
   const finish=()=>{if(done)return;done=true;speaking=false;updateMicUI();
-    if(micWanted&&cur&&!cur.won)setTimeout(micStart,150);onEnd&&onEnd()};
+    if(micWanted&&cur&&micOK())setTimeout(micStart,150);onEnd&&onEnd()};
   setTimeout(()=>{
     const u=new SpeechSynthesisUtterance(text);
     if(voice){u.voice=voice;u.lang=voice.lang}else u.lang='en-US';
-    u.rate=rate;u.onend=finish;u.onerror=finish;
+    u.rate=r;u.onend=finish;u.onerror=finish;
     speechSynthesis.speak(u);
-    setTimeout(finish,1500+text.length*110/rate);
+    setTimeout(finish,1800+text.length*120/r);
   },60);
 }
 
 /* =====================================================
-   MICROPHONE  (stays on while a door is open)
+   MICROPHONE (stays on while a door is open)
    ===================================================== */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 let rec=null,recOn=false,micWanted=false,quietEnds=0;
 if(!SR)$('#noMic').classList.remove('hidden');
-
+function micOK(){return cur&&!cur.doorWon&&(cur.finale?!cur.won:needsMic())}
 function micStart(){
-  if(!SR||!cur||cur.won||speaking||recOn)return;
+  if(!SR||!micOK()||speaking||recOn)return;
   micWanted=true;
   rec=new SR();rec.lang='en-US';rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=4;
   let heardSomething=false;
@@ -498,13 +798,13 @@ function micStart(){
   };
   rec.onerror=e=>{
     if(['not-allowed','service-not-allowed','audio-capture','network'].includes(e.error)){
-      micWanted=false;if(cur){cur.fb=micErrorText(e.error);cur.fbClass='bad';renderDoor()}
+      micWanted=false;if(cur){setFb(micErrorText(e.error),'bad')}
     }
   };
   rec.onend=()=>{
     recOn=false;
     quietEnds=heardSomething?0:quietEnds+1;
-    if(micWanted&&cur&&!cur.won&&!speaking){
+    if(micWanted&&micOK()&&!speaking){
       if(quietEnds>=3){micWanted=false;quietEnds=0;updateMicUI();return}
       setTimeout(()=>{if(micWanted&&!recOn&&!speaking)micStart()},250);
     }
@@ -521,8 +821,6 @@ function micErrorText(err){
   if(err==='audio-capture')return 'No microphone found. Check that one is plugged in.';
   return 'Something went wrong with the microphone. Try again.';
 }
-
-/* start-screen mic test */
 let testRec=null;
 $('#micTest').onclick=()=>{
   const out=$('#micTestOut');
@@ -551,34 +849,71 @@ function tone(freqs,dur=.12,type='sine',gap=.09){
       const t=actx.currentTime+i*gap;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.16,t+.02);
       g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+dur+.05)})}catch(e){}
 }
+const sfxRight=()=>tone([660,880],.15,'triangle',.08);
 const sfxUnlock=()=>tone([523,659,784,1047],.25,'triangle',.08);
 const sfxWrong=()=>tone([220,180],.18,'square',.12);
 const sfxFinish=()=>tone([523,659,784,1047,1319],.35,'triangle',.11);
 
 /* =====================================================
+   REWARDS
+   ===================================================== */
+const ARTIFACTS=[['🏺','Ancient Vase'],['👑','Golden Crown'],['💍','Ruby Ring'],['🗿','Stone Head'],['🦴','Dinosaur Bone'],['📜','Old Scroll'],
+ ['⚱️','Royal Urn'],['🪙','Gold Coin'],['🗝️','Silver Key'],['🛡️','Knight\'s Shield'],['⚔️','Crossed Swords'],['🏆','Golden Cup'],
+ ['🎭','Theater Masks'],['🧿','Blue Charm'],['🔮','Crystal Ball'],['🪔','Magic Lamp'],['📿','Pearl Necklace'],['🧭','Explorer\'s Compass'],
+ ['⌛','Hourglass'],['🏮','Paper Lantern'],['🦕','Dino Skeleton'],['🐚','Golden Shell'],['☄️','Meteorite'],['💎','Giant Diamond']];
+const VIEWS=[
+ ['Pine Valley','#f6a65b','#4a7a5a'],['Eagle Peak','#f7c26b','#3f6d7d'],['Misty Lake','#f2b8a0','#4c6f8c'],['Red Canyon','#f39b5a','#a0532e'],
+ ['Snow Ridge','#ffd59a','#8aa8c8'],['Desert Dunes','#ffbf69','#c98b45'],['Sea Cliffs','#ffb3a0','#2f6f8f'],['Volcano Top','#ff8a5c','#5a3a3a'],
+ ['Glacier Bay','#ffe2b0','#7fb0cf'],['Golden Hills','#ffc870','#a88a3a'],['Cloud Forest','#f4b6c2','#3f7a62'],['Waterfall Rim','#ffd08a','#3c7f86'],
+ ['Wolf Mountain','#f6a07a','#55607a'],['Sunset Mesa','#ff9d6c','#9b5a3c'],['Crystal Peak','#ffe0c0','#8f9fd8'],['Island View','#ffc59a','#2f8f9f'],
+ ['Moon Crater','#e9c8ff','#6a5f8a'],['Dragon\'s Back','#ff9f7a','#4f6a4a'],['Ice Tower','#d8ecff','#9fc0e0'],['Thunder Ridge','#ffb27a','#4a5470'],
+ ['Rainbow Pass','#ffc0d8','#6f8f5f'],['Star Summit','#c8b6ff','#3a3f6a'],['Sky Kingdom','#ffd6a6','#5d7fb0'],['Top of the World','#ffd080','#e8eef6']];
+function viewSVG(i,w){
+  const [name,sky,land]=VIEWS[i%24];
+  return `<svg viewBox="0 0 120 70" width="${w||'100%'}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="vg${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3f6e"/><stop offset="1" stop-color="${sky}"/></linearGradient></defs>
+    <rect width="120" height="70" fill="url(#vg${i})"/><circle cx="${30+(i*13)%60}" cy="44" r="9" fill="#fff3c4" opacity=".9"/>
+    <polygon points="0,70 0,48 22,34 40,46 62,28 84,44 104,32 120,42 120,70" fill="${land}" opacity=".75"/>
+    <polygon points="0,70 0,58 30,48 55,58 80,50 120,60 120,70" fill="${land}"/></svg>`;
+}
+
+/* =====================================================
    SETUP SCREEN
    ===================================================== */
-let theme=null,level=store.level||1,topic=store.topic||'food';
+let theme=null,pickTheme=null,selIdx=Math.min(store.unlocked,store.sel??store.unlocked),topic=store.topic||'mixed';
 function renderSetup(){
   const locked=!!theme;
   $('#themePick').classList.toggle('hidden',locked);
   $('#themeLocked').classList.toggle('hidden',!locked);
   if(locked)$('#themeNow').textContent=THEMES[theme].icon+'  '+THEMES[theme].name;
   document.querySelectorAll('.theme').forEach(b=>b.classList.toggle('on',b.dataset.th===pickTheme));
-  $('#levels').innerHTML=LEVELS.map(l=>`<button class="lvl ${l.n===level?'on':''}" data-l="${l.n}"><b>LEVEL ${l.n}</b><span>${l.name}</span><small>${l.short}</small></button>`).join('');
-  const th=theme||pickTheme;
-  $('#topics').innerHTML=Object.entries(TOPICS).map(([id,t])=>{
-    const b=th?store.best[th+'-'+level+'-'+id]:null;
-    return `<button class="topic ${id===topic?'on':''}" data-t="${id}"><span class="i">${t.icon}</span>${t.name}<small>${b!=null?'Best: '+b+'/24 🔑':'&nbsp;'}</small></button>`}).join('');
-  document.querySelectorAll('.lvl').forEach(b=>b.onclick=()=>{level=+b.dataset.l;renderSetup()});
+  $('#ladder').innerHTML=BANDS.map((b,bi)=>`<div class="band"><div class="bandhead"><b>${b.name}</b><small>${b.desc}</small></div>
+    <div class="ladder">${LEVELS.map(L=>{
+      const i=bi*8+L.n-1,lockd=!ADMIN&&i>store.unlocked,best=store.best[i];
+      return `<button class="lv ${lockd?'locked':''} ${best>=12?'done':''} ${i===selIdx?'on':''}" data-i="${i}" ${lockd?'disabled':''}>
+        <span class="n">${lockd?'🔒':'LEVEL '+L.n}</span><span class="i">${L.icon}</span><span class="t">${L.name}</span>
+        ${best!=null?`<span class="best">${best}/24 🔑</span>`:''}</button>`}).join('')}</div></div>`).join('');
+  document.querySelectorAll('.lv:not(.locked)').forEach(b=>b.onclick=()=>{selIdx=+b.dataset.i;renderSetup()});
+  $('#topics').innerHTML=[['mixed','🎲 Mixed topics'],...Object.entries(TOPIC_INFO).map(([id,[n,ic]])=>[id,ic+' '+n])]
+    .map(([id,label])=>`<button class="topic ${id===topic?'on':''}" data-t="${id}">${label}</button>`).join('');
   document.querySelectorAll('.topic').forEach(b=>b.onclick=()=>{topic=b.dataset.t;renderSetup()});
+  const {band,level}=fromIdx(selIdx);
+  $('#selText').textContent=BANDS.find(b=>b.id===band).name+' · Level '+level+': '+LEVELS[level-1].name;
+  renderShelf();
 }
-let pickTheme=null;
+function renderShelf(){
+  const th=theme||pickTheme||'museum';
+  const got=store.shelf[th]||{};
+  $('#collTitle').textContent=th==='museum'?'🏛️ Your trophy shelf':'🏔️ Your summit postcards';
+  $('#shelf').innerHTML=Array.from({length:24},(_,i)=>{
+    const have=got[i];
+    if(th==='museum')return `<div class="item ${have?'':'empty'}"><span class="e">${have?ARTIFACTS[i][0]:'❔'}</span><small>${have?ARTIFACTS[i][1]:'Level '+(i%8+1)+' · '+BANDS[Math.floor(i/8)].name}</small></div>`;
+    return `<div class="item pc ${have?'':'empty'}">${have?viewSVG(i):'<div style="height:52px;display:grid;place-items:center;font-size:24px">❔</div>'}<small>${have?VIEWS[i][0]:'Level '+(i%8+1)+' · '+BANDS[Math.floor(i/8)].name}</small></div>`;
+  }).join('');
+}
 document.querySelectorAll('.theme').forEach(b=>b.onclick=()=>{pickTheme=b.dataset.th;renderSetup()});
 $('#newSession').onclick=()=>{theme=null;pickTheme=null;renderSetup()};
-renderSetup();
 function show(id){['start','map','end'].forEach(s=>$('#'+s).classList.toggle('hidden',s!==id));window.scrollTo(0,0)}
-
 $('#startBtn').onclick=()=>{
   if(!theme){
     if(!pickTheme){const tp=$('#themePick');tp.classList.remove('shake');void tp.offsetWidth;tp.classList.add('shake');say('First, choose your adventure.');return}
@@ -590,24 +925,39 @@ $('#startBtn').onclick=()=>{
 /* =====================================================
    ROUTE (the map)
    ===================================================== */
-let route=null;
+const THEMES={
+ museum:{name:'Museum Vault',icon:'🏛️',marker:'🔦',
+   stops:['Entrance Hall','Dinosaur Wing','Ancient Egypt','Ocean Gallery','Space Hall','Art Gallery','Map Room','Clock Tower'],
+   goal:'The Vault',goalIcon:'💎',brief:'Open each door to move through the museum. Collect the vault code.'},
+ mountain:{name:'Mountain Expedition',icon:'🏔️',marker:'🧗',
+   stops:['Base Camp','Pine Forest','River Crossing','Rocky Ridge','Ice Bridge','Eagle Point','Cloud Camp','High Pass'],
+   goal:'The Summit',goalIcon:'🚩',brief:'Open each camp to climb higher. Collect the pieces of the summit flag.'}
+};
+const NUMWORDS=['ZERO','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE'];
+let route=null,band='easy',level=1;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pickItems(){
+  const pool=topic==='mixed'?Object.values(BANK[band]).flat():BANK[band][topic];
+  let list=shuffle(pool);
+  while(list.length<24){let more=shuffle(pool);if(more[0]===list[list.length-1])more.push(more.shift());list=list.concat(more)}
+  return list.slice(0,24);
+}
 function startRoute(){
-  store.level=level;store.topic=topic;save();
+  ({band,level}=fromIdx(selIdx));
+  if(!ADMIN){store.sel=selIdx;store.topic=topic;save()}
+  const items=pickItems();
   route={
-    stops:shuffle(TOPICS[topic].items).slice(0,8).map(it=>({it,state:'locked',keys:0})),
-    code:Array.from({length:8},()=>Math.floor(Math.random()*10)),
-    pos:0
+    stops:Array.from({length:8},(_,i)=>({items:items.slice(i*3,i*3+3),state:'locked',keys:0})),
+    code:Array.from({length:8},()=>Math.floor(Math.random()*10)),pos:0
   };
   const TH=THEMES[theme],L=LEVELS[level-1];
-  $('#mLevel').textContent='Level '+level+' · '+L.name+' · '+TOPICS[topic].name;
+  $('#mLevel').textContent=BANDS.find(b=>b.id===band).name+' · Level '+level+' · '+L.name+' · '+(topic==='mixed'?'Mixed topics':TOPIC_INFO[topic][0]);
   $('#mTitle').textContent=TH.icon+'  '+TH.name;
-  $('#mBrief').textContent=TH.brief;
+  $('#mBrief').textContent=TH.brief+' Each door has 3 challenges.';
   renderRoute();show('map');
   say(theme==='museum'?'Welcome to the museum. Open the first door.':'Welcome to base camp. Open the first camp.');
 }
 function totalKeys(){return route.stops.reduce((s,d)=>s+d.keys,0)}
-
 const POS={
   mountain:[[120,500],[330,478],[560,452],[770,392],[575,328],[345,292],[165,222],[370,150],[615,72]],
   museum:[[150,105],[450,105],[750,105],[750,290],[450,290],[150,290],[150,470],[450,470],[750,470]]
@@ -636,22 +986,22 @@ function bgMuseum(){
   <pattern id="tiles" width="30" height="30" patternUnits="userSpaceOnUse"><rect width="30" height="30" fill="#14121f"/><path d="M30 0H0V30" fill="none" stroke="#1d1a2c"/></pattern>
   <rect x="8" y="8" width="884" height="544" rx="14" fill="url(#tiles)" stroke="#3a3554" stroke-width="3"/>${rooms}`;
 }
-function renderRoute(popIndex){
+function renderRoute(){
   const TH=THEMES[theme],P=POS[theme],st=route.stops,pos=route.pos;
   const pathAll='M'+P.map(p=>p.join(',')).join(' L');
   const pathDone=pos>0?'M'+P.slice(0,pos+1).map(p=>p.join(',')).join(' L'):'';
   const nodes=P.map(([x,y],i)=>{
     const goal=i===8,label=goal?TH.goal:TH.stops[i];
     let state,inner;
-    if(goal){state=pos===8?'current':'locked';inner=pos===8?TH.goalIcon:'🔐'}
-    else if(i<pos){state=st[i].state==='skip'?'skip':'done';inner=st[i].state==='skip'?'⛔':st[i].it.e}
-    else if(i===pos){state='current';inner='🚪'}
+    if(goal){state=(pos===8||ADMIN)?'current':'locked';inner=(pos===8||ADMIN)?TH.goalIcon:'🔐'}
+    else if(st[i].state==='open'||st[i].state==='skip'){state=st[i].state==='skip'?'skip':'done';inner=st[i].state==='skip'?'⛔':'🔓'}
+    else if(i===pos||ADMIN){state='current';inner='🚪'}
     else{state='locked';inner='🔒'}
     const fill=state==='done'?'#16403a':state==='current'?'#3a2c0e':state==='skip'?'#2a2a33':'#1a2333';
     const stroke=state==='done'?'#33d1b4':state==='current'?'#f4b740':'#3a4a66';
     const keys=state==='done'?`<text x="${x}" y="${y+56}" text-anchor="middle" font-size="12">${'🔑'.repeat(st[i].keys)}</text>`:'';
     const marker=(i===pos)?`<text x="${x+40}" y="${y+12}" font-size="26">${TH.marker}</text>`:'';
-    return `<g class="node ${state} ${popIndex===i?'pop':''}" data-i="${i}">
+    return `<g class="node ${state}" data-i="${i}">
       ${state==='current'?`<circle class="ring" cx="${x}" cy="${y}" r="34" fill="none" stroke="#f4b740" stroke-width="3"/>`:''}
       <circle cx="${x}" cy="${y}" r="34" fill="${fill}" stroke="${stroke}" stroke-width="3"/>
       <text x="${x}" y="${y+11}" text-anchor="middle" font-size="30" opacity="${state==='locked'?.55:1}">${inner}</text>
@@ -663,164 +1013,268 @@ function renderRoute(popIndex){
     <path d="${pathAll}" fill="none" stroke="#5b6a86" stroke-width="5" stroke-dasharray="2 12" stroke-linecap="round" stroke-linejoin="round"/>
     ${pathDone?`<path d="${pathDone}" fill="none" stroke="#f4b740" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>`:''}
     ${nodes}</svg>`;
-  document.querySelectorAll('.node.current').forEach(g=>g.onclick=()=>{
-    const i=+g.dataset.i;if(i===8)openFinale();else openDoor(i);
-  });
+  document.querySelectorAll('.node.current').forEach(g=>g.onclick=()=>{const i=+g.dataset.i;if(i===8)openFinale();else openDoor(i)});
   $('#keyCount').textContent=totalKeys();
   renderCollect();
 }
 function renderCollect(){
-  const got=i=>i<route.pos;
+  const got=i=>ADMIN||route.stops[i].state!=='locked';
   if(theme==='museum'){
     $('#collect').innerHTML=`<div><div class="lbl">Vault code</div><div class="slots">${route.code.map((d,i)=>`<div class="slot ${got(i)?'got':''}">${got(i)?NUMWORDS[d]:'?'}</div>`).join('')}</div></div>
       <div class="note" style="margin:0;max-width:220px">Each door gives you one number. You need all 8 to open the vault.</div>`;
   }else{
-    $('#collect').innerHTML=`<div><div class="lbl">Summit flag</div>${flagSVG(route.pos,150)}</div>
+    $('#collect').innerHTML=`<div><div class="lbl">Summit flag</div>${flagSVG(route.pos,120)}</div>
       <div class="note" style="margin:0;max-width:260px">Each camp gives you one piece of the flag. Plant it on the summit to finish.</div>`;
   }
 }
-function flagSVG(pieces,w){
+function flagSVG(pieces,h){
   const covers=Array.from({length:8},(_,i)=>i).filter(i=>i>=pieces)
     .map(i=>`<rect x="${(i%4)*80}" y="${Math.floor(i/4)*80}" width="80" height="80" fill="#0f1726" stroke="#2a3a56" stroke-dasharray="4 4"/>`).join('');
-  return `<svg viewBox="-12 -6 344 172" width="${w*2}" height="${w}" xmlns="http://www.w3.org/2000/svg">
-    <rect x="-10" y="-4" width="6" height="170" rx="2" fill="#8d9cb6"/>
-    <rect x="0" y="0" width="320" height="160" fill="#1f6f7a"/>
-    <polygon points="0,160 320,0 320,40 80,160" fill="#f4b740"/>
-    <polygon points="40,140 120,40 170,100 200,70 260,140" fill="#e9eef6"/>
-    <polygon points="120,40 140,65 128,62 112,72 104,60" fill="#1f6f7a" opacity=".25"/>
-    <circle cx="265" cy="38" r="16" fill="#fff4d6"/>
-    ${covers}
+  return `<svg viewBox="-12 -6 344 172" width="${h*2}" height="${h}" xmlns="http://www.w3.org/2000/svg">
+    <rect x="-10" y="-4" width="6" height="170" rx="2" fill="#8d9cb6"/>${flagCloth()}${covers}
     ${Array.from({length:8},(_,i)=>`<rect x="${(i%4)*80}" y="${Math.floor(i/4)*80}" width="80" height="80" fill="none" stroke="#0d1420" stroke-opacity=".35"/>`).join('')}
   </svg>`;
+}
+function flagCloth(){
+  return `<rect x="0" y="0" width="320" height="160" fill="#1f6f7a"/>
+    <polygon points="0,160 320,0 320,40 80,160" fill="#f4b740"/>
+    <polygon points="40,140 120,40 170,100 200,70 260,140" fill="#e9eef6"/>
+    <circle cx="265" cy="38" r="16" fill="#fff4d6"/>`;
 }
 $('#backBtn').onclick=()=>{renderSetup();show('start')};
 $('#restartBtn').onclick=startRoute;
 
 /* =====================================================
-   DOOR
+   DOOR: 3 challenges in a row
    ===================================================== */
 let cur=null;
-function openDoor(i){
-  const d=route.stops[i];
-  cur={i,d,tries:0,revealed:false,showText:false,won:false,heard:'',fb:'',fbClass:'',hits:null,last:''};
-  $('#overlay').classList.remove('hidden');
-  renderDoor();
-  const L=LEVELS[level-1];
-  if(L.hear)setTimeout(()=>say(target()),250);
-  else if(SR)setTimeout(micStart,250);
+const L=()=>LEVELS[level-1];
+function item(){return cur.items[cur.k]}
+function needsMic(){
+  if(!cur||cur.finale)return false;
+  const lv=L();
+  if(lv.kind==='speak'||lv.kind==='answer')return !cur.itemDone;
+  if(lv.kind==='build')return cur.phase==='speak'&&!cur.itemDone;
+  return false;
 }
-function target(){const L=LEVELS[level-1];return L.sentence?cur.d.it.s:cur.d.it.w}
+function openDoor(i){
+  cur={i,d:route.stops[i],items:route.stops[i].items,k:0,scores:[],doorWon:false};
+  newItemState();
+  $('#overlay').classList.remove('hidden');
+  startItem();
+}
+function newItemState(){
+  Object.assign(cur,{tries:0,revealed:false,showText:false,itemDone:false,heard:'',fb:'',fbClass:'',hits:null,last:'',
+    typedRes:null,phase:'tiles',tiles:null,placed:[],tileMarks:null});
+  if(L().kind==='build'){
+    const ws=item().s.split(' ').map((w,ix)=>({id:ix,t:(ix===0&&!/^(I|Mom|Dad|Grandma|Grandpa|English)\b/.test(w)?w[0].toLowerCase()+w.slice(1):w).replace(/[.!?]$/,'')}));
+    let sh=shuffle(ws);if(sh.every((w,ix)=>w.id===ix))sh=sh.reverse();
+    cur.tiles=sh;
+  }
+}
+function target(){return L().kind==='answer'?item().q:(L().sent?item().s:item().w)}
+function startItem(){
+  renderDoor();
+  const lv=L();
+  if(lv.hear)setTimeout(()=>say(target()),250);
+  else if(needsMic()&&SR)setTimeout(micStart,250);
+  if(lv.kind==='type')setTimeout(()=>{const i=$('#typeIn');if(i)i.focus()},300);
+}
 function closeModal(){micOff();if(hasTTS)speechSynthesis.cancel();speaking=false;$('#overlay').classList.add('hidden');cur=null}
 $('#mClose').onclick=closeModal;
+function setFb(t,c){if(!cur)return;cur.fb=t;cur.fbClass=c||'';const f=$('#fb');if(f){f.textContent=t;f.className='fb '+(c||'')}}
 
-function targetHTML(){
-  const L=LEVELS[level-1],t=target();
-  if(!L.sentence)return `<div class="target word">${t}</div>`;
-  const words=t.split(' ');
-  return `<div class="target sent">${words.map((w,i)=>`<span class="w ${cur.hits?(cur.hits[i]?'hit':'miss'):''}">${w}</span>`).join(' ')}</div>`;
+function sentenceHTML(text,hits){
+  return `<div class="target sent">${text.split(' ').map((w,i)=>`<span class="w ${hits?(hits[i]?'hit':'miss'):''}">${w}</span>`).join(' ')}</div>`;
 }
 function renderDoor(){
   if(!cur||cur.finale)return;
-  const it=cur.d.it,L=LEVELS[level-1],TH=THEMES[theme];
-  const tag=`<div class="mtag">${TH.stops[cur.i]} · Level ${level}</div>`;
-  if(cur.won){
+  const lv=L(),it=item(),TH=THEMES[theme];
+  const head=`<div class="mtag">${TH.stops[cur.i]} · ${BANDS.find(b=>b.id===band).name} · Level ${level}</div>
+    <div class="itemdots">${[0,1,2].map(j=>`<i class="${j<cur.k?'done':j===cur.k?'now':''}"></i>`).join('')}</div>`;
+  if(cur.doorWon){
     const reward=theme==='museum'
       ?`<div class="reward"><span style="font-size:28px">🔢</span><div style="text-align:left"><div class="mtag">Code number</div><b>${NUMWORDS[route.code[cur.i]]}</b></div></div>`
       :`<div class="reward"><span style="font-size:28px">🚩</span><div style="text-align:left"><div class="mtag">Flag piece</div><b>${cur.i+1} of 8</b></div></div>`;
-    $('#mBody').innerHTML=`${tag}<div class="win"><div class="big">🔓</div><h3>Door unlocked!</h3>
-      <div style="font-size:22px;color:var(--gold)">+${cur.d.keys} ${'🔑'.repeat(cur.d.keys)}</div>
+    $('#mBody').innerHTML=`<div class="mtag">${TH.stops[cur.i]}</div><div class="win"><div class="bigicon">🔓</div><h3>Door unlocked!</h3>
+      <div style="font-size:22px;color:var(--gold)">+${cur.d.keys} ${'🔑'.repeat(cur.d.keys)||'—'}</div>
       ${reward}<div><button class="btn primary big" id="contBtn">Continue →</button></div></div>`;
     $('#contBtn').onclick=advance;
     return;
   }
-  const showText=!L.hear||cur.showText||cur.revealed;
-  const hearPart=L.hear?`<div class="hidden-target">
-      <button class="btn primary hearbig" id="hearBtn">🔊 Hear it again</button>
-      ${showText?'':`<div class="subbtns"><button class="linkbtn" id="showBtn">👀 Show me the words (max 2 🔑)</button></div>`}</div>`:'';
-  const micState=!SR?'Say it out loud, then press the button.'
-    :speaking?'🔊 <b>Listen…</b>'
-    :recOn?'<b>I\'m listening.</b> Say it now.'
-    :micWanted?'Starting the mic…':'Mic is off. <b>Tap 🎙️ to start.</b>';
-  $('#mBody').innerHTML=`${tag}
-    <div class="task">${L.task.toUpperCase()}</div>
-    <div class="pic">${it.e}</div>
-    ${showText?targetHTML():''}
-    ${hearPart}
-    <div class="micbar">
-      ${SR?`<button class="mic ${recOn?'live':speaking?'wait':''}" id="micBtn" title="Microphone">🎙️</button>`
-          :`<button class="btn primary big" id="saidBtn">✓ I said it</button>`}
-      ${SR?`<div class="micstate" id="micState">${micState}</div>`:''}
-    </div>
-    <div class="heard ${cur.heard?'':'empty'}" id="heard">${cur.heard?'"'+cur.heard+'"':'Your words will appear here'}</div>
+  let body='';
+  const showText=!lv.hear||cur.showText||cur.revealed;
+  const pic=`<div class="pic">${it.e||TOPIC_INFO[it.topic][1]}</div>`;
+  const hearBtns=`<div class="hearrow"><button class="btn primary hearbig" id="hearBtn">🔊 Hear it</button>
+      <button class="btn" id="slowBtn">🐢 Slower</button></div>`;
+
+  if(lv.kind==='speak'){
+    body+=pic;
+    if(showText)body+=lv.sent?sentenceHTML(it.s,cur.hits):`<div class="target word">${it.w}</div>`;
+    if(lv.hear)body+=hearBtns+(showText?'':`<div style="text-align:center"><button class="linkbtn" id="showBtn">👀 Show me the words (max 2 🔑)</button></div>`);
+    body+=micHTML()+heardHTML();
+  }
+  if(lv.kind==='answer'){
+    body+=pic+`<div class="mustuse">Use the word: <span>${it.w}</span></div>`;
+    body+=showText?`<div class="question">${it.q}</div>`:'';
+    body+=hearBtns+(showText?'':`<div style="text-align:center"><button class="linkbtn" id="showBtn">👀 Show me the question (max 2 🔑)</button></div>`);
+    body+=micHTML()+heardHTML();
+  }
+  if(lv.kind==='type'){
+    body+=pic+hearBtns;
+    if(cur.revealed)body+=`<div class="note" style="text-align:center">Type it exactly like this:</div>`+(lv.sent?`<div class="target sent">${it.s}</div>`:`<div class="target word">${it.w}</div>`);
+    if(cur.typedRes&&!cur.typedRes.ok&&lv.sent){
+      const r=cur.typedRes;
+      body+=`<div class="typed">${r.yw.map((w,i)=>`<span class="w ${r.okWords[i]?'ok':'no'}">${w}</span>`).join(' ')}</div>`;
+    }
+    body+=`<div class="typebox"><input id="typeIn" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${lv.sent?'Type the sentence…':'Type the word…'}">
+      <button class="btn primary" id="checkBtn">Check</button></div>`;
+  }
+  if(lv.kind==='build'){
+    body+=pic;
+    if(cur.phase==='tiles'){
+      const placed=cur.placed.map(id=>cur.tiles.find(t=>t.id===id));
+      const pool=cur.tiles.filter(t=>!cur.placed.includes(t.id));
+      body+=`<div class="answer-line" id="answerLine">${placed.length?placed.map((t,ix)=>`<button class="tile ${cur.tileMarks?(cur.tileMarks[ix]?'ok':'no'):''}" data-p="${t.id}">${t.t}</button>`).join('')
+        :'<span class="note" style="margin:0">Tap the words in the right order</span>'}</div>
+        <div class="pool">${pool.map(t=>`<button class="tile" data-t="${t.id}">${t.t}</button>`).join('')}</div>`;
+    }else{
+      body+=`<div class="task" style="margin-top:4px">NOW READ IT OUT LOUD</div>`+sentenceHTML(it.s,cur.hits)+micHTML()+heardHTML();
+    }
+  }
+  $('#mBody').innerHTML=`${head}<div class="task">${(lv.kind==='build'&&cur.phase==='speak')?'GREAT ORDER!':lv.task.toUpperCase()}</div>${body}
     <div class="fb ${cur.fbClass}" id="fb">${cur.fb}</div>
-    <div class="tries">${[0,1,2].map(k=>`<i class="${k<cur.tries?'used':''}"></i>`).join('')}</div>
+    <div class="tries">${[0,1,2].map(j=>`<i class="${j<cur.tries?'used':''}"></i>`).join('')}</div>
     <div class="mbtns"><button class="linkbtn" id="skipBtn">Skip this door</button></div>`;
-  if($('#micBtn'))$('#micBtn').onclick=()=>{if(recOn||micWanted){micOff();setTimeout(updateMicUI,50)}else{quietEnds=0;micStart()}};
-  if($('#saidBtn'))$('#saidBtn').onclick=()=>win();
-  if($('#hearBtn'))$('#hearBtn').onclick=()=>say(target());
-  if($('#showBtn'))$('#showBtn').onclick=()=>{cur.showText=true;renderDoor()};
-  $('#skipBtn').onclick=()=>{cur.d.state='skip';cur.d.keys=0;cur.won=true;micOff();advance()};
+  wireDoor();
+}
+function micHTML(){
+  if(!SR)return `<div class="micbar"><button class="btn primary big" id="saidBtn">✓ I said it</button></div>`;
+  return `<div class="micbar"><button class="mic ${recOn?'live':speaking?'wait':''}" id="micBtn" title="Microphone">🎙️</button>
+    <div class="micstate" id="micState">${micStateText()}</div></div>`;
+}
+function heardHTML(){return `<div class="heard ${cur.heard?'':'empty'}" id="heard">${cur.heard?'"'+cur.heard+'"':'Your words will appear here'}</div>`}
+function micStateText(){return speaking?'🔊 <b>Listen…</b>':recOn?'<b>I\'m listening.</b> Say it now.':micWanted?'Starting the mic…':'Mic is off. <b>Tap 🎙️ to start.</b>'}
+function wireDoor(){
+  const on=(id,fn)=>{const el=$(id);if(el)el.onclick=fn};
+  on('#micBtn',()=>{if(recOn||micWanted){micOff();setTimeout(updateMicUI,50)}else{quietEnds=0;micWanted=true;micStart()}});
+  on('#saidBtn',()=>itemWin(true));
+  on('#hearBtn',()=>say(target()));
+  on('#slowBtn',()=>say(target(),null,true));
+  on('#showBtn',()=>{cur.showText=true;renderDoor()});
+  on('#checkBtn',checkTypeAnswer);
+  on('#skipBtn',()=>{cur.d.state='skip';cur.d.keys=0;micOff();cur.doorWon=true;advance()});
+  const inp=$('#typeIn');if(inp)inp.onkeydown=e=>{if(e.key==='Enter')checkTypeAnswer()};
+  document.querySelectorAll('.pool .tile').forEach(b=>b.onclick=()=>{cur.placed.push(+b.dataset.t);cur.tileMarks=null;setFb('','');renderDoor();if(cur.placed.length===cur.tiles.length)checkTiles()});
+  document.querySelectorAll('.answer-line .tile').forEach(b=>b.onclick=()=>{cur.placed=cur.placed.filter(id=>id!==+b.dataset.p);cur.tileMarks=null;renderDoor()});
 }
 function updateMicUI(){
-  if(!cur||cur.won||cur.finale){if(cur&&cur.finale)renderFinaleMic();return}
+  if(cur&&cur.finale){renderFinaleMic();return}
   const b=$('#micBtn'),s=$('#micState');if(!b||!s)return;
-  b.className='mic '+(recOn?'live':speaking?'wait':'');
-  s.innerHTML=speaking?'🔊 <b>Listen…</b>':recOn?'<b>I\'m listening.</b> Say it now.':micWanted?'Starting the mic…':'Mic is off. <b>Tap 🎙️ to start.</b>';
+  b.className='mic '+(recOn?'live':speaking?'wait':'');s.innerHTML=micStateText();
 }
-function showHeard(t){
-  if(!cur)return;const h=$('#heard');if(!h)return;
-  h.classList.remove('empty');h.textContent='"'+t+'"';
-}
+function showHeard(t){const h=$('#heard');if(!h)return;h.classList.remove('empty');h.textContent='"'+t+'"'}
+
+/* ---- speaking ---- */
 function onSpeech(alts){
-  if(!cur||cur.won||!alts.length)return;
+  if(!cur||!alts.length)return;
   if(cur.finale){finaleSpeech(alts);return}
-  const L=LEVELS[level-1];
-  // Let a sentence said in two parts still count.
+  if(cur.itemDone||!needsMic())return;
+  const lv=L(),it=item();
   const tryAlts=cur.last?[...alts,...alts.map(a=>cur.last+' '+a)]:alts;
   cur.heard=alts[0];
-  const r=check(tryAlts,cur.d.it,level);
-  if(r.ok){win();return}
-  if(L.sentence&&norm(alts[0]).words.length<2){cur.last=alts[0];cur.fb='Keep going: say the whole sentence.';cur.fbClass='';renderDoor();return}
+  const r=checkSpeech(tryAlts,it,lv);
+  if(r.ok){itemWin();return}
+  if((lv.sent||lv.kind==='answer')&&words(alts[0]).length<2){cur.last=alts[0];cur.fb='Keep going: say the whole sentence.';cur.fbClass='';renderDoor();return}
   cur.last=alts[0];
   cur.tries++;sfxWrong();
-  if(r.hits&&(cur.showText||!L.hear||cur.revealed))cur.hits=r.hits;
-  cur.fb=r.hits?`You said ${r.n} of ${r.total} words. ${cur.tries>=3?'Listen and try again.':'Try again!'}`
-    :(cur.tries>=3?'Listen and try again.':'Not quite. Try again!');
+  const visible=!lv.hear||cur.showText||cur.revealed||lv.kind==='build';
+  if(r.hits&&visible)cur.hits=r.hits;
+  if(lv.kind==='answer'){
+    cur.fb=r.short?`Good! Now say it in a longer sentence (at least ${r.min} words).`:`Use the word "${it.w}" in your answer.`;
+  }else cur.fb=r.hits?`You said ${r.n} of ${r.total} words. ${cur.tries>=3?'Listen and try again.':'Try again!'}`:(cur.tries>=3?'Listen and try again.':'Not quite. Try again!');
   cur.fbClass='bad';
-  if(cur.tries>=3&&!cur.revealed){cur.revealed=true;renderDoor();say(target());return}
+  if(cur.tries>=3&&!cur.revealed){
+    cur.revealed=true;renderDoor();
+    if(lv.kind==='answer'){setFb('Here is one way to answer. Now say your own!','');say(it.s)}
+    else say(lv.sent?it.s:it.w);
+    return;
+  }
   renderDoor();
 }
-function win(){
-  let k=cur.revealed?1:Math.max(1,3-cur.tries);
-  if(LEVELS[level-1].hear&&cur.showText)k=Math.min(k,2);
-  if(!SR)k=2;
-  cur.d.state='open';cur.d.keys=k;cur.won=true;cur.hits=null;
-  micOff();sfxUnlock();renderDoor();
-  const doorCur=cur,digit=NUMWORDS[route.code[cur.i]].toLowerCase();
-  setTimeout(()=>{if(cur!==doorCur)return;
-    say(theme==='museum'?'Great! Your code number is '+digit+'.':'Great! You found a flag piece.')},400);
+/* ---- typing ---- */
+function checkTypeAnswer(){
+  const inp=$('#typeIn');if(!inp||!inp.value.trim())return;
+  const r=checkTyped(inp.value,item(),L());
+  if(r.ok){itemWin();return}
+  cur.tries++;cur.typedRes=r;sfxWrong();
+  const lv=L();
+  if(lv.sent)cur.fb=r.yw.length!==r.tLen?`Check again: the sentence has ${r.tLen} words.`:'Check the red words.';
+  else cur.fb='Not quite. Check your spelling.';
+  cur.fbClass='bad';
+  if(cur.tries>=3&&!cur.revealed){cur.revealed=true;cur.fb='Copy it to continue.';cur.fbClass=''}
+  const v=inp.value;renderDoor();const ni=$('#typeIn');if(ni){ni.value=lv.sent?v:'';ni.focus()}
+}
+/* ---- building ---- */
+function checkTiles(){
+  const placed=cur.placed.map(id=>cur.tiles.find(t=>t.id===id).t.toLowerCase());
+  const want=item().s.split(' ').map(w=>w.toLowerCase().replace(/[.!?]$/,''));
+  const marks=placed.map((w,i)=>w===want[i]);
+  if(marks.every(Boolean)){toSpeakPhase();return}
+  cur.tries++;sfxWrong();cur.tileMarks=marks;
+  if(cur.tries>=3){
+    cur.revealed=true;
+    cur.fb='Here is the right order. Now read it out loud.';cur.fbClass='';
+    cur.phase='speak';renderDoor();say(item().s);return;
+  }
+  cur.fb='Not quite. The red words are in the wrong place.';cur.fbClass='bad';renderDoor();
+}
+function toSpeakPhase(){
+  sfxRight();cur.phase='speak';cur.fb='';cur.fbClass='';
+  renderDoor();quietEnds=0;
+  if(SR){micWanted=true;setTimeout(micStart,200)}
+}
+/* ---- an item is done ---- */
+function itemWin(selfCheck){
+  if(cur.itemDone)return;
+  let s=cur.revealed?1:Math.max(1,3-cur.tries);
+  if(cur.showText)s=Math.min(s,2);
+  if(selfCheck)s=Math.min(s,2);
+  cur.scores.push(s);cur.itemDone=true;micPause();
+  sfxRight();
+  setFb(['','Done.','Good!','Excellent!'][s]+(cur.k<2?' Next one…':''),'ok');
+  const done=$('#heard');if(done&&L().sent)cur.hits=null;
+  setTimeout(()=>{
+    if(!cur)return;
+    if(cur.k<2){cur.k++;newItemState();startItem();return}
+    const keys=Math.round(cur.scores.reduce((a,b)=>a+b,0)/3);
+    cur.d.state='open';cur.d.keys=keys;cur.doorWon=true;micOff();sfxUnlock();renderDoor();
+    const digit=NUMWORDS[route.code[cur.i]].toLowerCase(),me=cur;
+    setTimeout(()=>{if(cur===me)say(theme==='museum'?'Door unlocked! Your code number is '+digit+'.':'Camp reached! You found a flag piece.')},400);
+  },1100);
 }
 function advance(){
   const i=cur.i;closeModal();
-  route.pos=i+1;renderRoute(i);
+  route.pos=ADMIN?(route.stops.findIndex(s=>s.state==='locked')+1||9)-1:i+1;renderRoute();
   if(route.pos===8)setTimeout(()=>say(theme==='museum'?'You have the whole code. Go to the vault!':'You have the whole flag. Climb to the summit!'),300);
 }
+document.addEventListener('keydown',e=>{if(e.code==='Escape'&&cur)closeModal()});
 
 /* =====================================================
-   FINALE
+   FINALES
    ===================================================== */
 let typed='';
 function openFinale(){
-  cur={finale:true,won:false,heard:'',fb:'',fbClass:''};typed='';
+  cur={finale:true,won:false};typed='';
   $('#overlay').classList.remove('hidden');
   if(theme==='museum'){renderVault();say('Enter the vault code.')}
-  else{renderSummit();micWanted=!!SR;say('Plant the flag! Say: I reached the top!')}
+  else{renderSummitAsk();micWanted=!!SR;say('Plant the flag! Say: I reached the top!')}
 }
 function renderVault(){
   $('#mBody').innerHTML=`<div class="mtag">The Vault</div>
     <div class="task">ENTER THE VAULT CODE</div>
     <div class="slots" style="justify-content:center;margin:10px 0">${route.code.map(d=>`<div class="slot got">${NUMWORDS[d]}</div>`).join('')}</div>
-    <p class="prompt" style="text-align:center;color:var(--muted);margin:6px 0">Type the numbers in order.</p>
+    <p style="text-align:center;color:var(--muted);margin:6px 0">Type the numbers in order.</p>
     <div class="codeshow" id="codeShow">${route.code.map((_,i)=>`<span>${typed[i]??''}</span>`).join('')}</div>
     <div class="keypad">${[1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].map(k=>`<button data-k="${k}">${k}</button>`).join('')}</div>
     <div class="fb" id="fb"></div>`;
@@ -834,73 +1288,108 @@ function renderVault(){
   });
 }
 function tryCode(){
-  if(typed===route.code.join('')){sfxFinish();
-    $('#mBody').innerHTML=`<div class="win"><div class="big">💎</div><h3>The vault is open!</h3><p style="color:var(--muted)">You found the museum's secret diamond.</p>
-      <button class="btn primary big" id="finBtn">See your score →</button></div>`;
-    say('The vault is open! You found the diamond.');
-    $('#finBtn').onclick=()=>{closeModal();finish()};
-  }else{
-    sfxWrong();const c=$('#codeShow');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');
-    $('#fb').className='fb bad';$('#fb').textContent='Wrong code. Read the words again and try again.';
-    typed='';setTimeout(()=>{if(cur&&cur.finale)renderVault()},900);
-  }
+  if(typed===route.code.join('')){vaultOpen();return}
+  sfxWrong();const c=$('#codeShow');c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');
+  $('#fb').className='fb bad';$('#fb').textContent='Wrong code. Read the words again and try again.';
+  typed='';setTimeout(()=>{if(cur&&cur.finale)renderVault()},900);
 }
-const SUMMIT={w:'top',k:'top',s:'I reached the top!'};
-function renderSummit(){
+function vaultOpen(){
+  cur.won=true;sfxFinish();
+  const keys=totalKeys(),idx=selIdx,[ae,an]=ARTIFACTS[idx];
+  const icons=['💎','💎','💍','🪙','🪙','💠','👑','🔶'];
+  const gems=Array.from({length:Math.max(3,keys)},(_,i)=>{
+    const x=6+Math.random()*86,drop=110+Math.random()*90,rot=(Math.random()*120-60)+'deg';
+    return `<span class="gem" style="left:${x}%;--drop:${drop}px;--rot:${rot};animation-delay:${(i*0.07).toFixed(2)}s">${icons[i%icons.length]}</span>`}).join('');
+  $('#mBody').innerHTML=`<div class="win"><h3>The vault is open!</h3>
+    <div class="treasure">${gems}<svg class="chest" width="120" height="80" viewBox="0 0 120 80"><path d="M8 34 Q60 -4 112 34 Z" fill="#8a5a24" stroke="#f4b740" stroke-width="3"/><rect x="8" y="34" width="104" height="42" rx="4" fill="#6e4519" stroke="#f4b740" stroke-width="3"/><rect x="52" y="30" width="16" height="22" rx="3" fill="#f4b740"/><rect x="8" y="48" width="104" height="5" fill="#f4b740" opacity=".7"/></svg></div>
+    <p style="color:var(--gold);font-weight:700;font-size:20px;margin:10px 0 0">You collected ${keys} treasures!</p>
+    <div class="newitem"><span class="e">${ae}</span><div style="text-align:left"><small>New on your trophy shelf</small><b>${an}</b></div></div>
+    <div><button class="btn primary big" id="finBtn">See your score →</button></div></div>`;
+  say('The vault is open! You found the '+an+'.');
+  $('#finBtn').onclick=()=>{closeModal();finish()};
+}
+const SUMMIT_LINE='I reached the top!';
+function renderSummitAsk(){
   $('#mBody').innerHTML=`<div class="mtag">The Summit</div>
     <div class="task">PLANT THE FLAG</div>
-    <div style="text-align:center;margin:10px 0">${flagSVG(8,110)}</div>
+    <div style="text-align:center;margin:10px 0">${flagSVG(8,90)}</div>
     <p style="text-align:center;color:var(--muted);margin:4px 0">Say it out loud:</p>
-    <div class="target sent">"I reached the top!"</div>
-    <div class="micbar">
-      ${SR?`<button class="mic" id="micBtn">🎙️</button><div class="micstate" id="micState"></div>`
-          :`<button class="btn primary big" id="saidBtn">✓ I said it</button>`}
-    </div>
+    <div class="target sent">"${SUMMIT_LINE}"</div>
+    <div class="micbar">${SR?`<button class="mic" id="micBtn">🎙️</button><div class="micstate" id="micState"></div>`
+          :`<button class="btn primary big" id="saidBtn">✓ I said it</button>`}</div>
     <div class="heard empty" id="heard">Your words will appear here</div>
     <div class="fb" id="fb"></div>`;
-  if($('#micBtn'))$('#micBtn').onclick=()=>{if(recOn||micWanted){micOff()}else{quietEnds=0;micWanted=true;finaleMicStart()}};
+  if($('#micBtn'))$('#micBtn').onclick=()=>{if(recOn||micWanted){micOff()}else{quietEnds=0;micWanted=true;micStart()}};
   if($('#saidBtn'))$('#saidBtn').onclick=summitWin;
   renderFinaleMic();
 }
-function finaleMicStart(){if(cur&&cur.finale&&!speaking){cur.won=false;micStart()}}
 function renderFinaleMic(){
   const b=$('#micBtn'),s=$('#micState');if(!b||!s)return;
   b.className='mic '+(recOn?'live':speaking?'wait':'');
   s.innerHTML=speaking?'🔊 <b>Listen…</b>':recOn?'<b>I\'m listening.</b> Say it now.':'<b>Tap 🎙️ and say it.</b>';
 }
 function finaleSpeech(alts){
+  if(cur.won)return;
   showHeard(alts[0]);
-  const hits=matchSentence(alts[0],SUMMIT.s);
-  const ok=alts.some(a=>{const h=matchSentence(a,SUMMIT.s);return h.filter(Boolean).length>=3&&hasKey(norm(a),'top')});
+  const ok=alts.some(a=>matchSentence(a,SUMMIT_LINE).filter(Boolean).length>=3&&usesWord(a,'top'));
   if(ok)summitWin();else{$('#fb').className='fb bad';$('#fb').textContent='Almost! Say: I reached the top!'}
 }
 function summitWin(){
   micOff();cur.won=true;sfxFinish();
-  $('#mBody').innerHTML=`<div class="win"><div class="big">🏔️🚩</div><h3>You reached the summit!</h3><p style="color:var(--muted)">Your flag is flying on top of the mountain.</p>
-    <button class="btn primary big" id="finBtn">See your score →</button></div>`;
-  say('You reached the summit! Well done.');
+  const idx=selIdx,[vname,sky,land]=VIEWS[idx];
+  $('#mBody').innerHTML=`<div class="win"><h3>You reached the summit!</h3>
+    <div class="summit"><svg viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="night" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1730"/><stop offset="1" stop-color="#22385a"/></linearGradient>
+        <linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b5998"/><stop offset=".55" stop-color="${sky}"/><stop offset="1" stop-color="#fff1d0"/></linearGradient></defs>
+      <rect width="600" height="340" fill="url(#night)"/>
+      <rect class="dawn" width="600" height="340" fill="url(#dawn)"/>
+      <circle class="sunrise" cx="430" cy="190" r="34" fill="#fff4c8"/>
+      <polygon points="0,260 70,200 130,230 210,170 300,225 380,185 460,220 540,180 600,210 600,340 0,340" fill="${land}" opacity=".55"/>
+      <polygon points="0,300 90,260 180,285 260,250 360,290 470,255 600,285 600,340 0,340" fill="${land}" opacity=".85"/>
+      <g class="cloudL"><ellipse cx="180" cy="230" rx="120" ry="26" fill="#eef3fb"/><ellipse cx="240" cy="215" rx="70" ry="24" fill="#f7faff"/></g>
+      <g class="cloudR"><ellipse cx="420" cy="240" rx="130" ry="26" fill="#eef3fb"/><ellipse cx="370" cy="224" rx="70" ry="22" fill="#f7faff"/></g>
+      <polygon points="170,340 300,150 430,340" fill="#5d7690"/>
+      <polygon points="300,150 338,205 318,198 300,214 282,198 262,205" fill="#f4f8fc"/>
+      <g class="flagdrop"><rect x="297" y="70" width="6" height="86" rx="2" fill="#c9d3e0"/>
+        <g transform="translate(303,72) scale(.25)"><g class="cloth">${flagCloth()}</g></g></g>
+    </svg></div>
+    <div class="newitem"><span class="e">${viewSVG(idx,90)}</span><div style="text-align:left"><small>New postcard</small><b>${vname}</b></div></div>
+    <div><button class="btn primary big" id="finBtn">See your score →</button></div></div>`;
+  say('You reached the summit! What a view.');
   $('#finBtn').onclick=()=>{closeModal();finish()};
 }
 
 /* =====================================================
-   END
+   END + PROGRESS
    ===================================================== */
 function finish(){
-  const k=totalKeys(),key=theme+'-'+level+'-'+topic;
-  if(store.best[key]==null||k>store.best[key])store.best[key]=k;save();
+  const k=totalKeys(),idx=selIdx;
+  let unlockedNow=false;
+  if(!ADMIN){
+    if(store.best[idx]==null||k>store.best[idx])store.best[idx]=k;
+    store.shelf[theme][idx]=true;
+    if(k>=12&&idx<23&&store.unlocked<idx+1){store.unlocked=idx+1;unlockedNow=true}
+    save();
+  }
   $('#endScore').textContent=k;
-  const tm=theme==='museum';
-  const [icon,title,msg]=k>=21?[tm?'💎':'🏔️',tm?'Master thief!':'Mountain master!','Amazing. Try the next level.']
-    :k>=15?['🥇','Great expedition!','Play again to collect even more keys.']
-    :['🔓','You made it!','Every door makes your English stronger. Play again for more keys.'];
-  $('#endIcon').textContent=icon;$('#endTitle').textContent=title;$('#endMsg').textContent=msg;
-  $('#endNext').classList.toggle('hidden',level===4);
-  show('end');
+  const passed=k>=12,last=idx===23;
+  const [icon,title]=k>=21?[theme==='museum'?'💎':'🏔️','Amazing!']:passed?['🥇','Level complete!']:['🔓','You made it to the end!'];
+  $('#endIcon').textContent=icon;$('#endTitle').textContent=title;
+  const nxt=last?null:fromIdx(idx+1);
+  const nxtName=nxt?(BANDS.find(b=>b.id===nxt.band).name+' Level '+nxt.level+': '+LEVELS[nxt.level-1].name):'';
+  $('#endUnlock').innerHTML=last&&passed?'<div class="unlock">🏆 You finished the whole journey!</div>'
+    :passed?`<div class="unlock">${unlockedNow?'🔓 Unlocked: ':'Next: '}${nxtName}</div>`
+    :`<div class="unlock no">Get 12 🔑 to unlock the next level. Try again!</div>`;
+  $('#endMsg').textContent=k>=21?'Your English is getting stronger and stronger.':passed?'Play again to collect even more keys.':'Every door makes your English stronger.';
+  $('#endNext').classList.toggle('hidden',last||(!ADMIN&&store.unlocked<idx+1));
+  sfxFinish();show('end');say(title);
 }
 $('#endAgain').onclick=startRoute;
-$('#endNext').onclick=()=>{level=Math.min(4,level+1);startRoute()};
-$('#endMenu').onclick=()=>{renderSetup();show('start')};
-document.addEventListener('keydown',e=>{if(e.code==='Escape'&&cur)closeModal()});
+$('#endNext').onclick=()=>{selIdx=Math.min(23,selIdx+1);startRoute()};
+$('#endMenu').onclick=()=>{selIdx=Math.min(store.unlocked,selIdx);renderSetup();show('start')};
+
+if(ADMIN)$('#adminBanner').classList.remove('hidden');
+renderSetup();
 </script>
 </body>
 </html>
